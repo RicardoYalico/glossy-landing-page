@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>12 Days of Beauty - Calendario de Adviento</title>
+    <title>Glossy.pe - Calendario de Adviento 12 Días de Belleza</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,8 +11,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     
-    <!-- Añadida la librería Three.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
     <style>
         :root {
             --bg-color-light: #fdf5f5; /* Crema/Blanco roto */
@@ -85,31 +83,59 @@
             transition: transform 0.3s ease-out;
         }
 
-        /* --- Landing Section (Tapa 3D) --- */
-        #landing-section {
+        /* --- Landing Section (Stylized Calendar) --- */
+        #landing-section .calendar-preview-container {
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        #landing-section .calendar-preview {
+            width: clamp(280px, 80vw, 320px);
+            background: linear-gradient(145deg, var(--bg-color-light), var(--bg-color-medium));
+            border-radius: 2rem;
+            padding: 1.5rem;
+            box-shadow: 0 20px 40px rgba(139, 0, 0, 0.15); /* Sombra rojo vino */
+            transform: rotateX(10deg);
             position: relative;
-            overflow: hidden;
+            animation: preview-float 5s ease-in-out infinite;
+            border: 1px solid var(--white);
         }
-        #canvas-hero {
+
+        @keyframes preview-float {
+            0%, 100% { transform: rotateX(10deg) translateY(0); }
+            50% { transform: rotateX(10deg) translateY(-15px); }
+        }
+
+        #landing-section .calendar-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+        }
+
+        #landing-section .calendar-preview-box {
+            aspect-ratio: 1 / 1;
+            background-color: var(--medium-wine-red);
+            border-radius: 0.75rem;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        
+        #landing-section .preview-bow {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1; /* Detrás del texto */
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 40px;
+            color: var(--gold);
         }
-        #landing-section .hero-text {
-            position: relative; /* Asegura que esté sobre el canvas */
-            z-index: 10;
-            color: var(--text-dark); /* Color del tema */
-            text-shadow: 0 0 10px var(--white); /* Sombra para legibilidad */
-            /* Ajuste para subir el texto */
-            margin-bottom: 25vh; /* Mueve el texto 25% de la altura del viewport hacia arriba */
-        }
-         /* Asegura que el scroll-down sea visible */
+
         .scroll-down {
             position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-            color: var(--text-dark); z-index: 10;
+            color: var(--text-dark); z-index: 5;
         }
         .scroll-down span {
             display: block; width: 20px; height: 20px;
@@ -122,20 +148,7 @@
             100% { transform: rotate(45deg) translate(5px, 5px); opacity: 0; }
         }
 
-        /* --- Calendar Grid Section (Caja 3D de fondo) --- */
-         #interactive-section {
-            position: relative; /* Necesario para el hijo absoluto */
-            overflow: hidden;
-        }
-        /* ESTILO ELIMINADO: #canvas-box ya no existe */
-        
-        /* Asegura que el contenido del calendario esté sobre el canvas */
-        #interactive-section > .z-10, 
-        #interactive-section > .calendar-container {
-            position: relative;
-            z-index: 10;
-        }
-        
+        /* --- Calendar Grid Section --- */
         .calendar-container { 
             display: flex;
             flex-direction: column;
@@ -487,15 +500,12 @@
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-2">
                 <div class="w-10 h-10 bg-medium-wine-red text-white rounded-full flex items-center justify-center"><i class="fa-solid fa-gift"></i></div>
-                <div class="font-playfair font-bold text-lg text-wine-red">12 Days of Beauty</div>
+                <div class="font-playfair font-bold text-lg text-wine-red">Glossy.pe</div>
             </div>
             <div class="hidden md:flex items-center space-x-8 text-sm font-semibold">
-                <a href="#landing-section" class="hover:text-wine-red transition">Home</a>
+                <a href="#landing-section" class="hover:text-wine-red transition">Inicio</a>
                 <a href="#interactive-section" class="hover:text-wine-red transition">Calendario</a>
-                <a href="#content-section" class="hover:text-wine-red transition">Comprar</a>
-            </div>
-             <div class="flex items-center space-x-4">
-                <button class="w-8 h-8 rounded-full hover:bg-bg-color-medium transition text-wine-red"><i class="fa-solid fa-user"></i></button>
+                <a href="#contact-section" class="hover:text-wine-red transition">Contacto</a>
             </div>
         </nav>
     </header>
@@ -504,142 +514,109 @@
     <div id="confetti-container" class="fixed inset-0 pointer-events-none z-[100] overflow-hidden"></div>
 
     
-    <section id="landing-section" class="full-section hero">
-      <canvas id="canvas-hero"></canvas>
-      <div class="hero-text z-10 text-center relative -mt-[35vh]">
-        <!-- Texto añadido y ajustado con margin-bottom --><h1 class="font-playfair text-4xl md:text-6xl font-bold text-wine-red">Calendario de Adviento 2025</h1>
-        <p class="text-medium-wine-red mt-4 text-lg">✨ Cada día una nueva forma de brillar ✨</p>
-      </div>
-       <a href="#interactive-section" class="scroll-down">
+    <!-- Hero/Landing Section -->
+    <section id="landing-section" class="full-section text-center">
+        <div class="z-10">
+            <h1 class="font-playfair text-4xl md:text-6xl font-bold text-wine-red">Calendario de Adviento 2025</h1>
+            <p class="text-medium-wine-red mt-4 text-lg">✨ Descubre la magia de la belleza esta Navidad ✨</p>
+            <p class="text-gray-600 mt-6 text-sm">Haz clic en la caja de regalo para comenzar tu viaje mágico</p>
+        </div>
+        <a href="#interactive-section" class="calendar-preview-container mt-8 z-10">
+            <div class="calendar-preview">
+                 <div class="preview-bow"><i class="fa-solid fa-bow"></i></div>
+                 <div class="calendar-preview-grid">
+                 </div>
+            </div>
+        </a>
+        <a href="#interactive-section" class="scroll-down">
             <span></span>
         </a>
     </section>
 
     
-    <!-- SECCIÓN INTERACTIVA CON ANIMACIÓN 3D DE FONDO --><section id="interactive-section" class="full-section text-center">
-        <!-- Canvas para la animación de la caja (ELIMINADO) --><!-- Contenido del calendario (con z-index para estar al frente) (ELIMINADO) --><div class="calendar-container mt-8 z-10">
-                  <div class="z-10">
+    <!-- Calendario Interactivo -->
+    <section id="interactive-section" class="full-section text-center">
+        <div class="z-10">
             <h1 class="font-playfair text-4xl md:text-5xl font-bold text-wine-red">Calendario Interactivo</h1>
             <p class="text-medium-wine-red mt-4 max-w-xl">¡Haz clic en cada cajita para descubrir la sorpresa del día! Te esperan 12 regalos de belleza y 2 bonus especiales.</p>
-        </div>  
-          
-          <div class="calendar-grid" id="calendar-grid">
+        </div>
+        <div class="calendar-container mt-8">
+            <div class="calendar-grid" id="calendar-grid">
+                <!-- Las cajas se generan por JS -->
             </div>
             <div id="progress-counter">¡Comienza tu viaje mágico!</div>
         </div>
     </section>
 
     
-
-<div id="modal-overlay" class="fixed inset-0 z-[99] opacity-0 invisible transition-opacity">
-        <div id="product-modal" class="w-11/12 max-w-sm absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 invisible transition-all duration-300"></div>
+    <!-- Modal (oculto por defecto) -->
+    <div id="modal-overlay" class="fixed inset-0 z-[99] opacity-0 invisible transition-opacity">
+        <div id="product-modal" class="w-11/12 max-w-sm absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 invisible transition-all duration-300">
+            <!-- El contenido del modal se genera por JS -->
+        </div>
     </div>
     
     
-
-<main id="content-section" class="py-20 px-6 container mx-auto">
+    <!-- Sección de Productos (Grid) -->
+    <main id="content-section" class="py-20 px-6 container mx-auto">
        <section class="text-center max-w-4xl mx-auto mb-20">
             <h2 class="font-playfair text-4xl md:text-5xl font-bold mb-4 text-wine-red">Una Colección Mágica</h2>
             <p class="text-lg text-medium-wine-red">Cada producto en nuestro calendario de adviento está cuidadosamente seleccionado para traer alegría y belleza a tu temporada festiva.</p>
         </section>
-        <section class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20" id="product-grid"></section>
+        <section class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20" id="product-grid">
+            <!-- Las tarjetas de producto se generan por JS -->
+        </section>
     </main>
 
-    <script>
-        // ========================================================================
-        // 🔹 LÓGICA DE THREE.JS (hero.js y box.js)
-        // ========================================================================
-        
-        // --- Lógica de hero.js ---
-        function initHero() {
-          const canvas = document.getElementById('canvas-hero');
-          if (!canvas) return;
-          const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true }); // alpha: true para fondo transparente
-          renderer.setSize(window.innerWidth, window.innerHeight);
-
-          const scene = new THREE.Scene();
-          const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-          camera.position.z = 4;
-
-          // Añadida la textura
-            const loader = new THREE.TextureLoader();
-            // Asegúrate de que la ruta 'textures/Glossy Landing Page.png' es accesible
-            const texture = loader.load('textures/Glossy Landing Page.png');
-            texture.colorSpace = THREE.SRGBColorSpace;
-            texture.wrapS = texture.wrapT = THREE.ClampToEdgeWrapping;
-            texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
-
-          // Materiales con la textura
-          const materials = [
-            new THREE.MeshBasicMaterial({ color: '#ffb3c6' }), // derecha
-            new THREE.MeshBasicMaterial({ color: '#ffb3c6' }), // izquierda
-            new THREE.MeshBasicMaterial({ color: '#ffb3c6' }), // arriba
-            new THREE.MeshBasicMaterial({ color: '#ffb3c6' }), // abajo
-            new THREE.MeshBasicMaterial({ map: texture }), // frente
-            new THREE.MeshBasicMaterial({ color: '#ffb3c6' })  // atrás
-          ];
-
-          const geometry = new THREE.BoxGeometry(5, 3.5, 0.1);
-          geometry.translate(0, -1.5, 0);
-          const lid = new THREE.Mesh(geometry, materials);
-          lid.position.set(0, 0.5, 0);
-          scene.add(lid);
-
-          // 🔹 Añadimos la referencia al contenedor del calendario
-          const calendarContainer = document.querySelector('#interactive-section .calendar-container');
-
-          let scrollProgress = 0;
-
-          function updateScrollProgress() {
-            // Actualizado el selector
-            const section = document.querySelector('#interactive-section');
-            if (!section) return;
-            const rect = section.getBoundingClientRect();
-            const viewportHeight = window.innerHeight;
-            const visibleRatio = 1 - Math.min(Math.max(rect.top / viewportHeight, 0), 1);
-            scrollProgress = visibleRatio;
-          }
-          window.addEventListener('scroll', updateScrollProgress);
-
-          function animate() {
-            requestAnimationFrame(animate);
-
-            // 🔹 Animar apertura de tapa
-            const angle = -scrollProgress * (Math.PI / 5);
-            lid.rotation.x = angle;
-
-            // 🔹 Movimiento vertical
-            lid.position.y = 0.5 + scrollProgress * 1.5;
+    <!-- NUEVA SECCIÓN DE CONTACTO / FOOTER -->
+    <footer id="contact-section" class="bg-white py-20 px-6">
+        <div class="container mx-auto max-w-4xl text-center">
+            <h2 class="font-playfair text-4xl md:text-5xl font-bold mb-4 text-wine-red">¡Separa tu Calendario 2025!</h2>
+            <p class="font-dancing text-3xl text-medium-wine-red mb-6">Precio Total: S/150 (Separa con S/50)</p>
             
-            // 🔹 Animación del calendario (en lugar de la caja 3D)
-            if (calendarContainer) {
-                const startY = -80; // Empezar 80vh ARRIBA
-                const endY = 0; // Terminar en su posición original
-                const currentY = startY - (startY - endY) * scrollProgress;
-                calendarContainer.style.transform = `translateY(${currentY}vh)`;
-                calendarContainer.style.opacity = scrollProgress; // Fade in
-            }
+            <div class="text-left max-w-lg mx-auto grid md:grid-cols-2 gap-6 mb-12">
+                <div class="bg-bg-color-light p-6 rounded-2xl shadow-sm border border-bg-color-medium">
+                    <h4 class="font-playfair text-xl font-bold text-wine-red mb-3">¿Qué incluye?</h4>
+                    <ul class="list-disc list-inside space-y-2 text-text-dark">
+                        <li>12 productos de maquillaje en tamaño real 💄</li>
+                        <li>4 regalos extras 🎁 (Solo 12 primeras compras)</li>
+                    </ul>
+                </div>
+                <div class="bg-bg-color-light p-6 rounded-2xl shadow-sm border border-bg-color-medium">
+                    <h4 class="font-playfair text-xl font-bold text-wine-red mb-3">Entregas y Envíos</h4>
+                     <ul class="list-disc list-inside space-y-2 text-text-dark">
+                        <li>🚚 Envíos a todo el Perú por Shalom.</li>
+                        <li>📍 Puntos de encuentro: Plaza San Miguel y Mall Plaza Bellavista.</li>
+                        <li>🛵 Recojo en San Miguel (puedes enviar tu motorizado).</li>
+                    </ul>
+                </div>
+            </div>
 
+            <h3 class="font-playfair text-2xl font-bold text-wine-red mb-6">Contáctanos y haz tu pedido</h3>
+            <p class="text-medium-wine-red mb-8">¡Cuéntanos tu nombre y ciudad para ayudarte con tu pedido! ✨</p>
 
-            renderer.render(scene, camera);
-          }
+            <div class="flex flex-wrap justify-center gap-4 mb-10">
+                <a href="https://wa.me/51996629113" target="_blank" class="bg-green-500 text-white font-bold py-3 px-6 rounded-full text-lg shadow-md hover:bg-green-600 transition duration-300 flex items-center gap-2">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp 1
+                </a>
+                <a href="https://wa.me/51923895798" target="_blank" class="bg-green-500 text-white font-bold py-3 px-6 rounded-full text-lg shadow-md hover:bg-green-600 transition duration-300 flex items-center gap-2">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp 2
+                </a>
+            </div>
 
-          animate();
+            <div class="flex justify-center gap-8 text-4xl text-wine-red">
+                <a href="https://tiktok.com/@glossy.pe" target="_blank" class="hover:text-gold transition transform hover:scale-110" aria-label="TikTok de Glossy.pe">
+                    <i class="fa-brands fa-tiktok"></i>
+                </a>
+                <a href="https://instagram.com/glossy.pe" target="_blank" class="hover:text-gold transition transform hover:scale-110" aria-label="Instagram de Glossy.pe">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+            </div>
+            <p class="mt-10 text-gray-500 text-sm">Glossy.pe &copy; 2025 - San Miguel, Lima, Perú</p>
+        </div>
+    </footer>
 
-          window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-          });
-        // ❗️ CORRECCIÓN: El '});' extra de la actualización anterior ha sido eliminado.
-        // Esta es ahora la llave de cierre correcta para initHero().
-        }
-
-        // --- Lógica de box.js (ELIMINADA) ---
-    
-        // ========================================================================
-        // 🔹 LÓGICA DEL CALENDARIO DE ADVIENTO
-        // ========================================================================
+    <script>
         document.addEventListener('DOMContentLoaded', () => {
             const calendarGrid = document.getElementById('calendar-grid');
             const previewGrid = document.querySelector('#landing-section .calendar-preview-grid');
@@ -650,31 +627,50 @@
             const progressCounter = document.getElementById('progress-counter');
             const confettiContainer = document.getElementById('confetti-container');
             
-            // 🔹 Ocultar el calendario inicialmente para la animación
-            if (document.querySelector('#interactive-section .calendar-container')) {
-                document.querySelector('#interactive-section .calendar-container').style.opacity = 0;
-            }
-
             let openedCount = 0;
 
             // CAMBIO: 'imageUrl' ahora usa rutas relativas.
             // ¡Asegúrate de crear una carpeta "imagenes" y guardar tus imágenes allí!
-            const products = [
-                { day: 1, name: "Iluminador Dupe Dior", imageUrl: "./iluminadorDior.png", message: "Que tus labios siempre digan palabras amables.", details: { desc: "Un labial cremoso en un tono rosa aterciopelado.", ingredients: "Vitamina E, Manteca de Karité, Pigmentos Naturales.", usage: "Aplicar directamente sobre los labios para un color intenso." } },
-                { day: 2, name: "Labial Mate Dupe Maybelline",  imageUrl: "./imagenes/producto2.jpg", message: "Brilla con luz propia, hoy y siempre.", details: { desc: "Polvo nacarado para un brillo celestial.", ingredients: "Mica, Polvo de Perla, Escualeno.", usage: "Usar una brocha para aplicar en pómulos, nariz y arco de cupido." } },
-                { day: 3, name: "Tinta de labios", imageUrl: "./imagenes/producto3.jpg", message: "La verdadera belleza comienza con una piel cuidada.", details: { desc: "Sérum hidratante con ácido hialurónico.", ingredients: "Ácido Hialurónico, Glicerina, Agua de Rosas.", usage: "Aplicar 2-3 gotas sobre la piel limpia antes de la crema hidratante." } },
-                { day: 4, name: "LipGloss Tiffany Dupe Maybelline", imageUrl: "./imagenes/producto4.jpg", message: "Un toque de color para alegrar el día.", details: { desc: "Un rubor suave para un look fresco y natural.", ingredients: "Talco, Mica, Estearato de Magnesio.", usage: "Sonreír y aplicar en las manzanas de las mejillas." } },
-                { day: 5, name: "Rubor dupe de Rhode", imageUrl: "./imagenes/producto5.jpg", message: "Tómate un momento para refrescarte y respirar.", details: { desc: "Bruma refrescante para calmar la piel.", ingredients: "Agua de Rosas, Aloe Vera, Glicerina.", usage: "Rociar sobre el rostro a 20cm de distancia para hidratar." } },
-                { day: 6, name:"Mini paleta de sombras", imageUrl: "./imagenes/producto6.jpg", message: "Tu mirada tiene el poder de iluminar el mundo.", details: { desc: "Sombra dorada para un look radiante.", ingredients: "Mica, Pigmentos Sintéticos, Dimeticona.", usage: "Aplicar sobre el párpado con una brocha o con el dedo." } },
-                { day: 7, name: "Polvo translucido", imageUrl: "./imagenes/producto7.jpg", message: "Una buena base lo es todo.", details: { desc: "Prebase suavizante para un maquillaje perfecto.", ingredients: "Silicona, Polímeros Matificantes.", usage: "Aplicar una capa fina sobre la piel antes de la base." } },
-                { day: 8, name: "Fijador", imageUrl: "./fijador.png", message: "¡Oops! Esta caja está vacía (¡como en la foto!).", details: { desc: "Esta caja representa el espacio vacío en el calendario real.", ingredients: "N/A", usage: "N/A" } },
-                { day: 9, name: "Fat Oil Labial", imageUrl: "./imagenes/producto9.jpg", message: "La sonrisa es el mejor maquillaje.", details: { desc: "Rubor rosa suave para un aspecto natural.", ingredients: "Talco, Mica, Extracto de Melocotón.", usage: "Aplicar en las mejillas y difuminar hacia las sienes." } },
-                { day: 10, name: "Rimel dupe Maybelline", imageUrl: "./imagenes/producto10.jpg", message: "Mientras sueñas, tu piel se renueva.", details: { desc: "Aceite facial para restaurar la piel.", ingredients: "Aceite de Jojoba, Aceite de Argán, Lavanda.", usage: "Masajear 3-4 gotas sobre el rostro como último paso de la rutina nocturna." } },
-                { day: 11, name: "Paleta de sombras Terra", imageUrl: "./imagenes/producto11.jpg", message: "Unas cejas bien definidas enmarcan tu belleza.", details: { desc: "Define y da forma a tus cejas.", ingredients: "Cera de Abeja, Aceite de Ricino, Pigmentos.", usage: "Rellenar las cejas con trazos cortos y ligeros." } },
-                { day: 12, name: "Perfume", imageUrl: "./imagenes/producto12.jpg", message: "Celebra cada pequeño momento con un toque de brillo.", details: { desc: "Brillo resplandeciente para un acabado festivo.", ingredients: "Poliisobuteno, Aceite Mineral, Partículas de Brillo.", usage: "Aplicar solo o sobre tu labial favorito." } },
-                { day: 13, isBonus: true, name: "Macarilla", imageUrl: "./imagenes/bonus1.jpg", message: "¡Bonus! La creatividad está en tus manos.", details: { desc: "Las herramientas perfectas para un acabado profesional.", ingredients: "Cerdas sintéticas de alta calidad, mangos de madera.", usage: "Usar para aplicar base, sombras, rubor y más." } },
-                { day: 14, isBonus: true, name: "Kit Kevin and Coco Iluminador, rubor y brocha", imageUrl: "./kit.png", message: "¡Gran Premio! El único límite es tu imaginación.", details: { desc: "Una colección de sombras para deslumbrar.", ingredients: "18 tonos (mates y brillantes), alta pigmentación.", usage: "Crear looks ilimitados, desde naturales hasta dramáticos." } }
-            ];
+            // NO SE CAMBIAN LAS DESCRIPCIONES SEGÚN LO SOLICITADO
+const products = [
+  { day: 1, name: "Iluminador Samantha - Dupe Dior", imageUrl: "./images/Iluminador Samantha.png", message: "Brilla con elegancia y sutileza.", details: { desc: "Cuarteto de iluminadores con cuatro tonos radiantes que aportan un brillo sutil, efecto satinado y acabado luminoso al rostro.", ingredients: "Mica, Polvo de Perla, Aceite de Jojoba.", usage: "Aplicar en pómulos, nariz y arco de cupido para resaltar el rostro." } },
+  { day: 2, name: "Labial Líquido Matte - Dupe Maybelline Teddy", imageUrl: "./images/Labial Liquido Mate.png", message: "El color que dura tanto como tu actitud.", details: { desc: "Labial líquido de acabado mate con un tono profundo, alta cobertura y textura ligera que se fija sin resecar.", ingredients: "Vitamina E, Pigmentos Minerales, Aceite de Ricino.", usage: "Aplicar directamente sobre los labios limpios para un acabado intenso." } },
+  { day: 3, name: "Tinta de Labios Carmesí", imageUrl: "./images/Tinta de Labios Carmesi.png", message: "Color vibrante que se siente natural.", details: { desc: "Tinta para labios ultra ligera con pigmentación intensa para un look vibrante.", ingredients: "Extracto de Fruta, Glicerina, Agua Purificada.", usage: "Aplicar con el aplicador sobre los labios y dejar secar unos segundos." } },
+  { day: 4, name: "LipGloss - Dupe Maybelline", imageUrl: "./images/Lipgloss Dupe Maybelline.png", message: "Brilla con confianza todo el día.", details: { desc: "Brillo labial de textura ligera y acabado pulido con excelente pigmentación, brillo intenso y sensación cómoda.", ingredients: "Aceite Mineral, Manteca de Karité, Poliisobuteno.", usage: "Aplicar sobre el labio limpio o sobre labial para un brillo extra." } },
+  { day: 5, name: "Rubor en Barra - Dupe Rhode", imageUrl: "images/Rubor en Barra.png", message: "Un toque de color, un toque de vida.", details: { desc: "Rubor en barra con textura cremosa que se funde fácilmente, deja un acabado satinado natural y aporta un toque saludable de color al rostro.", ingredients: "Cera de Abeja, Aceite de Coco, Pigmentos Minerales.", usage: "Aplicar con los dedos o brocha en mejillas y difuminar suavemente." } },
+  { day: 6, name: "Paleta de Sombras Terra", imageUrl: "images/Paleta de Sombras Terra.png", message: "Tu mirada puede decirlo todo.", details: { desc: "Sombras cálidas y versátiles con alta pigmentación.", ingredients: "Mica, Dimeticona, Talco Cosmético.", usage: "Aplicar con brocha o dedo sobre el párpado para lograr distintas intensidades." } },
+  { day: 7, name: "Polvo Compacto Revel", imageUrl: "images/Polvo Compacto Revel.png", message: "Matifica sin perder tu luz natural.", details: { desc: "Polvo compacto ligero que fija, matifica y deja un acabado natural y suave.", ingredients: "Silica, Talco, Dimeticona.", usage: "Aplicar con brocha grande sobre todo el rostro para sellar el maquillaje." } },
+  { day: 8, name: "Sellador Fijador de Maquillaje", imageUrl: "images/Sellador de Maquillaje.png", message: "Tu look se mantiene impecable todo el día.", details: { desc: "Spray ligero que fija el maquillaje, controla el brillo y mantiene el rostro fresco e impecable durante horas.", ingredients: "Agua, Glicerina, Polímeros Fijadores, Extracto de Aloe Vera.", usage: "Rociar a 20 cm del rostro después del maquillaje para sellar y prolongar su duración." } },
+  { day: 9, name: "Labial Fat Oil - Dupe NYX", imageUrl: "images/Labial Fat Oil.png", message: "Brillo y cuidado en un solo paso.", details: { desc: "Labial con brillo efecto glowy que hidrata y deja los labios suaves, jugosos y luminosos.", ingredients: "Aceite de Ricino, Escualano, Vitamina E.", usage: "Aplicar una capa sobre los labios para nutrir y dar brillo." } },
+  { day: 10, name: "Rímel Sky High - Dupe Maybelline", imageUrl: "images/Rimel Sky High.png", message: "Tu mirada al siguiente nivel.", details: { desc: "Máscara de pestañas que alarga y da volumen extremo. Ideal para realzar la mirada y lograr pestañas largas, separadas y definidas.", ingredients: "Cera de Carnauba, Aceite de Ricino, Pigmento Negro.", usage: "Aplicar desde la raíz hasta las puntas con movimientos en zigzag." } },
+  { day: 11, name: "Labial Mousse Barra Matte Italia Deluxe", imageUrl: "images/Labial Musse.jpeg", message: "Color intenso, textura ligera.", details: { desc: "Labial en barra con textura ligera y acabado mate aterciopelado, suave y súper pigmentado.", ingredients: "Vitamina E, Cera de Candelilla, Pigmentos Minerales.", usage: "Aplicar directamente sobre los labios para un acabado uniforme." } },
+  { day: 12, name: "Perfume Dupe", imageUrl: "images/Perfume Dupe.png", message: "Celebra cada pequeño momento con un toque fresco.", details: { desc: "Versiones compactas inspiradas en Rose y Billion, femeninas, frescas y versátiles para usar a diario.", ingredients: "Alcohol Desnaturalizado, Fragancia, Agua.", usage: "Rociar ligeramente en cuello, muñecas o ropa para mantener una sensación de frescura." } },
+{ 
+  day: 13, 
+  isBonus: true, 
+  name: "Mascarilla", 
+  imageUrl: "images/Mascarillas.png", 
+  message: "¡Bonus! Un mimo para tu piel.", 
+  details: { 
+    desc: "Mascarilla facial en formato hoja que hidrata profundamente, revitaliza el tono apagado y mejora la textura de la piel.", 
+    ingredients: "Extracto de Pepino, Ácido Hialurónico, Aloe Vera.", 
+    usage: "Aplicar sobre el rostro limpio, dejar actuar 15 minutos y retirar suavemente." 
+  } 
+},
+{ 
+  day: 14, 
+  isBonus: true, 
+  name: "Kit Kevin & Coco – Dupe de Rare Beauty", 
+  imageUrl: "images/Kit Kevin and Coco.png", 
+  message: "¡Gran Premio! El glow perfecto te espera.", 
+  details: { 
+    desc: "Set de tres productos: rubor líquido, iluminador líquido y brocha. Textura ligera, acabado natural y brillo radiante.", 
+    ingredients: "Mica, Pigmentos Minerales, Cerdas Sintéticas.", 
+    usage: "Usar la brocha para aplicar y difuminar el rubor e iluminador según el look deseado." 
+  } 
+}
+];
+
 
             let synth;
             function playSound(note, duration = '8n') {
@@ -758,7 +754,7 @@
                 calendarBox.addEventListener('click', () => handleBoxClick(calendarBox, product));
                 calendarGrid.appendChild(calendarBox);
                 
-                if (previewGrid && !product.isBonus) {
+                if (!product.isBonus) {
                     const previewBox = document.createElement('div');
                     previewBox.className = 'calendar-preview-box';
                     previewBox.textContent = product.day;
@@ -925,11 +921,6 @@
                 particle.style.fontSize = `${Math.random() * 8 + 8}px`;
                 particleContainer.appendChild(particle);
             }
-            
-            // ========================================================================
-            // 🔹 INICIALIZAR ANIMACIONES 3D
-            // ========================================================================
-            initHero();
         });
     </script>
 </body>
