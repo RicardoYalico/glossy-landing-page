@@ -195,8 +195,7 @@
         [data-day="11"] { grid-area: 4 / 1 / 5 / 2; } /* Fila 4 a 5, Col 1 a 2 */
         [data-day="12"] { grid-area: 4 / 2 / 5 / 5; } /* Fila 4 a 5, Col 2 a 5 */
         
-        [data-day="13"] { grid-area: 5 / 1 / 6 / 3; } /* Fila 5 a 6, Col 1 a 3 */
-        [data-day="14"] { grid-area: 5 / 3 / 6 / 5; } /* Fila 5 a 6, Col 3 a 5 */
+        [data-day="13"] { grid-area: 5 / 1 / 6 / 5; } /* Fila 5 a 6, Col 1 a 3 */
 
 
         .drawer {
@@ -281,8 +280,7 @@
         [data-day="7"] .box-day-number,
         [data-day="8"] .box-day-number,
         [data-day="12"] .box-day-number,
-        [data-day="13"] .box-day-number,
-        [data-day="14"] .box-day-number {
+        [data-day="13"] .box-day-number {
             font-size: clamp(2rem, 5vw, 3.5rem);
         }
         
@@ -627,7 +625,7 @@
                     <h4 class="font-playfair text-xl font-bold text-wine-red mb-3">¿Qué incluye?</h4>
                     <ul class="list-disc list-inside space-y-2 text-text-dark">
                         <li>12 productos de maquillaje en tamaño real 💄</li>
-                        <li>4 regalos extras 🎁 (Solo 12 primeras compras)</li>
+                        <li>5 regalos extras 🎁 (Solo 6 primeras compras)</li>
                     </ul>
                 </div>
                 <div class="bg-bg-color-light p-6 rounded-2xl shadow-sm border border-bg-color-medium">
@@ -682,40 +680,109 @@
             // ¡Asegúrate de crear una carpeta "imagenes" y guardar tus imágenes allí!
             // NO SE CAMBIAN LAS DESCRIPCIONES SEGÚN LO SOLICITADO
 const products = [
-  { day: 1, name: "Iluminador Samantha - Dupe Dior", imageUrl: "./images/Iluminador Samantha.png", message: "Brilla con elegancia y sutileza.", details: { desc: "Cuarteto de iluminadores con cuatro tonos radiantes que aportan un brillo sutil, efecto satinado y acabado luminoso al rostro.", ingredients: "Mica, Polvo de Perla, Aceite de Jojoba.", usage: "Aplicar en pómulos, nariz y arco de cupido para resaltar el rostro." } },
-  { day: 2, name: "Labial Líquido Matte - Dupe Maybelline Teddy", imageUrl: "./images/Labial Liquido Mate.png", message: "El color que dura tanto como tu actitud.", details: { desc: "Labial líquido de acabado mate con un tono profundo, alta cobertura y textura ligera que se fija sin resecar.", ingredients: "Vitamina E, Pigmentos Minerales, Aceite de Ricino.", usage: "Aplicar directamente sobre los labios limpios para un acabado intenso." } },
+  { day: 1, name: "Set de labial en barra y gloss", imageUrl: "./images/Duo-v2.png", message: "Labios irresistibles con color y brillo en perfecta armonía.", details: { desc: "Color intenso con acabado suave y un brillo ligero que realza y hidrata los labios.", usage: "Perfila y rellena los labios con el labial en barra para obtener un color definido. Finaliza aplicando el gloss en el centro o en toda la superficie para añadir brillo y volumen." } },
+{
+  day: 2,
+  name: "Paleta facial 3 en 1 - Kevin & Coco",
+  imageUrl: "./images/tres-uno-v2.png",
+  message: "Define, ilumina y perfecciona tu rostro en un solo paso.",
+  details: {
+    desc: "Paleta facial todo-en-uno con iluminador, contorno y polvo compacto. Perfecta para definir, sellar e iluminar el rostro con un acabado natural y uniforme.",
+    ingredients: "Vitamina E, Pigmentos Minerales, Aceite de Ricino.",
+    usage: "Usa el contorno para definir los rasgos, aplica el polvo compacto para sellar el maquillaje y finaliza con el iluminador en las zonas altas del rostro para un brillo radiante."
+  }
+},
   { day: 3, name: "Tinta de Labios Carmesí", imageUrl: "./images/Tinta de Labios Carmesi.png", message: "Color vibrante que se siente natural.", details: { desc: "Tinta para labios ultra ligera con pigmentación intensa para un look vibrante.", ingredients: "Extracto de Fruta, Glicerina, Agua Purificada.", usage: "Aplicar con el aplicador sobre los labios y dejar secar unos segundos." } },
-  { day: 4, name: "LipGloss - Dupe Maybelline", imageUrl: "./images/Lipgloss Dupe Maybelline.png", message: "Brilla con confianza todo el día.", details: { desc: "Brillo labial de textura ligera y acabado pulido con excelente pigmentación, brillo intenso y sensación cómoda.", ingredients: "Aceite Mineral, Manteca de Karité, Poliisobuteno.", usage: "Aplicar sobre el labio limpio o sobre labial para un brillo extra." } },
-  { day: 5, name: "Rubor en Barra - Dupe Rhode", imageUrl: "images/Rubor en Barra.png", message: "Un toque de color, un toque de vida.", details: { desc: "Rubor en barra con textura cremosa que se funde fácilmente, deja un acabado satinado natural y aporta un toque saludable de color al rostro.", ingredients: "Cera de Abeja, Aceite de Coco, Pigmentos Minerales.", usage: "Aplicar con los dedos o brocha en mejillas y difuminar suavemente." } },
-  { day: 6, name: "Paleta de Sombras Terra", imageUrl: "images/Paleta de Sombras Terra.png", message: "Tu mirada puede decirlo todo.", details: { desc: "Sombras cálidas y versátiles con alta pigmentación.", ingredients: "Mica, Dimeticona, Talco Cosmético.", usage: "Aplicar con brocha o dedo sobre el párpado para lograr distintas intensidades." } },
-  { day: 7, name: "Polvo Compacto Revel", imageUrl: "images/Polvo Compacto Revel.png", message: "Matifica sin perder tu luz natural.", details: { desc: "Polvo compacto ligero que fija, matifica y deja un acabado natural y suave.", ingredients: "Silica, Talco, Dimeticona.", usage: "Aplicar con brocha grande sobre todo el rostro para sellar el maquillaje." } },
-  { day: 8, name: "Sellador Fijador de Maquillaje", imageUrl: "images/Sellador de Maquillaje.png", message: "Tu look se mantiene impecable todo el día.", details: { desc: "Spray ligero que fija el maquillaje, controla el brillo y mantiene el rostro fresco e impecable durante horas.", ingredients: "Agua, Glicerina, Polímeros Fijadores, Extracto de Aloe Vera.", usage: "Rociar a 20 cm del rostro después del maquillaje para sellar y prolongar su duración." } },
-  { day: 9, name: "Labial Fat Oil - Dupe NYX", imageUrl: "images/Labial Fat Oil.png", message: "Brillo y cuidado en un solo paso.", details: { desc: "Labial con brillo efecto glowy que hidrata y deja los labios suaves, jugosos y luminosos.", ingredients: "Aceite de Ricino, Escualano, Vitamina E.", usage: "Aplicar una capa sobre los labios para nutrir y dar brillo." } },
-  { day: 10, name: "Rímel Sky High - Dupe Maybelline", imageUrl: "images/Rimel Sky High.png", message: "Tu mirada al siguiente nivel.", details: { desc: "Máscara de pestañas que alarga y da volumen extremo. Ideal para realzar la mirada y lograr pestañas largas, separadas y definidas.", ingredients: "Cera de Carnauba, Aceite de Ricino, Pigmento Negro.", usage: "Aplicar desde la raíz hasta las puntas con movimientos en zigzag." } },
-  { day: 11, name: "Labial Mousse Barra Matte Italia Deluxe", imageUrl: "images/Labial Musse.jpeg", message: "Color intenso, textura ligera.", details: { desc: "Labial en barra con textura ligera y acabado mate aterciopelado, suave y súper pigmentado.", ingredients: "Vitamina E, Cera de Candelilla, Pigmentos Minerales.", usage: "Aplicar directamente sobre los labios para un acabado uniforme." } },
-  { day: 12, name: "Perfume Dupe", imageUrl: "images/Perfume Dupe.png", message: "Celebra cada pequeño momento con un toque fresco.", details: { desc: "Versiones compactas inspiradas en Rose y Billion, femeninas, frescas y versátiles para usar a diario.", ingredients: "Alcohol Desnaturalizado, Fragancia, Agua.", usage: "Rociar ligeramente en cuello, muñecas o ropa para mantener una sensación de frescura." } },
+{
+  day: 4,
+  name: "Corrector Kevin & Coco",
+  imageUrl: "./images/Corrector-v2.png",
+  message: "Cubre, ilumina y perfecciona tu piel al instante.",
+  details: {
+    desc: "Cobertura impecable y acabado natural, ideal para camuflar imperfecciones sin resecar.",
+    ingredients: "Aceite Mineral, Manteca de Karité, Poliisobuteno.",
+    usage: "Aplica una pequeña cantidad sobre ojeras, manchas o imperfecciones y difumina con brocha, esponja o con la yema de los dedos para un acabado uniforme."
+  }
+},
+  { day: 5, name: "Rubor en Barra - Dupe Rhode", imageUrl: "images/Rubor-v2.png", message: "Un toque de color, un toque de vida.", details: { desc: "Rubor en barra con textura cremosa que se funde fácilmente, deja un acabado satinado natural y aporta un toque saludable de color al rostro.", ingredients: "Cera de Abeja, Aceite de Coco, Pigmentos Minerales.", usage: "Aplicar con los dedos o brocha en mejillas y difuminar suavemente." } },
+{
+  day: 6,
+  name: "Mini paleta Dikalu",
+  imageUrl: "images/MiniPaleta-v2.png",
+  message: "Colores compactos, mirada poderosa donde vayas.",
+  details: {
+    desc: "Tonos versátiles, buen pigmento y tamaño perfecto para llevar a todos lados.",
+    ingredients: "Mica, Dimeticona, Talco Cosmético.",
+    usage: "Aplica los tonos con pincel o con la yema del dedo sobre el párpado para crear looks naturales o intensos según el estilo."
+  }
+},  
+{
+  day: 7,
+  name: "Paleta de sombras Shine",
+  imageUrl: "images/PaletaGrande-v2.png",
+  message: "Brilla con intensidad y crea miradas que inspiran.",
+  details: {
+    desc: "Paleta de sombras Shine para ojos con tonos luminosos y pigmentados que aportan brillo y profundidad a cualquier look.",
+    ingredients: "Silica, Talco, Dimeticona.",
+    usage: "Aplica las sombras con pinceles de ojos para difuminar, iluminar y crear profundidad según el estilo que quieras lograr."
+  }
+},
+{
+  day: 8,
+  name: "Sellador Fijador Maquillaje",
+  imageUrl: "images/Fijador-v2.png",
+  message: "Mantén tu maquillaje fresco, firme y radiante todo el día.",
+  details: {
+    desc: "Spray ligero que fija el maquillaje, controla el brillo y mantiene el rostro fresco e impecable durante horas.",
+    ingredients: "Aceite de Ricino, Escualano, Vitamina E.",
+    usage: "Rociar a 20–30 cm del rostro en forma de X y T para fijar el maquillaje y prolongar su duración."
+  }
+},
+{
+  day: 9,
+  name: "Serum Para La Piel - Kevin & Coco",
+  imageUrl: "images/Serum-v2.webp",
+  message: "Hidrata, ilumina y transforma tu piel desde el primer uso.",
+  details: {
+    desc: "Sérum facial ligero y de rápida absorción que hidrata, ilumina y mejora la textura de la piel. Ayuda a unificar el tono, suavizar líneas finas y dejar el rostro más fresco y radiante.",
+    ingredients: "Agua, Glicerina, Polímeros Fijadores, Extracto de Aloe Vera.",
+    usage: "Aplicar de 3 a 5 gotas sobre el rostro limpio, masajeando suavemente hasta su absorción. Usar antes de la crema hidratante o del maquillaje."
+  }
+},  
+
+{
+  day: 10,
+  name: "Lipgloss - Kevin & Coco",
+  imageUrl: "images/LipGloss-v2.png",
+  message: "Labios con brillo, color y un acabado que enamora.",
+  details: {
+    desc: "Brillo labial de textura ligera y acabado pulido, con excelente pigmentación, brillo intenso y sensación cómoda.",
+    ingredients: "Cera de Carnauba, Aceite de Ricino, Pigmento Negro.",
+    usage: "Aplicar directamente sobre los labios limpios o sobre tu labial favorito para un acabado más brillante y voluminoso."
+  }
+}
+,  
+{ day: 11, name: "Labial Mousse Barra Matte Italia Deluxe", imageUrl: "images/Labial Musse.jpeg", message: "Color intenso, textura ligera.", details: { desc: "Labial en barra con textura ligera y acabado mate aterciopelado, suave y súper pigmentado.", ingredients: "Vitamina E, Cera de Candelilla, Pigmentos Minerales.", usage: "Aplicar directamente sobre los labios para un acabado uniforme." } },
+{
+  day: 12,
+  name: "Labial Efecto Terciopelado",
+  imageUrl: "images/Aterciopelado-v2.png",
+  message: "Labios suaves, elegantes y con un acabado que destaca.",
+  details: {
+    desc: "Acabado luminoso con efecto terciopelado que realza los labios con suavidad y un toque de brillo elegante.",
+    ingredients: "Aceite Mineral, Cera de Abeja, Pigmentos Minerales.",
+    usage: "Aplicar directamente sobre los labios siguiendo su forma natural. Puede usarse solo o combinado con un delineador para mayor definición."
+  }
+},
 { 
   day: 13, 
   isBonus: true, 
-  name: "Mascarilla", 
-  imageUrl: "images/Mascarillas.png", 
-  message: "¡Bonus! Un mimo para tu piel.", 
-  details: { 
-    desc: "Mascarilla facial en formato hoja que hidrata profundamente, revitaliza el tono apagado y mejora la textura de la piel.", 
-    ingredients: "Extracto de Pepino, Ácido Hialurónico, Aloe Vera.", 
-    usage: "Aplicar sobre el rostro limpio, dejar actuar 15 minutos y retirar suavemente." 
-  } 
-},
-{ 
-  day: 14, 
-  isBonus: true, 
-  name: "Kit Kevin & Coco – Dupe de Rare Beauty", 
-  imageUrl: "images/Kit Kevin and Coco.png", 
+  name: "kit pink kevin set 5 EN 1 - kevin & coco ", 
+  imageUrl: "images/Kit-v2.jpeg", 
   message: "¡Gran Premio! El glow perfecto te espera.", 
   details: { 
-    desc: "Set de tres productos: rubor líquido, iluminador líquido y brocha. Textura ligera, acabado natural y brillo radiante.", 
-    ingredients: "Mica, Pigmentos Minerales, Cerdas Sintéticas.", 
-    usage: "Usar la brocha para aplicar y difuminar el rubor e iluminador según el look deseado." 
+    desc: "Set completo con labial matte, gloss, rubor, contorno y delineador de labios. Todo lo que necesitas para un look suave, femenino y perfectamente definido en cualquier ocasión.", 
+    usage: "Aplica el delineador para perfilar los labios, luego utiliza el labial matte para dar color. Añade el gloss para un acabado brillante. Usa el rubor para aportar frescura a las mejillas y el contorno para definir suavemente el rostro." 
   } 
 }
 ];
@@ -774,7 +841,6 @@ const products = [
                     case 11: return '<i class="fa-solid fa-gift"></i>';
                     case 12: return '<i class="fa-solid fa-bell"></i> <i class="fa-solid fa-bell"></i> <i class="fa-solid fa-bell"></i>';
                     case 13: return '<i class="fa-solid fa-wand-magic-sparkles"></i>';
-                    case 14: return '<i class="fa-solid fa-wand-magic-sparkles"></i>';
                     default: return '<i class="fa-solid fa-star"></i>';
                 }
             }
