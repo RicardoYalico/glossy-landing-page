@@ -1,1041 +1,1185 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glossy.pe - Calendario de Adviento 12 Días de Belleza</title>
+    <title>Glossy.pe | Catálogo de Tonos</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
-    
-    <style>
-        :root {
-            --bg-color-light: #fdf5f5; /* Crema/Blanco roto */
-            --bg-color-medium: #fff0f0; /* Rosado muy claro */
-            --wine-red: #8b0000; /* Rojo vino oscuro */
-            --medium-wine-red: #a52a2a; /* Rojo vino un poco más claro */
-            --gold: #d4af37; /* Dorado clásico */
-            --light-gold: #f0c860; /* Dorado más claro para brillos */
-            --text-dark: #3a1c1c; /* Textos oscuros para contraste */
-            --white: #ffffff;
-            --border-color-light: #eee;
-        }
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-        html {
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-nude': '#f5ebe0',
+                        'brand-pink': '#e3d5ca',
+                        'brand-dark': '#4a403a',
+                        'brand-accent': '#d5bdaf',
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Lato"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #faf9f8;
             scroll-behavior: smooth;
         }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(170deg, var(--bg-color-light), var(--bg-color-medium), var(--bg-color-light));
-            background-size: 200% 200%;
-            animation: animated-bg 15s ease infinite;
-            color: var(--text-dark);
-            overflow-x: hidden;
-        }
-        
-        @keyframes animated-bg {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .font-playfair { font-family: 'Playfair Display', serif; }
-        .font-dancing { font-family: 'Dancing Script', cursive; }
-
-        /* --- Global Sections --- */
-        .full-section {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-            padding: 80px 1rem 1rem;
-        }
-
-        .particle {
-            position: absolute;
-            opacity: 0;
-            animation: particle-fall linear infinite;
-        }
-
-        @keyframes particle-fall {
-            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
-            20%, 80% { opacity: 0.9; }
-            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
-        }
-
-        /* --- Header --- */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 50;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color-light);
-            transition: transform 0.3s ease-out;
-        }
-
-        /* --- Landing Section (Stylized Calendar) --- */
-        #landing-section .calendar-preview-container {
-            perspective: 1000px;
+        .swatch {
+            transition: transform 0.2s, border 0.2s;
             cursor: pointer;
         }
 
-        #landing-section .calendar-preview {
-            width: clamp(280px, 80vw, 320px);
-            background: linear-gradient(145deg, var(--bg-color-light), var(--bg-color-medium));
-            border-radius: 2rem;
-            padding: 1.5rem;
-            box-shadow: 0 20px 40px rgba(139, 0, 0, 0.15); /* Sombra rojo vino */
-            transform: rotateX(10deg);
-            position: relative;
-            animation: preview-float 5s ease-in-out infinite;
-            border: 1px solid var(--white);
+        .swatch:hover {
+            transform: scale(1.2);
         }
 
-        @keyframes preview-float {
-            0%, 100% { transform: rotateX(10deg) translateY(0); }
-            50% { transform: rotateX(10deg) translateY(-15px); }
-        }
-
-        #landing-section .calendar-preview-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0.75rem;
-        }
-
-        #landing-section .calendar-preview-box {
-            aspect-ratio: 1 / 1;
-            background-color: var(--medium-wine-red);
-            border-radius: 0.75rem;
-            color: var(--gold);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1rem;
-        }
-        
-        #landing-section .preview-bow {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 40px;
-            color: var(--gold);
-        }
-
-        .scroll-down {
-            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-            color: var(--text-dark); z-index: 5;
-        }
-        .scroll-down span {
-            display: block; width: 20px; height: 20px;
-            border-bottom: 2px solid var(--text-dark); border-right: 2px solid var(--text-dark);
-            transform: rotate(45deg); margin: -10px auto; animation: scroll-ani 2s infinite;
-        }
-        @keyframes scroll-ani {
-            0% { transform: rotate(45deg) translate(-5px, -5px); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: rotate(45deg) translate(5px, 5px); opacity: 0; }
-        }
-
-        /* --- Calendar Grid Section --- */
-        .calendar-container { 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
-        }
-        .calendar-grid {
-            display: grid; 
-            gap: 1rem;
-            width: clamp(320px, 90vw, 800px); 
-            padding: 1.5rem;
-            background: linear-gradient(145deg, var(--white), var(--bg-color-medium));
-            border-radius: 2rem; box-shadow: 0 20px 40px rgba(139, 0, 0, 0.1);
-            position: relative; border: 1px solid var(--white);
-            
-            /* Inspirado en la foto de la caja real */
-            grid-template-columns: repeat(4, 1fr);
-            grid-auto-rows: minmax(90px, 1fr);
-            /* NUEVO LAYOUT - COINCIDE CON LA FOTO */
-        }
-        
-        /* REVERTIDO: Animación de Cajón (Drawer) */
-        .calendar-box {
-            cursor: pointer;
-            position: relative;
-            perspective: 500px;
-            min-height: 90px;
-        }
-        
-        /* Asignación de áreas de la cuadrícula */
-        [data-day="1"] { grid-area: 1 / 1 / 3 / 2; } /* Fila 1 a 3, Col 1 a 2 */
-        [data-day="2"] { grid-area: 1 / 2 / 2 / 3; } /* Fila 1 a 2, Col 2 a 3 */
-        [data-day="3"] { grid-area: 1 / 3 / 2 / 4; } /* Fila 1 a 2, Col 3 a 4 */
-        [data-day="5"] { grid-area: 1 / 4 / 2 / 5; } /* Fila 1 a 2, Col 4 a 5 */
-        
-        [data-day="4"] { grid-area: 2 / 2 / 3 / 3; } /* Fila 2 a 3, Col 2 a 3 */
-        [data-day="6"] { grid-area: 2 / 3 / 3 / 4; } /* Fila 2 a 3, Col 3 a 4 */
-        [data-day="7"] { grid-area: 2 / 4 / 3 / 5; } /* Fila 2 a 3, Col 4 a 5 */
-        
-        [data-day="8"] { grid-area: 3 / 1 / 4 / 3; } /* Fila 3 a 4, Col 1 a 3 (Caja blanca) */
-        [data-day="9"] { grid-area: 3 / 3 / 4 / 4; } /* Fila 3 a 4, Col 3 a 4 */
-        [data-day="10"] { grid-area: 3 / 4 / 4 / 5; } /* Fila 3 a 4, Col 4 a 5 */
-
-        [data-day="11"] { grid-area: 4 / 1 / 5 / 2; } /* Fila 4 a 5, Col 1 a 2 */
-        [data-day="12"] { grid-area: 4 / 2 / 5 / 5; } /* Fila 4 a 5, Col 2 a 5 */
-        
-        [data-day="13"] { grid-area: 5 / 1 / 6 / 5; } /* Fila 5 a 6, Col 1 a 3 */
-
-
-        .drawer {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            transform: translateZ(0);
-        }
-        
-        .calendar-box:not(.locked):not(.opened):hover .drawer {
-            transform: translateZ(10px) scale(1.02);
-        }
-
-        /* 1. Animación de deslizamiento */
-        .calendar-box.opened .drawer {
-            transform: translateZ(30px); /* Deslizar hacia adelante */
-        }
-        
-        .drawer-face, .drawer-base {
-            position: absolute;
-            inset: 0;
-            width: 100%; height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0.5rem;
-        }
-
-        .drawer-face {
-            background: var(--white);
-            border: 1px solid var(--border-color-light);
-            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.05);
-            color: var(--wine-red);
-            padding: 0.5rem;
-            transform: translateZ(5px); /* Cara frontal */
-            transition: opacity 0.3s ease-out, box-shadow 0.3s ease-out, border-color 0.3s ease-out;
-            opacity: 1;
-            z-index: 2; /* Encima de la base */
-        }
-        
-        /* Animación de Hover con Brillo */
-        .calendar-box:not(.locked):not(.opened):hover .drawer-face {
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.7); /* --gold con alpha */
-            border-color: var(--light-gold);
-        }
-
-        .drawer-base {
-            background: var(--bg-color-light);
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
-            color: var(--wine-red);
-            transform: translateZ(-15px); /* Detrás de la cara frontal */
-            font-size: 0.9rem;
-            text-align: center;
-            font-weight: 600;
-            overflow: hidden; /* Para contener la imagen */
-        }
-        
-        /* 2. Animación de desvanecimiento de la cara */
-        .calendar-box.opened .drawer-face {
-            opacity: 0;
-        }
-
-        .box-day-number {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-            font-weight: 700;
-            line-height: 1;
-        }
-        .box-decorations {
-            font-size: 0.8rem;
-            color: var(--medium-wine-red);
-            opacity: 0.7;
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 0.25rem;
-        }
-        /* Cajas más grandes */
-        [data-day="1"] .box-day-number,
-        [data-day="7"] .box-day-number,
-        [data-day="8"] .box-day-number,
-        [data-day="12"] .box-day-number,
-        [data-day="13"] .box-day-number {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-        }
-        
-        .calendar-box .product-preview {
-            opacity: 1; /* El producto siempre está visible en la base */
-            font-size: 0.9rem; text-align: center; font-weight: 600;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 0.5rem;
-            width: 100%;
-            height: 100%;
-        }
-        
-        /* NUEVO: Estilos para la imagen del producto en la caja */
-        .product-preview img {
-            width: 80%;
-            height: 80%;
-            max-width: 100px;
-            max-height: 100px;
-            object-fit: contain; /* Para que la imagen se vea bien */
-            margin-bottom: 0.25rem;
-        }
-        .product-preview span {
-            font-size: 0.8rem;
-        }
-        /* END DRAWER STYLES */
-
-
-        .calendar-box.next-to-open { 
-            animation: pulsate 2s infinite; 
-        }
-        
-        @keyframes pulsate {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 3px var(--gold)); }
-            50% { transform: scale(1.03); filter: drop-shadow(0 0 10px var(--gold)); }
-        }
-        
-        #progress-counter {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.5rem;
-            color: var(--wine-red);
-            background-color: var(--white);
-            padding: 0.5rem 1.5rem;
-            border-radius: 999px;
-            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.1);
-        }
-
-
-        /* Modal Redesign */
-        #modal-overlay { background: rgba(58, 28, 28, 0.3); backdrop-filter: blur(8px); } /* Oscuro para contraste */
-        #product-modal {
-            background: linear-gradient(160deg, var(--white) 50%, var(--bg-color-light) 100%);
-            border-radius: 1.5rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            border: 1px solid white; padding: 1.5rem;
-        }
-        #close-modal {
-            position: absolute; top: 1rem; right: 1rem; width: 2.5rem; height: 2.5rem;
-            background-color: var(--bg-color-medium); color: var(--wine-red); border-radius: 50%;
-            font-size: 1.5rem; line-height: 1; z-index: 10;
-        }
-        /* NUEVO: Contenedor de imagen en Modal */
-        .product-image-container {
-            width: 100%;
-            height: 12rem; /* 192px */
-            background-color: var(--bg-color-medium);
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        .product-image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-
-        /* Bonus Boxes */
-        .calendar-box.locked .drawer { filter: grayscale(80%); cursor: not-allowed; }
-        .calendar-box.locked .drawer-face { background: #f5f5f5; color: #aaa; }
-        .calendar-box.locked::after {
-            content: '\f023';
-            font-family: 'Font Awesome 6 Free'; font-weight: 900;
-            position: absolute; font-size: 1.5rem; color: rgba(0,0,0,0.2);
-            top: 50%; left: 50%; transform: translate(-50%, -50%);
-            z-index: 10;
-        }
-
-        .calendar-box.unlocked { 
-            animation: pulsate-gold 2s infinite; 
-        }
-        .calendar-box.unlocked .drawer-face { 
-            background: linear-gradient(145deg, var(--white), #fff9e0); 
-            color: var(--gold); 
-            border-color: var(--gold);
-        }
-        
-
-        @keyframes pulsate-gold {
-             0%, 100% { transform: scale(1); filter: drop-shadow(0 0 3px var(--gold)); }
-             50% { transform: scale(1.05); filter: drop-shadow(0 0 10px var(--gold)); }
-        }
-
-        .daily-message {
-            background-color: var(--bg-color-light); border: 1px dashed var(--border-color-light);
-            margin-top: 1rem; padding: 0.75rem; border-radius: 0.75rem;
-            font-style: italic; color: var(--medium-wine-red); text-align: center;
-        }
-        
-        /* Estilos de Pestañas (Tabs) */
-        .tab-buttons {
-            display: flex;
-            border-bottom: 2px solid var(--border-color-light);
-            margin-top: 1rem;
-        }
-        .tab-btn {
-            padding: 0.5rem 1rem;
-            border: none;
-            background: none;
-            cursor: pointer;
-            color: #aaa;
-            font-weight: 600;
-            position: relative;
-            bottom: -2px;
-            font-size: 0.875rem;
-        }
-        .tab-btn.active {
-            color: var(--wine-red);
-            border-bottom: 2px solid var(--wine-red);
-        }
-        .tab-content {
-            padding-top: 1rem;
-            min-height: 80px; /* Asegura altura mínima */
-        }
-        .tab-panel {
-            display: none;
-            font-size: 0.875rem;
-            line-height: 1.6;
-            color: #666;
-        }
-        .tab-panel.active {
-            display: block;
-        }
-        
-        .modal-actions {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-        .modal-action-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-            color: #d1d5db; /* Gris para inactivo */
-            transition: all 0.2s ease;
-        }
-        .modal-action-btn:hover {
-            color: var(--gold); /* Dorado al pasar el ratón */
+        .swatch.active {
+            border: 2px solid #4a403a;
             transform: scale(1.1);
         }
-        .modal-action-btn.active {
-            color: var(--gold); /* Dorado para activo */
-        }
 
-        /* Confetti Animation */
-        .confetti {
-            position: absolute;
-            width: 10px; height: 10px;
-            opacity: 0;
-            animation: confetti-fall 5s ease-out forwards;
-        }
-        @keyframes confetti-fall {
-            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-        }
-        
-        /* Sparkle Animation */
-        .sparkle {
-            position: absolute;
-            width: 8px; height: 8px;
-            background: var(--light-gold); /* Sparkles en dorado claro */
-            border-radius: 50%;
-            opacity: 0;
-            pointer-events: none;
-            animation: sparkle-anim 0.6s ease-out;
-        }
-        @keyframes sparkle-anim {
-            0% { opacity: 1; transform: scale(0); }
-            50% { opacity: 1; transform: scale(1.5); }
-            100% { opacity: 0; transform: scale(0); }
-        }
-
-
-        /* Scroll Animations */
-        #product-grid .product-card {
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
         }
-        #product-grid .product-card.visible {
-            opacity: 1;
-            transform: translateY(0);
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .glass-header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Estilos para el carrusel */
+        .carousel-btn {
+            background-color: rgba(255, 255, 255, 0.7);
+            color: #4a403a;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .carousel-btn:hover {
+            background-color: rgba(255, 255, 255, 0.95);
+            transform: scale(1.1);
         }
     </style>
 </head>
-<body>
 
-    <header>
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <div class="w-10 h-10 bg-medium-wine-red text-white rounded-full flex items-center justify-center"><i class="fa-solid fa-gift"></i></div>
-                <div class="font-playfair font-bold text-lg text-wine-red">Glossy.pe</div>
-            </div>
-            <div class="hidden md:flex items-center space-x-8 text-sm font-semibold">
-                <a href="#landing-section" class="hover:text-wine-red transition">Inicio</a>
-                <a href="#product-showcase-section" class="hover:text-wine-red transition">El Calendario</a>
-                <a href="#interactive-section" class="hover:text-wine-red transition">Sorpresas</a>
-                <a href="#contact-section" class="hover:text-wine-red transition">Contacto</a>
-            </div>
-        </nav>
-    </header>
-    
-    <div id="particle-container"></div>
-    <div id="confetti-container" class="fixed inset-0 pointer-events-none z-[100] overflow-hidden"></div>
+<body class="text-brand-dark font-sans antialiased">
 
-    
-    <!-- Hero/Landing Section -->
-    <section id="landing-section" class="full-section text-center">
-        <div class="z-10">
-            <h1 class="font-playfair text-4xl md:text-6xl font-bold text-wine-red">Calendario de Adviento 2025</h1>
-            <p class="text-medium-wine-red mt-4 text-lg">✨ Descubre la magia de la belleza esta Navidad ✨</p>
-            <p class="text-gray-600 mt-6 text-sm">Haz clic en la caja de regalo para comenzar tu viaje mágico</p>
+    <!-- Navbar -->
+    <nav class="glass-header fixed w-full z-50 border-b border-brand-pink/50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="font-serif text-2xl font-semibold tracking-wider">GLOSSY.PE</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" onclick="switchView('individual'); return false;"
+                        class="text-brand-dark hover:text-brand-accent transition font-light uppercase tracking-widest text-sm">Colección</a>
+                    <a href="#" onclick="switchView('kits'); return false;"
+                        class="text-brand-dark hover:text-brand-accent transition font-light uppercase tracking-widest text-sm">Kits</a>
+                </div>
+                <div>
+                    <a href="#footer"
+                        class="text-xs uppercase tracking-widest font-semibold text-brand-dark hover:text-brand-accent transition">
+                        Contacto
+                    </a>
+                </div>
+            </div>
         </div>
-        <a href="#interactive-section" class="calendar-preview-container mt-8 z-10">
-            <div class="calendar-preview">
-                 <div class="preview-bow"><i class="fa-solid fa-bow"></i></div>
-                 <div class="calendar-preview-grid">
-                 </div>
-            </div>
-        </a>
-        <a href="#product-showcase-section" class="scroll-down">
-            <span></span>
-        </a>
-    </section>
+    </nav>
 
-    <!-- ====================================================== -->
-    <!-- NUEVA SECCIÓN: Presentación del Calendario Físico      -->
-    <!-- ====================================================== -->
-    <section id="product-showcase-section" class="py-20 px-6 container mx-auto text-center">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="font-playfair text-4xl md:text-5xl font-bold mb-4 text-wine-red">Descubre la Caja Mágica</h2>
-            <p class="text-lg text-medium-wine-red mb-12 max-w-2xl mx-auto">
-                Nuestro calendario de adviento no es solo un producto, es una experiencia. Diseñado con amor en tonos vino y dorados, cada cajita numerada guarda una sorpresa especial.
+    <!-- Hero Section -->
+    <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-brand-nude overflow-hidden">
+        <div class="absolute inset-0 opacity-40">
+            <img src="https://images.unsplash.com/photo-1596462502278-27bfdd403348?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
+                alt="Makeup Texture" class="w-full h-full object-cover">
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-nude via-transparent to-white/20"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in-up">
+            <h1 class="text-5xl md:text-7xl font-serif text-brand-dark mb-6">Redefine tu Esencia</h1>
+            <p class="max-w-2xl mx-auto text-lg md:text-xl font-light text-gray-600 mb-10">
+                Una colección curada de tonos diseñada para realzar tu belleza natural. Texturas ligeras, pigmentos
+                profundos y acabados etéreos.
             </p>
+            <a href="#catalogo"
+                class="inline-block border border-brand-dark text-brand-dark px-10 py-3 uppercase tracking-widest text-sm hover:bg-brand-dark hover:text-white transition duration-300">
+                Descubrir Tonos
+            </a>
+        </div>
+    </header>
+
+    <!-- Catálogo Section -->
+    <main id="catalogo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 min-h-screen">
+
+        <!-- View Switcher (Tabs) -->
+        <div class="flex justify-center mb-16 fade-in-up">
+            <div class="inline-flex bg-white rounded-full p-1 shadow-sm border border-brand-pink/30">
+                <button onclick="switchView('individual')" id="btn-individual"
+                    class="px-8 py-3 rounded-full text-sm uppercase tracking-widest font-semibold transition-all duration-300 bg-brand-dark text-white shadow-md">
+                    Colección Individual
+                </button>
+                <button onclick="switchView('kits')" id="btn-kits"
+                    class="px-8 py-3 rounded-full text-sm uppercase tracking-widest font-semibold text-gray-500 hover:text-brand-dark transition-all duration-300">
+                    Kits Exclusivos
+                </button>
+            </div>
         </div>
 
-        <!-- Grid de Imágenes del Producto -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-12 items-center">
-            
-            <!-- Imagen Principal (Vertical) -->
-            <div class="w-full h-auto rounded-2xl overflow-hidden shadow-xl aspect-[3/4]">
-                <img src="images/Caja1.png" 
-                     alt="Foto principal del calendario de adviento Glossy.pe" 
-                     class="w-full h-full object-cover">
-            </div>
-            
-            <!-- Imágenes de Detalle (Horizontales) -->
-            <div class="flex flex-col gap-6">
-                <div class="w-full h-auto rounded-2xl overflow-hidden shadow-xl aspect-video">
-                    <img src="images/Caja2.png"
-                         alt="Detalle de las cajas del calendario" 
-                         class="w-full h-full object-cover">
+        <!-- VISTA 1: Individual Products (Generado Dinámicamente) -->
+        <div id="vista-individual" class="transition-opacity duration-500">
+            <!-- El contenido se inyectará aquí mediante JavaScript basándose en categoriesDB y productsDB -->
+        </div>
+
+        <!-- VISTA 2: LISTA DE KITS (Galería simplificada) -->
+        <div id="vista-kits" class="hidden opacity-0 transition-opacity duration-500">
+            <div class="flex items-end justify-between mb-12 border-b border-brand-pink/50 pb-4">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-serif mb-2">Sets Completos</h2>
+                    <p class="text-gray-500 font-light">Rutinas curadas para un look completo.</p>
                 </div>
-                <div class="w-full h-auto rounded-2xl overflow-hidden shadow-xl aspect-video">
-                    <img src="images/Caja3.jpeg"
-                         alt="Calendario en un ambiente festivo" 
-                         class="w-full h-full object-cover">
+                <span class="text-sm text-gray-400 hidden sm:block">EDICIÓN LIMITADA</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+
+                <!-- KIT CARD 1 -->
+                <div class="group cursor-pointer" onclick="openKitDetail('nude')">
+                    <div class="relative overflow-hidden bg-white rounded-xl shadow-md h-96 w-full mb-6">
+                        <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                            alt="The Nude Essentials Kit"
+                            class="h-full w-full object-cover transition duration-700 ease-in-out group-hover:scale-105">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition duration-300"></div>
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <button
+                                class="w-full bg-white/90 backdrop-blur text-brand-dark py-3 uppercase tracking-widest text-xs font-semibold hover:bg-brand-dark hover:text-white transition duration-300">
+                                Ver Contenido del Kit
+                            </button>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-2xl font-serif mb-2">The Nude Essentials Kit</h3>
+                        <p class="text-gray-500 font-light mb-2 text-sm max-w-sm mx-auto">La colección definitiva de 12
+                            productos para lograr una piel de vidrio y tonos neutros perfectos.</p>
+                        <div class="flex justify-center items-center gap-3">
+                            <span class="text-xl font-serif text-brand-dark">$65.00</span>
+                            <span class="text-xs text-gray-400 line-through">$145.00 Value</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KIT CARD 2 -->
+                <div class="group cursor-pointer" onclick="openKitDetail('glam')">
+                    <div class="relative overflow-hidden bg-white rounded-xl shadow-md h-96 w-full mb-6">
+                        <img src="https://images.unsplash.com/photo-1599305090598-fe179d501227?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                            alt="Full Glam Night Kit"
+                            class="h-full w-full object-cover transition duration-700 ease-in-out group-hover:scale-105">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition duration-300"></div>
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <button
+                                class="w-full bg-white/90 backdrop-blur text-brand-dark py-3 uppercase tracking-widest text-xs font-semibold hover:bg-brand-dark hover:text-white transition duration-300">
+                                Ver Contenido del Kit
+                            </button>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-2xl font-serif mb-2">Full Glam Night Kit</h3>
+                        <p class="text-gray-500 font-light mb-2 text-sm max-w-sm mx-auto">10 esenciales de alto impacto
+                            para una noche inolvidable. Ojos ahumados y labios rojos.</p>
+                        <div class="flex justify-center items-center gap-3">
+                            <span class="text-xl font-serif text-brand-dark">$85.00</span>
+                            <span class="text-xs text-gray-400 line-through">$180.00 Value</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- VISTA 3: DETALLE DEL KIT (Grid de productos dentro del kit) -->
+        <div id="vista-kit-detalle" class="hidden opacity-0 transition-opacity duration-500">
+            <!-- Back Button -->
+            <div class="mb-8">
+                <button onclick="closeKitDetail()"
+                    class="flex items-center text-sm uppercase tracking-widest text-gray-500 hover:text-brand-dark transition">
+                    <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Volver a Kits
+                </button>
+            </div>
+
+            <!-- Kit Header Info (Dynamic) -->
+            <div class="text-center mb-16 border-b border-brand-pink/30 pb-10">
+                <h2 id="kit-detail-title" class="text-4xl md:text-5xl font-serif mb-4 text-brand-dark">Nombre del Kit
+                </h2>
+                <p id="kit-detail-desc" class="text-lg font-light text-gray-600 max-w-2xl mx-auto mb-6">Descripción del
+                    kit.</p>
+                <div class="inline-block border border-brand-dark px-6 py-2">
+                    <span id="kit-detail-price" class="text-2xl font-serif text-brand-dark">$00.00</span>
                 </div>
             </div>
-        </div>
-        
-        <p class="text-lg text-medium-wine-red max-w-2xl mx-auto">
-            Es el regalo perfecto para esta temporada festiva, diseñado para sorprenderte cada día hasta Navidad.
-        </p>
-        <a href="#interactive-section" class="inline-block bg-wine-red text-wine-red font-bold py-3 px-8 rounded-full text-lg shadow-md hover:bg-medium-wine-red transition duration-300 mt-8">
-            ¡Explora las sorpresas!
-        </a>
-    </section>
-    <!-- ====================================================== -->
-    <!-- FIN DE LA NUEVA SECCIÓN                                -->
-    <!-- ====================================================== -->
 
-    
-    <!-- Calendario Interactivo -->
-    <section id="interactive-section" class="full-section text-center">
-        <div class="z-10">
-            <h1 class="font-playfair text-4xl md:text-5xl font-bold text-wine-red">Calendario Interactivo</h1>
-            <p class="text-medium-wine-red mt-4 max-w-xl">¡Haz clic en cada cajita para descubrir la sorpresa del día! Te esperan 12 regalos de belleza y 2 bonus especiales.</p>
-        </div>
-        <div class="calendar-container mt-8">
-            <div class="calendar-grid" id="calendar-grid">
-                <!-- Las cajas se generan por JS -->
+            <!-- Products Grid (Dynamic) -->
+            <div id="kit-products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Javascript injects content here -->
             </div>
-            <div id="progress-counter">¡Comienza tu viaje mágico!</div>
         </div>
-    </section>
 
-    
-    <!-- Modal (oculto por defecto) -->
-    <div id="modal-overlay" class="fixed inset-0 z-[99] opacity-0 invisible transition-opacity">
-        <div id="product-modal" class="w-11/12 max-w-sm absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 invisible transition-all duration-300">
-            <!-- El contenido del modal se genera por JS -->
-        </div>
-    </div>
-    
-    
-    <!-- Sección de Productos (Grid) -->
-    <main id="content-section" class="py-20 px-6 container mx-auto">
-       <section class="text-center max-w-4xl mx-auto mb-20">
-            <h2 class="font-playfair text-4xl md:text-5xl font-bold mb-4 text-wine-red">Una Colección Mágica</h2>
-            <p class="text-lg text-medium-wine-red">Cada producto en nuestro calendario de adviento está cuidadosamente seleccionado para traer alegría y belleza a tu temporada festiva.</p>
-        </section>
-        <section class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20" id="product-grid">
-            <!-- Las tarjetas de producto se generan por JS -->
-        </section>
     </main>
 
-    <!-- NUEVA SECCIÓN DE CONTACTO / FOOTER -->
-    <footer id="contact-section" class="bg-white py-20 px-6">
-        <div class="container mx-auto max-w-4xl text-center">
-            <h2 class="font-playfair text-4xl md:text-5xl font-bold mb-4 text-wine-red">¡Separa tu Calendario 2025!</h2>
-            <p class="font-dancing text-3xl text-medium-wine-red mb-6">Precio Total: S/150 (Separa con S/50)</p>
-            
-            <div class="text-left max-w-lg mx-auto grid md:grid-cols-2 gap-6 mb-12">
-                <div class="bg-bg-color-light p-6 rounded-2xl shadow-sm border border-bg-color-medium">
-                    <h4 class="font-playfair text-xl font-bold text-wine-red mb-3">¿Qué incluye?</h4>
-                    <ul class="list-disc list-inside space-y-2 text-text-dark">
-                        <li>12 productos de maquillaje en tamaño real 💄</li>
-                        <li>5 regalos extras 🎁 (Solo 6 primeras compras)</li>
-                    </ul>
+    <!-- Footer -->
+    <footer id="footer" class="bg-brand-dark text-brand-nude py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div>
+                <h3 class="font-serif text-2xl mb-6">GLOSSY.PE</h3>
+                <p class="font-light text-sm opacity-80 leading-relaxed">
+                    Celebrando la belleza individual a través de productos conscientes y estéticamente puros.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-sm uppercase tracking-widest mb-6 font-semibold">Descubre</h4>
+                <ul class="space-y-3 text-sm opacity-80 font-light">
+                    <li><a href="#" onclick="switchView('individual'); return false;"
+                            class="hover:text-white hover:underline">Labios</a></li>
+                    <li><a href="#" onclick="switchView('individual'); return false;"
+                            class="hover:text-white hover:underline">Rostro</a></li>
+                    <li><a href="#" onclick="switchView('individual'); return false;"
+                            class="hover:text-white hover:underline">Ojos</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-sm uppercase tracking-widest mb-6 font-semibold">Mantente en contacto</h4>
+                <p class="text-sm opacity-80 mb-4 font-light">Síguenos para lanzamientos exclusivos.</p>
+                <div class="flex space-x-4 mt-6">
+                    <i data-lucide="instagram" class="w-5 h-5 cursor-pointer hover:text-white"></i>
+                    <i data-lucide="facebook" class="w-5 h-5 cursor-pointer hover:text-white"></i>
+                    <i data-lucide="twitter" class="w-5 h-5 cursor-pointer hover:text-white"></i>
                 </div>
-                <div class="bg-bg-color-light p-6 rounded-2xl shadow-sm border border-bg-color-medium">
-                    <h4 class="font-playfair text-xl font-bold text-wine-red mb-3">Entregas y Envíos</h4>
-                     <ul class="list-disc list-inside space-y-2 text-text-dark">
-                    <li>🚚 Envíos a todo el Perú por Shalom.</li>
-                    <li>🛵 Envíos por motorizado a todo Lima Metropolitana y Callao.</li>
-                    <li>📍 Puntos de encuentro: Plaza San Miguel y Mall Plaza Bellavista.</li>
-                    <li>🤝 Recojo en San Miguel (también puedes enviar tu motorizado).</li>
-                    </ul>
-                </div>
             </div>
-
-            <h3 class="font-playfair text-2xl font-bold text-wine-red mb-6">Contáctanos y haz tu pedido</h3>
-            <p class="text-medium-wine-red mb-8">¡Cuéntanos tu nombre y ciudad para ayudarte con tu pedido! ✨</p>
-
-            <div class="flex flex-wrap justify-center gap-4 mb-10">
-                <a href="https://wa.me/51923895798" target="_blank" class="bg-green-500 text-white font-bold py-3 px-6 rounded-full text-lg shadow-md hover:bg-green-600 transition duration-300 flex items-center gap-2">
-                    <i class="fa-brands fa-whatsapp"></i> WhatsApp 1
-                </a>
-                <a href="https://wa.me/51996629113" target="_blank" class="bg-green-500 text-white font-bold py-3 px-6 rounded-full text-lg shadow-md hover:bg-green-600 transition duration-300 flex items-center gap-2">
-                    <i class="fa-brands fa-whatsapp"></i> WhatsApp 2
-                </a>
-            </div>
-
-            <div class="flex justify-center gap-8 text-4xl text-wine-red">
-                <a href="https://tiktok.com/@glossy.pe" target="_blank" class="hover:text-gold transition transform hover:scale-110" aria-label="TikTok de Glossy.pe">
-                    <i class="fa-brands fa-tiktok"></i>
-                </a>
-                <a href="https://instagram.com/glossyr.pe" target="_blank" class="hover:text-gold transition transform hover:scale-110" aria-label="Instagram de Glossy.pe">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-            </div>
-            <p class="mt-10 text-gray-500 text-sm">Glossy.pe &copy; 2025 - San Miguel, Lima, Perú</p>
+        </div>
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 pt-8 border-t border-brand-nude/10 text-center text-xs opacity-60">
+            &copy; 2025 Glossy.pe Cosmetics.
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const calendarGrid = document.getElementById('calendar-grid');
-            const previewGrid = document.querySelector('#landing-section .calendar-preview-grid');
-            const modalOverlay = document.getElementById('modal-overlay');
-            const productModal = document.getElementById('product-modal');
-            const particleContainer = document.getElementById('particle-container');
-            const productGrid = document.getElementById('product-grid');
-            const progressCounter = document.getElementById('progress-counter');
-            const confettiContainer = document.getElementById('confetti-container');
-            
-            let openedCount = 0;
+        // Inicializar iconos
+        lucide.createIcons();
 
-            // CAMBIO: 'imageUrl' ahora usa rutas relativas.
-            // ¡Asegúrate de crear una carpeta "imagenes" y guardar tus imágenes allí!
-            // NO SE CAMBIAN LAS DESCRIPCIONES SEGÚN LO SOLICITADO
-const products = [
-  { day: 1, name: "Set de labial en barra y gloss - Kevin & Coco", imageUrl: "./images/Duo-v2.png", message: "Labios irresistibles con color y brillo en perfecta armonía.", details: { desc: "Color intenso con acabado suave y un brillo ligero que realza y hidrata los labios.", usage: "Perfila y rellena los labios con el labial en barra para obtener un color definido. Finaliza aplicando el gloss en el centro o en toda la superficie para añadir brillo y volumen." } },
-{
-  day: 2,
-  name: "Paleta facial 3 en 1 - Kevin & Coco",
-  imageUrl: "./images/tres-uno-v2.png",
-  message: "Define, ilumina y perfecciona tu rostro en un solo paso.",
-  details: {
-    desc: "Paleta facial todo-en-uno con iluminador, contorno y polvo compacto. Perfecta para definir, sellar e iluminar el rostro con un acabado natural y uniforme.",
-    ingredients: "Vitamina E, Pigmentos Minerales, Aceite de Ricino.",
-    usage: "Usa el contorno para definir los rasgos, aplica el polvo compacto para sellar el maquillaje y finaliza con el iluminador en las zonas altas del rostro para un brillo radiante."
-  }
-},
-  { day: 3, name: "Tinta de Labios Carmesí - Nossa", imageUrl: "./images/Tinta de Labios Carmesi.png", message: "Color vibrante que se siente natural.", details: { desc: "Tinta para labios ultra ligera con pigmentación intensa para un look vibrante.", ingredients: "Extracto de Fruta, Glicerina, Agua Purificada.", usage: "Aplicar con el aplicador sobre los labios y dejar secar unos segundos." } },
-{
-  day: 4,
-  name: "Corrector - Kevin & Coco",
-  imageUrl: "./images/Corrector-v2.png",
-  message: "Cubre, ilumina y perfecciona tu piel al instante.",
-  details: {
-    desc: "Cobertura impecable y acabado natural, ideal para camuflar imperfecciones sin resecar.",
-    ingredients: "Aceite Mineral, Manteca de Karité, Poliisobuteno.",
-    usage: "Aplica una pequeña cantidad sobre ojeras, manchas o imperfecciones y difumina con brocha, esponja o con la yema de los dedos para un acabado uniforme."
-  }
-},
-  { day: 5, name: "Rubor en Barra Dupe Rhode - Kevin & Coco", imageUrl: "images/Rubor-v2.png", message: "Un toque de color, un toque de vida.", details: { desc: "Rubor en barra con textura cremosa que se funde fácilmente, deja un acabado satinado natural y aporta un toque saludable de color al rostro.", ingredients: "Cera de Abeja, Aceite de Coco, Pigmentos Minerales.", usage: "Aplicar con los dedos o brocha en mejillas y difuminar suavemente." } },
-{
-  day: 6,
-  name: "Mini paleta - Dikalu",
-  imageUrl: "images/MiniPaleta-v2.png",
-  message: "Colores compactos, mirada poderosa donde vayas.",
-  details: {
-    desc: "Tonos versátiles, buen pigmento y tamaño perfecto para llevar a todos lados.",
-    ingredients: "Mica, Dimeticona, Talco Cosmético.",
-    usage: "Aplica los tonos con pincel o con la yema del dedo sobre el párpado para crear looks naturales o intensos según el estilo."
-  }
-},  
-{
-  day: 7,
-  name: "Paleta de sombras Shine - Kevin & Coco",
-  imageUrl: "images/PaletaGrande-v2.png",
-  message: "Brilla con intensidad y crea miradas que inspiran.",
-  details: {
-    desc: "Paleta de sombras Shine para ojos con tonos luminosos y pigmentados que aportan brillo y profundidad a cualquier look.",
-    ingredients: "Silica, Talco, Dimeticona.",
-    usage: "Aplica las sombras con pinceles de ojos para difuminar, iluminar y crear profundidad según el estilo que quieras lograr."
-  }
-},
-{
-  day: 8,
-  name: "Sellador Fijador Maquillaje - Kevin & Coco",
-  imageUrl: "images/Fijador-v2.png",
-  message: "Mantén tu maquillaje fresco, firme y radiante todo el día.",
-  details: {
-    desc: "Spray ligero que fija el maquillaje, controla el brillo y mantiene el rostro fresco e impecable durante horas.",
-    ingredients: "Aceite de Ricino, Escualano, Vitamina E.",
-    usage: "Rociar a 20–30 cm del rostro en forma de X y T para fijar el maquillaje y prolongar su duración."
-  }
-},
-{
-  day: 9,
-  name: "Serum Para La Piel - Kevin & Coco",
-  imageUrl: "images/Serum-v2.webp",
-  message: "Hidrata, ilumina y transforma tu piel desde el primer uso.",
-  details: {
-    desc: "Sérum facial ligero y de rápida absorción que hidrata, ilumina y mejora la textura de la piel. Ayuda a unificar el tono, suavizar líneas finas y dejar el rostro más fresco y radiante.",
-    ingredients: "Agua, Glicerina, Polímeros Fijadores, Extracto de Aloe Vera.",
-    usage: "Aplicar de 3 a 5 gotas sobre el rostro limpio, masajeando suavemente hasta su absorción. Usar antes de la crema hidratante o del maquillaje."
-  }
-},  
-
-{
-  day: 10,
-  name: "Lipgloss - Kevin & Coco",
-  imageUrl: "images/LipGloss-v2.png",
-  message: "Labios con brillo, color y un acabado que enamora.",
-  details: {
-    desc: "Brillo labial de textura ligera y acabado pulido, con excelente pigmentación, brillo intenso y sensación cómoda.",
-    ingredients: "Cera de Carnauba, Aceite de Ricino, Pigmento Negro.",
-    usage: "Aplicar directamente sobre los labios limpios o sobre tu labial favorito para un acabado más brillante y voluminoso."
-  }
-}
-,  
-{ day: 11, name: "Labial Mousse Barra Matte - Italia Deluxe", imageUrl: "images/Labial Musse.jpeg", message: "Color intenso, textura ligera.", details: { desc: "Labial en barra con textura ligera y acabado mate aterciopelado, suave y súper pigmentado.", ingredients: "Vitamina E, Cera de Candelilla, Pigmentos Minerales.", usage: "Aplicar directamente sobre los labios para un acabado uniforme." } },
-{
-  day: 12,
-  name: "Labial Efecto Terciopelado - Kevin & Coco",
-  imageUrl: "images/Aterciopelado-v2.png",
-  message: "Labios suaves, elegantes y con un acabado que destaca.",
-  details: {
-    desc: "Acabado luminoso con efecto terciopelado que realza los labios con suavidad y un toque de brillo elegante.",
-    ingredients: "Aceite Mineral, Cera de Abeja, Pigmentos Minerales.",
-    usage: "Aplicar directamente sobre los labios siguiendo su forma natural. Puede usarse solo o combinado con un delineador para mayor definición."
-  }
-},
-{ 
-  day: 13, 
-  isBonus: true, 
-  name: "kit pink kevin set 5 EN 1 - Kevin & Coco", 
-  imageUrl: "images/Kit-v2.jpeg", 
-  message: "¡Gran Premio! El glow perfecto te espera.", 
-  details: { 
-    desc: "Set completo con labial matte, gloss, rubor, contorno y delineador de labios. Todo lo que necesitas para un look suave, femenino y perfectamente definido en cualquier ocasión.", 
-    usage: "Aplica el delineador para perfilar los labios, luego utiliza el labial matte para dar color. Añade el gloss para un acabado brillante. Usa el rubor para aportar frescura a las mejillas y el contorno para definir suavemente el rostro." 
-  } 
-}
-];
-
-
-            let synth;
-            function playSound(note, duration = '8n') {
-                if (typeof Tone === 'undefined') return;
-                try {
-                    if (Tone.context.state !== 'running') {
-                        Tone.start();
-                    }
-                    if (!synth) {
-                        synth = new Tone.Synth({ oscillator: { type: 'triangle' }, envelope: { attack: 0.02, decay: 0.1, sustain: 0.3, release: 1 } }).toDestination();
-                    }
-                    synth.triggerAttackRelease(note, duration);
-                } catch (e) {
-                    console.error("Tone.js error: ", e);
-                }
+        // ==========================================
+        //  CONFIGURACIÓN DE CATEGORÍAS (DINÁMICO)
+        // ==========================================
+        // Define aquí los metadatos de las categorías.
+        // La clave (ej: 'labios') debe coincidir con el campo 'category' en productsDB.
+        const categoriesDB = {
+            'labios': {
+                title: 'Labios Velvet',
+                subtitle: 'Acabados mate y satinados de larga duración.',
+                order: 1
+            },
+            'rostro': {
+                title: 'Rostro Perfecto',
+                subtitle: 'Bases, correctores y rubores para una piel radiante.',
+                order: 2
+            },
+            'ojos': {
+                title: 'Mirada Profunda',
+                subtitle: 'Sombras y delineadores para definir tu estilo.',
+                order: 3
             }
-            
-            function createSparkles(element) {
-                for(let i=0; i<5; i++) {
-                    const sparkle = document.createElement('div');
-                    sparkle.className = 'sparkle';
-                    const x = (Math.random() - 0.5) * 150;
-                    const y = (Math.random() - 0.5) * 150;
-                    sparkle.style.setProperty('--x', `${x}px`);
-                    sparkle.style.setProperty('--y', `${y}px`);
-                    sparkle.style.left = `calc(50% + ${x}px)`;
-                    sparkle.style.top = `calc(50% + ${y}px)`;
-                    element.appendChild(sparkle);
-                    setTimeout(() => sparkle.remove(), 600);
-                }
-            }
+            // Puedes agregar más categorías aquí:
+            // 'piel': { title: 'Cuidado de Piel', subtitle: '...', order: 4 }
+        };
 
-            function highlightNextBox() {
-                document.querySelectorAll('.calendar-box').forEach(b => b.classList.remove('next-to-open'));
-                const nextBox = document.querySelector('.calendar-box:not(.opened):not(.locked)');
-                if (nextBox) nextBox.classList.add('next-to-open');
+        // ==========================================
+        //  BASE DE DATOS DE PRODUCTOS (EDITAR AQUÍ)
+        // ==========================================
+        const productsDB = [
+            // --- LABIOS ---
+            {
+                id: 'p1',
+                category: 'labios',
+                name: 'Base gagk',
+                price: '$24.00',
+                desc: 'Fórmula hidratante con acabado mate suave. No reseca.',
+                tag: 'Best Seller',
+                images: [
+                    '/images/1.Base gagk/Gemini_Generated_Image_56jqi056jqi056jq (1).png',
+                    '/images/1.Base gagk/Gemini_Generated_Image_e2l7vhe2l7vhe2l7.png' // Segunda foto ejemplo
+                ],
+                tones: [
+                    { name: 'Vanilla Sand', hex: '#F0DDC8' },
+                    { name: 'Warm Almond', hex: '#E8CCAC' }
+                ],
+                defaultTone: 'Rose Nude'
+            },
+            {
+                id: 'p2',
+                category: 'labios',
+                name: 'BROW REVEL',
+                price: '$18.00',
+                desc: 'Brillo de alto impacto sin sensación pegajosa.',
+                tag: '',
+                images: [
+                    '/images/2.BROWN REVEL/Gemini_Generated_Image_nzfzjwnzfzjwnzfz.png',
+                    '/images/2.BROWN REVEL/TONOS.png',
+                ],
+                tones: [
+                    { name: 'Dusty Rose', hex: '#A88275' },
+                    { name: 'Mocha Blush', hex: '#8F675C' },
+                    { name: 'Deep Cocoa', hex: '#5E5049' }
+                ],
+                defaultTone: 'Clear'
+            },
+            {
+                id: 'p3',
+                category: 'labios',
+                name: 'Corrector Kevin & Coco',
+                price: '$16.00',
+                desc: 'Delineador cremoso para definir el contorno.',
+                tag: '',
+                images: [
+                    '/images/3.Corrector kevin and coco/Gemini_Generated_Image_mlbvklmlbvklmlbv.png',
+                    '/images/3.Corrector kevin and coco/Gemini_Generated_Image_8r96rr8r96rr8r96.png',
+                ],
+                tones: [
+                    { name: 'Soft Ivory', hex: '#F1E3C1' },
+                    { name: 'Warm Linen', hex: '#E7CCB6' },
+                    { name: 'Golden Oat', hex: '#E1C19D' },
+                    { name: 'Sand Beige', hex: '#E5BFA2' }
+                ],
+                defaultTone: 'Cinnamon'
+            },
+            // --- ROSTRO ---
+            {
+                id: 'p4',
+                category: 'rostro',
+                name: 'Crema Hidratante',
+                price: '$32.00',
+                desc: 'Cobertura ligera con efecto \'segunda piel\'.',
+                tag: '',
+                images: [
+                    '/images/4.crema hidratante/crema.webp',
+                    '/images/4.crema hidratante/crema hidratante 2.webp',
+                ],
+                tones: [
+                    { name: 'White', hex: '#ffffff' },
+                ],
+                defaultTone: 'White'
+            },
+            {
+                id: 'p5',
+                category: 'rostro',
+                name: 'Delineador y Rimel Kevin & Coco',
+                price: '$22.00',
+                desc: 'Rubor en barra multifuncional para mejillas y labios.',
+                tag: '',
+                images: [
+                    '/images/5.delineador y rimel kevin and coco/imagen 1.webp',
+                    '/images/5.delineador y rimel kevin and coco/imagen 3.webp',
+                ],
+                tones: [
+                    { name: 'Black', hex: '#000000' },
+                ],
+                defaultTone: 'Black'
+            },
+            // --- OJOS ---
+            {
+                id: 'p6',
+                category: 'ojos',
+                name: '6',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/6.Duo de lipgloss y rubor kevin and coco/Gemini_Generated_Image_irt3lairt3lairt3.png',
+                    '/images/6.Duo de lipgloss y rubor kevin and coco/Gemini_Generated_Image_1kvr1j1kvr1j1kvr.png',
+                ],
+                tones: [
+                    { name: 'Rose Bloom', hex: '#E4729A' },
+                    { name: 'Coral Kiss', hex: '#E7817C' }
+                ],
+                defaultTone: 'Rose Bloom'
+            },
+            {
+                id: 'p7',
+                category: 'ojos',
+                name: '7',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/7.Duo labiales/Gemini_Generated_Image_oget5ioget5ioget (1).png',
+                    '/images/7.Duo labiales/Gemini_Generated_Image_1s0wx41s0wx41s0w.png',
+                ],
+                tones: [
+                    { name: 'Warm Terracotta', hex: '#C07A68' },
+                    { name: 'Rose Clay', hex: '#D0857B' },
+                    { name: 'Burnt Sienna', hex: '#A35545' },
+                    { name: 'Dusty Rosewood', hex: '#C97477' }
+                ],
+                defaultTone: 'Warm Terracotta'
+            },
+            {
+                id: 'p8',
+                category: 'ojos',
+                name: '8',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/8.Fijador Kevin and coco/Gemini_Generated_Image_1069cx1069cx1069 (1).png',
+                    '/images/8.Fijador Kevin and coco/Gemini_Generated_Image_6dykte6dykte6dyk.png',
+                ],
+                tones: [
+                    { name: 'Withe', hex: '#ffffff' },
+                ],
+                defaultTone: 'Withe'
+            },
+            {
+                id: 'p9',
+                category: 'ojos',
+                name: '9',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/9.FIJADOR KISS BEAUTY/Gemini_Generated_Image_29sgge29sgge29sg.png',
+                    '/images/9.FIJADOR KISS BEAUTY/Gemini_Generated_Image_fp9zm2fp9zm2fp9z.png',
+                ],
+                tones: [
+                    { name: 'Withe', hex: '#ffffff' }
+                ],
+                defaultTone: 'Withe'
+            },
+            {
+                id: 'p10',
+                category: 'ojos',
+                name: '10',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/10.Labial aterciopelado/Gemini_Generated_Image_gv0abngv0abngv0a (1).png',
+                    '/images/10.Labial aterciopelado/Gemini_Generated_Image_fpwvkfpwvkfpwvkf.png',
+                ],
+                tones: [
+                    { name: 'Deep Mocha', hex: '#573E38' },
+                    { name: 'Cinnamon Nude', hex: '#A2614D' },
+                    { name: 'Warm Taupe', hex: '#986958' },
+                    { name: 'Crimson Clay', hex: '#9C3F3E' },
+                    { name: 'Plum Earth', hex: '#6F363C' },
+                    { name: 'Burnt Rouge', hex: '#A03027' }
+                ],
+                defaultTone: 'Deep Mocha'
+            },
+            {
+                id: 'p11',
+                category: 'ojos',
+                name: '11',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/11.Labial matte kiss beauty/Gemini_Generated_Image_589ho5589ho5589h.png',
+                    '/images/11.Labial matte kiss beauty/Gemini_Generated_Image_lrt0jalrt0jalrt0.png',
+                ],
+                tones: [
+                    { name: 'Soft Peach', hex: '#C59987' },
+                    { name: 'Blush Latte', hex: '#BE857E' },
+                    { name: 'Muted Rose', hex: '#B1817C' },
+                    { name: 'Warm Brick', hex: '#AB6352' },
+                    { name: 'Rose Mauve', hex: '#A45261' },
+                    { name: 'Spiced Caramel', hex: '#C07653' },
+                    { name: 'Deep Garnet', hex: '#A33C39' },
+                    { name: 'Plum Cocoa', hex: '#763A46' }
+                ],
+                defaultTone: 'Soft Peach'
+            },
+            {
+                id: 'p12',
+                category: 'ojos',
+                name: '12',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/12.Lipgloss corazon/Gemini_Generated_Image_slb051slb051slb0 (1).png',
+                    '/images/12.Lipgloss corazon/tonos.webp',
+                ],
+                tones: [
+                    { name: 'Pink Coral', hex: '#F48685' },
+                    { name: 'Soft Flamingo', hex: '#F17777' },
+                    { name: 'Rose Sorbet', hex: '#EF887F' },
+                    { name: 'Blush Petal', hex: '#EA8C84' },
+                    { name: 'Berry Bloom', hex: '#E35F76' },
+                    { name: 'Classic Red', hex: '#BA3E32' },
+                    { name: 'Spiced Red', hex: '#CC523C' },
+                    { name: 'Coral Rouge', hex: '#EA6A5D' }
+                ],
+                defaultTone: 'Pink Coral'
+            },
+            {
+                id: 'p13',
+                category: 'ojos',
+                name: '13',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/13.Lipgloss gagk/Gemini_Generated_Image_ouoddxouoddxouod.png',
+                    '/images/13.Lipgloss gagk/tono2.png',
+                ],
+                tones: [
+                    { name: 'Vintage Rose', hex: '#B1564E' },
+                    { name: 'Smoked Blush', hex: '#A84D48' },
+                    { name: 'Dusty Wine', hex: '#9E4244' }
+                ],
+                defaultTone: 'Vintage Rose'
+            },
+            {
+                id: 'p14',
+                category: 'ojos',
+                name: '14',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/14.lipjam yeahkiss/Gemini_Generated_Image_leod7vleod7vleod.png',
+                    '/images/14.lipjam yeahkiss/Gemini_Generated_Image_4kzprs4kzprs4kzp (1).png',
+                ],
+                tones: [
+                    { name: 'Dark Berry', hex: '#542931' },
+                    { name: 'Spiced Cocoa', hex: '#874136' },
+                    { name: 'Warm Chestnut', hex: '#8E5143' },
+                    { name: 'Midnight Plum', hex: '#4A2B30' },
+                    { name: 'Coral Flame', hex: '#DF6758' },
+                    { name: 'Soft Periwinkle', hex: '#A5B2CB' }
+                ],
+                defaultTone: 'Warm Sunset'
+            },
+            {
+                id: 'p15',
+                category: 'ojos',
+                name: '15',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/15.Matificante de arroz - Magic shop/Gemini_Generated_Image_sr9qd5sr9qd5sr9q.png',
+                ],
+                tones: [
+                    { name: 'Withe', hex: '#ffffff' }
+                ],
+                defaultTone: 'Withe'
+            },
+            {
+                id: 'p16',
+                category: 'ojos',
+                name: '16',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/16.Polvo traslucido revel/Gemini_Generated_Image_1bnlre1bnlre1bnl.png',
+                    '/images/16.Polvo traslucido revel/Gemini_Generated_Image_w2m8igw2m8igw2m8.png',
+                ],
+                tones: [
+                    { name: 'Warm Camel', hex: '#B58B67' }
+                ],
+                defaultTone: 'Warm Camel'
+            },
+            {
+                id: 'p17',
+                category: 'ojos',
+                name: '17',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/17.Removedor Kevin and coco/Gemini_Generated_Image_xluz02xluz02xluz.png',
+                ],
+                tones: [
+                    { name: 'WWithe', hex: '#ffffff' }
+                ],
+                defaultTone: 'Withe'
+            },
+            {
+                id: 'p18',
+                category: 'ojos',
+                name: '18',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/18.rubor liquido/rubor 2.webp',
+                    '/images/18.rubor liquido/tonos.webp',
+                ],
+                tones: [
+                    { name: 'Peach Bloom', hex: '#F1A49A' },
+                    { name: 'Soft Terracotta', hex: '#DA7F70' },
+                    { name: 'Rose Clay', hex: '#D47973' },
+                    { name: 'Crimson Blush', hex: '#E06265' },
+                    { name: 'Muted Berry', hex: '#AD5154' },
+                    { name: 'Warm Rust', hex: '#AF594D' }
+                ],
+                defaultTone: 'Peach Bloom'
+            },
+            {
+                id: 'p19',
+                category: 'ojos',
+                name: '19',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/19.Serum 4 en 1/Gemini_Generated_Image_u6m9e2u6m9e2u6m9.png',
+                ],
+                tones: [
+                    { name: 'Withe', hex: '#ffffff' }
+                ],
+                defaultTone: 'Withe'
+            },
+            {
+                id: 'p20',
+                category: 'ojos',
+                name: '20',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/20.Serum kevin and coco/serum.webp',
+                ],
+                tones: [
+                    { name: 'White', hex: '#ffffff' }
+                ],
+                defaultTone: 'White'
+            },
+            {
+                id: 'p21',
+                category: 'ojos',
+                name: '21',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/21.Sombra Electric/Gemini_Generated_Image_dzyur7dzyur7dzyu.png',
+                ],
+                tones: [
+                    { name: 'Withe', hex: '#ffffff' }
+                ],
+                defaultTone: 'Withe'
+            },
+            {
+                id: 'p22',
+                category: 'ojos',
+                name: '22',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/22.TEDDY/Gemini_Generated_Image_25vyep25vyep25vy.png',
+                ],
+                tones: [
+                    { name: 'Peach Clay', hex: '#DD8268' },
+                    { name: 'Dusty Coral', hex: '#C16561' },
+                    { name: 'Burnt Red', hex: '#C1433D' },
+                    { name: 'Warm Rosewood', hex: '#B7675B' },
+                    { name: 'Deep Burgundy', hex: '#67282A' }
+                ],
+                defaultTone: 'Peach Clay'
+            },
+            {
+                id: 'p23',
+                category: 'ojos',
+                name: '23',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/23.Tinta Candela/Gemini_Generated_Image_go1tekgo1tekgo1t.png',
+                    '/images/23.Tinta Candela/Gemini_Generated_Image_xz1v31xz1v31xz1v.png',
+                ],
+                tones: [
+                    { name: 'Soft Terracotta', hex: '#CA6E64' },
+                    { name: 'Spiced Brick', hex: '#BD493E' },
+                    { name: 'Rose Ember', hex: '#CD564D' },
+                    { name: 'Warm Coral', hex: '#D86158' },
+                    { name: 'Classic Crimson', hex: '#C94236' },
+                    { name: 'Deep Chili', hex: '#A53D35' }
+                ],
+                defaultTone: 'Soft Terracotta'
+            },
+            {
+                id: 'p24',
+                category: 'ojos',
+                name: '24',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/24.Tinta the game Jarusa/Gemini_Generated_Image_eld8fheld8fheld8.png',
+                    '/images/24.Tinta the game Jarusa/tonos.u4aed8-1705697520328',
+                ],
+                tones: [
+                    { name: 'Berry Rose', hex: '#B94351' },
+                    { name: 'Soft Raspberry', hex: '#C85B64' },
+                    { name: 'Crimson Blush', hex: '#AF444B' },
+                    { name: 'Warm Wine', hex: '#AA413D' },
+                    { name: 'Dusty Plum', hex: '#BD6376' },
+                    { name: 'Mulberry Silk', hex: '#A4455D' }
+                ],
+                defaultTone: 'Berry Rose'
+            },
+            {
+                id: 'p25',
+                category: 'ojos',
+                name: '25',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/25.uñas nossa/Gemini_Generated_Image_to56g8to56g8to56.png',
+                    '/images/25.uñas nossa/Gemini_Generated_Image_wnsercwnsercwnse (1).png',
+                ],
+                tones: [
+                    { name: 'Warm Sandstone', hex: '#B3856C' },
+                    { name: 'Deep Walnut', hex: '#55362E' },
+                    { name: 'Soft Taupe Rose', hex: '#936D62' },
+                    { name: 'Desert Clay', hex: '#9C705C' },
+                    { name: 'Golden Beige', hex: '#E0BC9B' },
+                    { name: 'Sage Nude', hex: '#A8A392' },
+                    { name: 'Blush Linen', hex: '#E2ADA8' }
+                ],
+                defaultTone: 'Warm Sandstone'
+            },
+            {
+                id: 'p26',
+                category: 'ojos',
+                name: '26',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/26.Colonia sol de rio/Gemini_Generated_Image_qt8n45qt8n45qt8n.png',
+                    '/images/26.Colonia sol de rio/Gemini_Generated_Image_ssaemfssaemfssae.png',
+                ],
+                tones: [
+                    { name: 'Withe', hex: '#ffffff' }
+                ],
+                defaultTone: 'Withe'
+            },
+            {
+                id: 'p27',
+                category: 'ojos',
+                name: '27',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/27.Labial Dorage/Gemini_Generated_Image_f78tlff78tlff78t.png',
+                    '/images/27.Labial Dorage/tono 2.jpg',
+                ],
+                tones: [
+                    { name: 'Powder Rose', hex: '#DAA9A9' },
+                    { name: 'Dusty Mauve', hex: '#BD898E' },
+                    { name: 'Muted Blush', hex: '#C6888C' },
+                    { name: 'Berry Mauve', hex: '#C25777' },
+                    { name: 'Crimson Petal', hex: '#CE5C60' },
+                    { name: 'Deep Rosewood', hex: '#863437' }
+                ],
+                defaultTone: 'Powder Rose'
+            },
+            {
+                id: 'p28',
+                category: 'ojos',
+                name: '28',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/28.Mascarillas/Gemini_Generated_Image_hjzlj4hjzlj4hjzl.png',
+                    '/images/28.Mascarillas/Gemini_Generated_Image_wwxl2jwwxl2jwwxl.png',
+                ],
+                tones: [
+                    { name: 'Velvet Mauve', hex: '#7953A3' },
+                    { name: 'Rose Crimson', hex: '#C14A46' },
+                    { name: 'Golden Olive', hex: '#B7915D' },
+                    { name: 'Soft Moss', hex: '#759F4F' }
+                ],
+                defaultTone: 'Velvet Mauve'
+            },
+            {
+                id: 'p29',
+                category: 'ojos',
+                name: '29',
+                price: '$45.00',
+                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                tag: 'Trending',
+                images: [
+                    '/images/29.rubor dupe/Gemini_Generated_Image_cneu4gcneu4gcneu.png',
+                    '/images/29.rubor dupe/tonos, disponible tono 3.ffs7r4-1738878796906',
+                ],
+                tones: [
+                    { name: 'Raspberry Pink', hex: '#DC4269' },
+                    { name: 'Rose Pop', hex: '#F36B7A' },
+                    { name: 'Fuchsia Bloom', hex: '#CE3E6F' },
+                    { name: 'Soft Pink Veil', hex: '#F7B7D7' },
+                    { name: 'Cherry Flame', hex: '#F14648' },
+                    { name: 'Scarlet Kiss', hex: '#EB454F' }
+                ],
+                defaultTone: 'Raspberry Pink'
             }
-            
-            // Función para obtener decoraciones inspiradas en la foto
-            function getDecorations(day) {
-                switch(day) {
-                    case 1: return '<i class="fa-regular fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>';
-                    case 2: return '<i class="fa-solid fa-tree"></i>';
-                    case 3: return '<i class="fa-solid fa-bell"></i> <i class="fa-solid fa-holly-berry"></i> <i class="fa-solid fa-bell"></i>';
-                    case 4: return '<span class="font-dancing text-lg">his his</span>';
-                    case 5: return '<i class="fa-solid fa-holly-berry"></i>';
-                    case 6: return '<i class="fa-solid fa-tree"></i> <i class="fa-solid fa-music"></i> <i class="fa-solid fa-tree"></i>';
-                    case 7: return '<span class="font-dancing text-lg">Merry Christmas</span>';
-                    case 8: return ''; // Caja 8 en blanco
-                    case 9: return '<i class="fa-solid fa-gift"></i>';
-                    case 10: return '<i class="fa-solid fa-star-of-life"></i> <i class="fa-solid fa-asterisk"></i> <i class="fa-solid fa-star-of-life"></i>';
-                    case 11: return '<i class="fa-solid fa-gift"></i>';
-                    case 12: return '<i class="fa-solid fa-bell"></i> <i class="fa-solid fa-bell"></i> <i class="fa-solid fa-bell"></i>';
-                    case 13: return '<i class="fa-solid fa-wand-magic-sparkles"></i>';
-                    default: return '<i class="fa-solid fa-star"></i>';
-                }
+        ];
+
+        // ==========================================
+        //  BASE DE DATOS DE KITS
+        // ==========================================
+        const kitsDB = {
+            'nude': {
+                title: "The Nude Essentials Kit",
+                price: "$65.00",
+                desc: "12 piezas esenciales para un look natural, fresco y radiante.",
+                products: [
+                    { name: "Luminous Skin Tint", tone: "Ivory", images: ["https://images.unsplash.com/photo-1631729371254-42c2a89e0e18?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"], colors: [{ hex: '#f3e2c3', name: 'Ivory' }, { hex: '#e8cdb3', name: 'Sand' }, { hex: '#dcbca0', name: 'Beige' }] },
+                    { name: "Matte Silk Lipstick", tone: "Rose Nude", images: ["https://images.unsplash.com/photo-1586495777744-4413f21062fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"], colors: [{ hex: '#dfaea3', name: 'Rose Nude' }, { hex: '#c98877', name: 'Terracotta' }] }
+                    // ... (Simplificado para el ejemplo, pero el código de render usa la misma lógica)
+                ]
+            },
+            'glam': {
+                title: "Full Glam Night Kit",
+                price: "$85.00",
+                desc: "Todo lo necesario para destacar. Tonos profundos y acabados metálicos.",
+                products: [
+                    { name: "Earth Tones Palette", tone: "Warm Sunset", images: ["https://images.unsplash.com/photo-1583241747386-404ead2a7752?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"], colors: [{ hex: '#d65a31', name: 'Warm Sunset' }, { hex: '#222831', name: 'Cool Night' }] }
+                ]
             }
+        };
 
-            products.forEach((product) => {
-                const calendarBox = document.createElement('div');
-                calendarBox.className = 'calendar-box';
-                calendarBox.dataset.day = product.day;
-                if (product.isBonus) calendarBox.classList.add('locked');
+        // ==========================================
+        //  LÓGICA DE RENDERIZADO
+        // ==========================================
 
-                // CAMBIO: ESTRUCTURA HTML usa <img> en lugar de <i>
-                calendarBox.innerHTML = `
-                    <div class="drawer">
-                        <div class="drawer-face">
-                            <span class="box-decorations">${getDecorations(product.day)}</span>
-                            <span class="box-day-number">${product.day}</span>
-                        </div>
-                        <div class="drawer-base">
-                            <div class="product-preview">
-                                <img src="${product.imageUrl}" alt="${product.name}" class="w-16 h-16 object-contain rounded-md mb-1" onerror="this.src='httpshttps://placehold.co/100x100/fff0f0/8b0000?text=?'; this.onerror=null;">
-                                <span class="font-semibold">${product.name}</span>
+        function renderProducts() {
+            const containerMain = document.getElementById('vista-individual');
+            containerMain.innerHTML = ''; // Limpiar cualquier contenido existente
+
+            // 1. Agrupar productos por categoría
+            const productsByCategory = {};
+            productsDB.forEach(p => {
+                if (!productsByCategory[p.category]) productsByCategory[p.category] = [];
+                productsByCategory[p.category].push(p);
+            });
+
+            // 2. Iterar sobre categoriesDB para mantener el orden deseado
+            // Si hay una categoría en DB pero no en config, se podría manejar como 'Otros', 
+            // pero por ahora solo renderizamos lo configurado.
+            Object.keys(categoriesDB).sort((a, b) => categoriesDB[a].order - categoriesDB[b].order).forEach((catKey, index) => {
+                const catConfig = categoriesDB[catKey];
+                const products = productsByCategory[catKey];
+
+                // Solo renderizar la sección si hay productos para esa categoría
+                if (products && products.length > 0) {
+
+                    // Crear HTML de la Sección (Título + Contenedor de Grid)
+                    const sectionHtml = `
+                        <div id="container-${catKey}" class="mb-24 fade-in-up" style="animation-delay: ${0.2 + (index * 0.2)}s;">
+                            <div class="flex items-end justify-between mb-12 border-b border-brand-pink/50 pb-4">
+                                <div>
+                                    <h2 class="text-3xl md:text-4xl font-serif mb-2">${catConfig.title}</h2>
+                                    <p class="text-gray-500 font-light">${catConfig.subtitle}</p>
+                                </div>
+                                <span class="text-sm text-gray-400 hidden sm:block">0${index + 1} — INDIVIDUAL</span>
+                            </div>
+                            <div id="grid-${catKey}" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                                <!-- Las tarjetas se inyectarán aquí -->
                             </div>
                         </div>
-                    </div>`;
+                    `;
 
-                calendarBox.addEventListener('click', () => handleBoxClick(calendarBox, product));
-                calendarGrid.appendChild(calendarBox);
-                
-                if (!product.isBonus) {
-                    const previewBox = document.createElement('div');
-                    previewBox.className = 'calendar-preview-box';
-                    previewBox.textContent = product.day;
-                    previewGrid.appendChild(previewBox);
-                }
+                    // Agregar sección al DOM principal
+                    containerMain.insertAdjacentHTML('beforeend', sectionHtml);
 
-                const card = document.createElement('div');
-                card.className = 'bg-white p-6 rounded-2xl shadow-lg product-card';
-                // CAMBIO: ESTRUCTURA HTML usa <img> en lugar de <i>
-                card.innerHTML = `
-                    <div class="w-full h-48 bg-bg-color-medium rounded-lg mb-4 overflow-hidden">
-                         <img src="${product.imageUrl}" alt="${product.name}" class="w-full h-full object-cover" onerror="this.src='httpshttps://placehold.co/400x300/fff0f0/8b0000?text=Error'; this.onerror=null;">
-                    </div>
-                    <h4 class="font-playfair text-xl font-bold text-wine-red">${product.name}</h4>
-                    <p class="text-medium-wine-red mt-2 text-sm">${product.details.desc}</p>`;
-                productGrid.appendChild(card);
-            });
-            
-            highlightNextBox();
+                    // Referencia al grid recién creado
+                    const gridContainer = document.getElementById(`grid-${catKey}`);
 
-            function handleBoxClick(boxElement, product) {
-                if (boxElement.classList.contains('locked')) {
-                    playSound('C4', '16n');
-                    return;
-                }
-                
-                if (!boxElement.classList.contains('opened')) {
-                    createSparkles(boxElement);
-                    // Mostrar el modal DESPUÉS de que la animación comience
-                    setTimeout(() => {
-                        showModal(product);
-                    }, 500); // 500ms de retraso para el modal
-                    
-                    boxElement.classList.add('opened');
-                    if (!product.isBonus) openedCount++;
-                    
-                    const totalDiscovered = products.filter(p => document.querySelector(`[data-day="${p.day}"]`).classList.contains('opened')).length
-                    const totalProducts = products.length;
-                    progressCounter.textContent = `${totalDiscovered} / ${totalProducts} Descubiertos`;
-                    
-                    playSound('E5');
+                    // 3. Renderizar productos dentro del grid
+                    products.forEach(product => {
+                        const hasMultipleImages = product.images.length > 1;
 
-                    // Desbloquea si se abrieron las 12 cajas (ignorando la caja 8 vacía)
-                    if (openedCount === products.filter(p => !p.isBonus && p.day !== 8).length) {
-                        unlockBonusGifts();
-                        triggerRewardAnimation();
-                    }
-                    highlightNextBox();
-                } else {
-                     // Si ya está abierto, solo mostrar el modal
-                     showModal(product);
-                }
-            }
+                        // Generar HTML de Imágenes (Carrusel o Simple)
+                        let imagesHtml = '';
+                        product.images.forEach((img, index) => {
+                            const hiddenClass = index === 0 ? '' : 'hidden';
+                            // Importante: unique styles display:none handling inside inline style for JS logic
+                            const styleDisplay = index !== 0 ? 'style="display:none"' : '';
+                            imagesHtml += `<img src="${img}" class="absolute inset-0 w-full h-full object-cover transition duration-500 ease-in-out product-img-${product.id}" data-index="${index}" ${styleDisplay}>`;
+                        });
 
-            function unlockBonusGifts() {
-                document.querySelectorAll('.calendar-box.locked').forEach(box => {
-                    box.classList.remove('locked');
-                    box.classList.add('unlocked');
-                });
-                playSound('C6', '4n');
-            }
-            
-            function triggerRewardAnimation() {
-                for (let i = 0; i < 50; i++) {
-                    const confetti = document.createElement('div');
-                    confetti.className = 'confetti';
-                    confetti.style.left = `${Math.random() * 100}vw`;
-                    confetti.style.animationDelay = `${Math.random() * 2}s`;
-                    const color = Math.random() > 0.5 ? getComputedStyle(document.documentElement).getPropertyValue('--wine-red') : getComputedStyle(document.documentElement).getPropertyValue('--gold');
-                    confetti.style.backgroundColor = color;
-                    confettiContainer.appendChild(confetti);
-                    setTimeout(() => confetti.remove(), 5000);
-                }
-            }
+                        // Controles del Carrusel
+                        let carouselControls = '';
+                        if (hasMultipleImages) {
+                            carouselControls = `
+                                <button onclick="changeImage('${product.id}', -1)" class="carousel-btn absolute left-2 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 z-10 hover:bg-white">
+                                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                                </button>
+                                <button onclick="changeImage('${product.id}', 1)" class="carousel-btn absolute right-2 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 z-10 hover:bg-white">
+                                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                                </button>
+                                <div class="absolute bottom-2 left-0 right-0 flex justify-center space-x-1">
+                                    ${product.images.map((_, i) => `<div class="w-1.5 h-1.5 rounded-full bg-white/50 dot-${product.id}" data-index="${i}"></div>`).join('')}
+                                </div>
+                            `;
+                        }
 
-            function showModal(product) {
-                // CAMBIO: HTML del Modal con <img>
-                productModal.innerHTML = `
-                    <button id="close-modal">&times;</button>
-                    <div class="product-image-container">
-                         <img src="${product.imageUrl}" alt="${product.name}" class="w-full h-full object-cover" onerror="this.src='httpshttps://placehold.co/400x300/fff0f0/8b0000?text=Error'; this.onerror=null;">
-                    </div>
-                    <h3 class="font-playfair text-center text-2xl font-bold text-wine-red">${product.name}</h3>
-                    
-                    <div class="tab-buttons">
-                        <button class="tab-btn active" data-tab="desc">Descripción</button>
-                        <button class="tab-btn" data-tab="usage">Modo de Uso</button>
-                    </div>
-                    <div class="tab-content">
-                        <div class="tab-panel active" id="tab-desc">${product.details.desc}</div>
-                        <div class="tab-panel" id="tab-ingredients">${product.details.ingredients}</div>
-                        <div class="tab-panel" id="tab-usage">${product.details.usage}</div>
-                    </div>
+                        // Generar HTML de Tonos
+                        let tonesHtml = '';
+                        product.tones.forEach((tone, idx) => {
+                            const activeClass = idx === 0 ? 'active' : '';
+                            const bgStyle = tone.name === 'Warm Sunset' ? 'background-image: linear-gradient(to bottom right, #fed7aa, #f87171)' :
+                                tone.name === 'Cool Night' ? 'background-image: linear-gradient(to bottom right, #e5e7eb, #4b5563)' :
+                                    `background-color: ${tone.hex}`;
 
-                    <div class="daily-message"><p>"${product.message}"</p></div>
-                    <div class="modal-actions">
-                        <button class="modal-action-btn" id="wishlist-btn" aria-label="Añadir a favoritos"><i class="fa-regular fa-heart"></i></button>
-                        <button class="modal-action-btn" id="share-btn" aria-label="Compartir"><i class="fa-solid fa-share-alt"></i></button>
-                    </div>`;
-                modalOverlay.classList.remove('invisible', 'opacity-0');
-                productModal.classList.remove('invisible', 'opacity-0');
-                document.getElementById('close-modal').addEventListener('click', hideModal);
-                
-                // Lógica para Pestañas
-                const tabButtons = productModal.querySelectorAll('.tab-btn');
-                const tabPanels = productModal.querySelectorAll('.tab-panel');
-                
-                tabButtons.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        // Quitar activo de todos
-                        tabButtons.forEach(b => b.classList.remove('active'));
-                        tabPanels.forEach(p => p.classList.remove('active'));
-                        
-                        // Poner activo en el clickeado
-                        btn.classList.add('active');
-                        const tabId = btn.dataset.tab;
-                        productModal.querySelector(`#tab-${tabId}`).classList.add('active');
+                            tonesHtml += `<button class="w-6 h-6 rounded-full swatch ${activeClass}" style="${bgStyle}" onclick="selectTone(this, '${tone.name}')"></button> `;
+                        });
+
+                        const tagHtml = product.tag ? `<div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 text-xs uppercase tracking-wide z-10">${product.tag}</div>` : '';
+
+                        const cardHtml = `
+                            <div class="group" id="product-${product.id}" data-current-img="0" data-total-imgs="${product.images.length}">
+                                <div class="relative overflow-hidden bg-white rounded-t-xl h-80 w-full mb-4">
+                                    ${imagesHtml}
+                                    ${tagHtml}
+                                    ${carouselControls}
+                                </div>
+                                <div>
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h3 class="text-xl font-serif">${product.name}</h3>
+                                        <span class="text-lg font-light text-brand-dark">${product.price}</span>
+                                    </div>
+                                    <p class="text-sm text-gray-500 mb-4 line-clamp-2">${product.desc}</p>
+                                    
+                                    <div class="mb-4">
+                                        <p class="text-xs uppercase tracking-widest text-gray-400 mb-2">Tono: <span class="text-brand-dark font-medium selected-tone-name">${product.defaultTone}</span></p>
+                                        <div class="flex space-x-2 flex-wrap gap-y-2">
+                                            ${tonesHtml}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+
+                        gridContainer.insertAdjacentHTML('beforeend', cardHtml);
                     });
-                });
+                }
+            });
 
-                document.getElementById('wishlist-btn').addEventListener('click', (e) => {
-                    e.currentTarget.classList.toggle('active');
-                    e.currentTarget.querySelector('i').classList.toggle('fa-regular');
-                    e.currentTarget.querySelector('i').classList.toggle('fa-solid');
-                });
+            // Re-inicializar iconos
+            lucide.createIcons();
+            updateDots();
+        }
 
-                document.getElementById('share-btn').addEventListener('click', (e) => {
-                    e.currentTarget.classList.add('active');
-                    setTimeout(() => e.currentTarget.classList.remove('active'), 1000);
-                });
+        // --- LÓGICA DEL CARRUSEL ---
+        function changeImage(productId, direction) {
+            const productCard = document.getElementById(`product-${productId}`);
+            let currentIndex = parseInt(productCard.getAttribute('data-current-img'));
+            const totalImages = parseInt(productCard.getAttribute('data-total-imgs'));
 
-                playSound('G5');
-            }
+            // Ocultar imagen actual
+            const images = productCard.querySelectorAll(`.product-img-${productId}`);
+            images[currentIndex].style.display = 'none';
 
-            function hideModal() {
-                modalOverlay.classList.add('invisible', 'opacity-0');
-                productModal.classList.add('invisible', 'opacity-0');
-            }
-            
-            modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) hideModal(); });
+            // Calcular nuevo índice
+            currentIndex = currentIndex + direction;
+            if (currentIndex >= totalImages) currentIndex = 0;
+            if (currentIndex < 0) currentIndex = totalImages - 1;
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
+            // Mostrar nueva imagen
+            images[currentIndex].style.display = 'block';
+
+            // Actualizar estado
+            productCard.setAttribute('data-current-img', currentIndex);
+            updateDots(productId, currentIndex);
+        }
+
+        function updateDots(productId = null, activeIndex = 0) {
+            if (productId) {
+                const dots = document.querySelectorAll(`.dot-${productId}`);
+                dots.forEach((dot, idx) => {
+                    dot.classList.remove('bg-white');
+                    dot.classList.add('bg-white/50');
+                    if (idx === activeIndex) {
+                        dot.classList.remove('bg-white/50');
+                        dot.classList.add('bg-white');
                     }
                 });
-            }, { threshold: 0.1 });
+            } else {
+                // Initialize all dots active state (index 0)
+                document.querySelectorAll('.group').forEach(group => {
+                    const dots = group.querySelectorAll('div[class*="dot-"]');
+                    if (dots.length > 0) {
+                        dots[0].classList.remove('bg-white/50');
+                        dots[0].classList.add('bg-white');
+                    }
+                });
+            }
+        }
 
-            document.querySelectorAll('#product-grid .product-card').forEach(card => observer.observe(card));
+        // --- FUNCIONES EXISTENTES ---
 
-            const particleIcons = ['fa-star', 'fa-snowflake'];
-            for (let i = 0; i < 40; i++) {
-                const particle = document.createElement('i');
-                const icon = particleIcons[Math.floor(Math.random() * particleIcons.length)];
-                const color = icon === 'fa-star' ? 'var(--gold)' : '#d4af37'; /* Nieve en dorado para la nueva paleta */
-                particle.className = `particle fa-solid ${icon}`;
-                particle.style.color = color;
-                particle.style.left = `${Math.random() * 100}vw`;
-                particle.style.top = `${Math.random() * 200}vh`;
-                particle.style.animationDuration = `${Math.random() * 8 + 7}s`;
-                particle.style.animationDelay = `${Math.random() * 7}s`;
-                particle.style.fontSize = `${Math.random() * 8 + 8}px`;
-                particleContainer.appendChild(particle);
+        function selectTone(element, toneName) {
+            const productContainer = element.closest('.group');
+            if (productContainer) {
+                const toneNameElement = productContainer.querySelector('.selected-tone-name');
+                if (toneNameElement) toneNameElement.textContent = toneName;
+
+                const swatchesContainer = element.parentElement;
+                const swatches = swatchesContainer.querySelectorAll('.swatch');
+                swatches.forEach(swatch => swatch.classList.remove('active', 'border-2', 'border-brand-dark', 'scale-110'));
+                element.classList.add('active');
+            }
+        }
+
+        function switchView(viewName) {
+            const individualView = document.getElementById('vista-individual');
+            const kitsView = document.getElementById('vista-kits');
+            const kitDetailView = document.getElementById('vista-kit-detalle');
+            const btnIndividual = document.getElementById('btn-individual');
+            const btnKits = document.getElementById('btn-kits');
+
+            kitDetailView.classList.add('hidden', 'opacity-0');
+
+            if (viewName === 'individual') {
+                individualView.classList.remove('hidden');
+                setTimeout(() => individualView.classList.remove('opacity-0'), 50);
+
+                kitsView.classList.add('opacity-0');
+                setTimeout(() => kitsView.classList.add('hidden'), 500);
+
+                btnIndividual.classList.add('bg-brand-dark', 'text-white', 'shadow-md');
+                btnIndividual.classList.remove('text-gray-500');
+                btnKits.classList.remove('bg-brand-dark', 'text-white', 'shadow-md');
+                btnKits.classList.add('text-gray-500');
+            } else {
+                kitsView.classList.remove('hidden');
+                setTimeout(() => kitsView.classList.remove('opacity-0'), 50);
+
+                individualView.classList.add('opacity-0');
+                setTimeout(() => individualView.classList.add('hidden'), 500);
+
+                btnKits.classList.add('bg-brand-dark', 'text-white', 'shadow-md');
+                btnKits.classList.remove('text-gray-500');
+                btnIndividual.classList.remove('bg-brand-dark', 'text-white', 'shadow-md');
+                btnIndividual.classList.add('text-gray-500');
+            }
+        }
+
+        function openKitDetail(kitId) {
+            const kit = kitsDB[kitId];
+            if (!kit) return;
+
+            const kitsView = document.getElementById('vista-kits');
+            const detailView = document.getElementById('vista-kit-detalle');
+            const grid = document.getElementById('kit-products-grid');
+
+            kitsView.classList.add('opacity-0');
+            setTimeout(() => {
+                kitsView.classList.add('hidden');
+
+                document.getElementById('kit-detail-title').innerText = kit.title;
+                document.getElementById('kit-detail-price').innerText = kit.price;
+                document.getElementById('kit-detail-desc').innerText = kit.desc;
+
+                grid.innerHTML = '';
+                kit.products.forEach((prod, index) => {
+                    // Logic to handle images inside Kit Detail (Simplified to show first image only for now, but scalable)
+                    const mainImage = prod.images ? prod.images[0] : prod.img; // Fallback for old data structure
+
+                    let colorsHtml = '';
+                    prod.colors.forEach((col, idx) => {
+                        const activeClass = idx === 0 ? 'active' : '';
+                        colorsHtml += `<button class="w-6 h-6 rounded-full swatch ${activeClass}" style="background-color: ${col.hex};" onclick="selectTone(this, '${col.name}')"></button>`;
+                    });
+
+                    const cardHtml = `
+                        <div class="group">
+                            <div class="relative overflow-hidden bg-white rounded-t-xl h-80 w-full mb-4">
+                                <img src="${mainImage}" alt="${prod.name}" class="h-full w-full object-cover group-hover:scale-105 transition duration-700 ease-in-out">
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-serif mb-1">${prod.name}</h3>
+                                <div class="mb-4">
+                                    <p class="text-xs uppercase tracking-widest text-gray-400 mb-2">Tono: <span class="text-brand-dark font-medium selected-tone-name">${prod.tone}</span></p>
+                                    <div class="flex space-x-2">
+                                        ${colorsHtml}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    grid.innerHTML += cardHtml;
+                });
+
+                detailView.classList.remove('hidden');
+                window.scrollTo(0, document.getElementById('catalogo').offsetTop - 100);
+                setTimeout(() => detailView.classList.remove('opacity-0'), 50);
+
+            }, 500);
+        }
+
+        function closeKitDetail() {
+            const kitsView = document.getElementById('vista-kits');
+            const detailView = document.getElementById('vista-kit-detalle');
+
+            detailView.classList.add('opacity-0');
+            setTimeout(() => {
+                detailView.classList.add('hidden');
+                kitsView.classList.remove('hidden');
+                setTimeout(() => kitsView.classList.remove('opacity-0'), 50);
+            }, 500);
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-md');
+                nav.classList.replace('h-20', 'h-16');
+            } else {
+                nav.classList.remove('shadow-md');
+                nav.classList.replace('h-16', 'h-20');
             }
         });
+
+        // INICIALIZAR RENDERIZADO
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+        });
+
     </script>
 </body>
+
 </html>
