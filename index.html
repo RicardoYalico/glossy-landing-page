@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glossy.pe | Catálogo de Tonos</title>
+    <title>Glossy.pe | Catálogo de Maquillaje</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
@@ -100,6 +100,9 @@
                         class="text-brand-dark hover:text-brand-accent transition font-light uppercase tracking-widest text-sm">Colección</a>
                     <a href="#" onclick="switchView('kits'); return false;"
                         class="text-brand-dark hover:text-brand-accent transition font-light uppercase tracking-widest text-sm">Kits</a>
+                    <!-- Agregado link a envios -->
+                    <a href="#envios"
+                        class="text-brand-dark hover:text-brand-accent transition font-light uppercase tracking-widest text-sm">Envíos</a>
                 </div>
                 <div>
                     <a href="#footer"
@@ -122,12 +125,11 @@
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in-up">
             <h1 class="text-5xl md:text-7xl font-serif text-brand-dark mb-6">Redefine tu Esencia</h1>
             <p class="max-w-2xl mx-auto text-lg md:text-xl font-light text-gray-600 mb-10">
-                Una colección curada de tonos diseñada para realzar tu belleza natural. Texturas ligeras, pigmentos
-                profundos y acabados etéreos.
+                Una colección completa de maquillaje diseñada para realzar tu belleza natural. Desde bases perfectas hasta labiales vibrantes y sombras etéreas.
             </p>
             <a href="#catalogo"
                 class="inline-block border border-brand-dark text-brand-dark px-10 py-3 uppercase tracking-widest text-sm hover:bg-brand-dark hover:text-white transition duration-300">
-                Descubrir Tonos
+                Ver Catálogo
             </a>
         </div>
     </header>
@@ -248,6 +250,53 @@
 
     </main>
 
+    <!-- NUEVA SECCIÓN: MÉTODOS DE ENTREGA -->
+    <section id="envios" class="py-24 bg-brand-pink/20 border-t border-brand-pink/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Title -->
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-serif text-brand-dark mb-4">Métodos de Entrega</h2>
+                <p class="text-gray-600 font-light max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
+                    Llevamos la esencia Glossy hasta la puerta de tu casa. Elige la opción que mejor se adapte a tu ritmo de vida.
+                </p>
+            </div>
+
+            <!-- Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm text-center hover:shadow-md transition duration-300 border border-brand-pink/10">
+                    <div class="inline-flex items-center justify-center w-14 h-14 bg-brand-nude rounded-full mb-6 text-brand-dark">
+                        <i data-lucide="truck" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-serif text-xl mb-3 text-brand-dark">Envío Standard</h3>
+                    <p class="text-sm text-gray-500 font-light leading-relaxed">
+                        Llegamos a todo el país. Tu pedido viajará seguro y llegará en un plazo estimado de <strong>3 a 5 días hábiles</strong>.
+                    </p>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm text-center hover:shadow-md transition duration-300 border border-brand-pink/10">
+                    <div class="inline-flex items-center justify-center w-14 h-14 bg-brand-nude rounded-full mb-6 text-brand-dark">
+                        <i data-lucide="zap" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-serif text-xl mb-3 text-brand-dark">Express Lima</h3>
+                    <p class="text-sm text-gray-500 font-light leading-relaxed">
+                        ¿Lo necesitas urgente? Entrega al día siguiente en Lima Metropolitana para pedidos confirmados antes de la 1:00 PM.
+                    </p>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm text-center hover:shadow-md transition duration-300 border border-brand-pink/10">
+                    <div class="inline-flex items-center justify-center w-14 h-14 bg-brand-nude rounded-full mb-6 text-brand-dark">
+                        <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-serif text-xl mb-3 text-brand-dark">Recojo en Tienda</h3>
+                    <p class="text-sm text-gray-500 font-light leading-relaxed">
+                        Compra online y recoge sin costo adicional en nuestros puntos de venta autorizados. Listo en 24 horas.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer id="footer" class="bg-brand-dark text-brand-nude py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -295,23 +344,56 @@
         // Define aquí los metadatos de las categorías.
         // La clave (ej: 'labios') debe coincidir con el campo 'category' en productsDB.
         const categoriesDB = {
-            'labios': {
-                title: 'Labios Velvet',
-                subtitle: 'Acabados mate y satinados de larga duración.',
-                order: 1
-            },
-            'rostro': {
-                title: 'Rostro Perfecto',
-                subtitle: 'Bases, correctores y rubores para una piel radiante.',
-                order: 2
-            },
-            'ojos': {
-                title: 'Mirada Profunda',
-                subtitle: 'Sombras y delineadores para definir tu estilo.',
-                order: 3
-            }
-            // Puedes agregar más categorías aquí:
-            // 'piel': { title: 'Cuidado de Piel', subtitle: '...', order: 4 }
+        'Fijadores y Removedor': {
+            title: 'Fijadores y Removedor',
+            subtitle: 'Productos para sellar, prolongar y remover tu maquillaje.',
+            order: 1
+        },
+        'Fragancias': {
+            title: 'Fragancias',
+            subtitle: 'Aromas únicos que acompañan tu estilo todos los días.',
+            order: 2
+        },
+        'Skincare': {
+            title: 'Skincare',
+            subtitle: 'Cuidado facial para una piel sana y luminosa.',
+            order: 3
+        },
+        'Iluminador': {
+            title: 'Iluminadores',
+            subtitle: 'Resalta los puntos clave de tu rostro con luz natural.',
+            order: 4
+        },
+        'Rubor': {
+            title: 'Rubores',
+            subtitle: 'Aporta color y frescura a tus mejillas.',
+            order: 5
+        },
+        'Sombras': {
+            title: 'Sombras',
+            subtitle: 'Colores y texturas para crear miradas únicas.',
+            order: 6
+        },
+        'Labiales': {
+            title: 'Labiales',
+            subtitle: 'Acabados mate, satinados y glossy para cada ocasión.',
+            order: 7
+        },
+        'Polvos, corrector y bases': {
+            title: 'Polvos, corrector y bases',
+            subtitle: 'Bases, correctores y polvos para un acabado perfecto.',
+            order: 8
+        },
+        'Rímel, delineador y cejas': {
+            title: 'Rímel, delineador y cejas',
+            subtitle: 'Define y realza tu mirada con precisión.',
+            order: 9
+        },
+        'Uñas': {
+            title: 'Uñas',
+            subtitle: 'Esmaltes y tratamientos para manos impecables.',
+            order: 10
+        }
         };
 
         // ==========================================
@@ -321,10 +403,10 @@
             // --- LABIOS ---
             {
                 id: 'p1',
-                category: 'labios',
-                name: 'Base gagk',
-                price: '$24.00',
-                desc: 'Fórmula hidratante con acabado mate suave. No reseca.',
+                category: 'Polvos, corrector y bases',
+                name: 'Base Cushion - Gagk',
+                price: 'S/ 18.00',
+                desc: 'Base cushion coreana con cobertura ligera a media que unifica el tono de la piel dejando un acabo natural y luminoso. Su fórmula hidratante se funde fácilmente, proporcionando confort durante todo el día y un look fresco y radiante.',
                 tag: 'Best Seller',
                 images: [
                     '/images/1.Base gagk/Gemini_Generated_Image_56jqi056jqi056jq (1).png',
@@ -338,10 +420,10 @@
             },
             {
                 id: 'p2',
-                category: 'labios',
-                name: 'BROW REVEL',
-                price: '$18.00',
-                desc: 'Brillo de alto impacto sin sensación pegajosa.',
+                category: 'Rimel, delineador y aplicador para cejas',
+                name: 'Brown Set ceja - Revel',
+                price: 'S/ 5.00',
+                desc: 'Define y fija las cejas con un acabado natural, manteniéndolas prolijas todo el día.',
                 tag: '',
                 images: [
                     '/images/2.BROWN REVEL/Gemini_Generated_Image_nzfzjwnzfzjwnzfz.png',
@@ -356,10 +438,10 @@
             },
             {
                 id: 'p3',
-                category: 'labios',
-                name: 'Corrector Kevin & Coco',
-                price: '$16.00',
-                desc: 'Delineador cremoso para definir el contorno.',
+                category: 'Polvos, corrector y bases',
+                name: 'Corrector - Kevin & Coco',
+                price: 'S/ 7.00',
+                desc: 'Cobertura impecable y acabado natural, ideal para camuflar imperfecciones sin resecar. Difumina poros y textura dejando la piel suave y uniforme. Su fórmula hidratante con ácido hialurónico y escualeno no marca líneas y aporta una luminosidad sutil.',
                 tag: '',
                 images: [
                     '/images/3.Corrector kevin and coco/Gemini_Generated_Image_mlbvklmlbvklmlbv.png',
@@ -376,9 +458,9 @@
             // --- ROSTRO ---
             {
                 id: 'p4',
-                category: 'rostro',
-                name: 'Crema Hidratante',
-                price: '$32.00',
+                category: 'Skincare',
+                name: 'Crema Facial de día - Kevin & coco',
+                price: 'S/ 15.00',
                 desc: 'Cobertura ligera con efecto \'segunda piel\'.',
                 tag: '',
                 images: [
@@ -392,10 +474,10 @@
             },
             {
                 id: 'p5',
-                category: 'rostro',
+                category: 'Rimel, delineador y aplicador para cejas',
                 name: 'Delineador y Rimel Kevin & Coco',
-                price: '$22.00',
-                desc: 'Rubor en barra multifuncional para mejillas y labios.',
+                price: 'S/ 12.00',
+                desc: 'Incluye delineador y rímel para lograr una mirada intensa y definida con facilidad.',
                 tag: '',
                 images: [
                     '/images/5.delineador y rimel kevin and coco/imagen 1.webp',
@@ -409,10 +491,10 @@
             // --- OJOS ---
             {
                 id: 'p6',
-                category: 'ojos',
-                name: '6',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                category: 'Rubor',
+                name: 'Duo de Rubor y Lipgloss Butterfly',
+                price: 'S/ 12.00',
+                desc: 'Dúo práctico que incluye un lipgloss tipo lip oil y un rubor en crema en tonos cálidos y favorecedores. Sus fórmulas son ligeras, fáciles de difuminar y dejan un acabado natural y fresco, ideal para un look diario',
                 tag: 'Trending',
                 images: [
                     '/images/6.Duo de lipgloss y rubor kevin and coco/Gemini_Generated_Image_irt3lairt3lairt3.png',
@@ -426,10 +508,10 @@
             },
             {
                 id: 'p7',
-                category: 'ojos',
-                name: '7',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                category: 'Labiales',
+                name: 'Set Labial en barra y lipgloss - Kevin & Coco',
+                price: 'S/ 8.00',
+                desc: 'Duo de labial cremoso pigmentado y gloss ultra-brillante que ofrece color intenso y un acabado efecto glass; se pueden usar juntos o por separado para un look versátil y glamuroso.',
                 tag: 'Trending',
                 images: [
                     '/images/7.Duo labiales/Gemini_Generated_Image_oget5ioget5ioget (1).png',
@@ -445,10 +527,10 @@
             },
             {
                 id: 'p8',
-                category: 'ojos',
-                name: '8',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                category: 'Fijadores y Removedor',
+                name: 'Fijador Kevin & Coco',
+                price: 'S/ 12.00',
+                desc: 'Spray fijador ligero que prolonga la duración del maquillaje, controla los brillos y deja la piel fresca con un acabado natural. Ideal para todo tipo de piel, sin sensación pegajosa.',
                 tag: 'Trending',
                 images: [
                     '/images/8.Fijador Kevin and coco/Gemini_Generated_Image_1069cx1069cx1069 (1).png',
@@ -461,10 +543,10 @@
             },
             {
                 id: 'p9',
-                category: 'ojos',
-                name: '9',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                category: 'Fijadores y Removedor ',
+                name: 'Fijador Kiss Beauty',
+                price: 'S/ 12.00',
+                desc: 'Un spray ligero y eficaz que fija el maquillaje prolongando su duración durante todo el día. Su fórmula ayuda a controlar el brillo, manteniendo la piel con un acabado natural, fresco e impecable por horas.',
                 tag: 'Trending',
                 images: [
                     '/images/9.FIJADOR KISS BEAUTY/Gemini_Generated_Image_29sgge29sgge29sg.png',
@@ -477,10 +559,10 @@
             },
             {
                 id: 'p10',
-                category: 'ojos',
-                name: '10',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                category: 'Labiales',
+                name: 'Labial Crystal Kiss Gloss - Kevin & Coco',
+                price: 'S/ 6.00',
+                desc: 'Labial con efecto aterciopelado matte que combina el brillo sutil del gloss con un acabado suave y sofisticado. Aporta color intenso y confort en los labios sin sensación pegajosa, para un look elegante y moderno.',
                 tag: 'Trending',
                 images: [
                     '/images/10.Labial aterciopelado/Gemini_Generated_Image_gv0abngv0abngv0a (1).png',
@@ -498,10 +580,10 @@
             },
             {
                 id: 'p11',
-                category: 'ojos',
-                name: '11',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                category: 'Labiales',
+                name: 'Labial Matte ultra - Kiss Beauty',
+                price: 'S/ 4.50',
+                desc: 'Labial de acabado mate intenso con pigmentación duradera y textura suave que se desliza fácilmente en los labios. Proporciona un color vibrante y cómodo durante todo el día',
                 tag: 'Trending',
                 images: [
                     '/images/11.Labial matte kiss beauty/Gemini_Generated_Image_589ho5589ho5589h.png',
@@ -521,10 +603,10 @@
             },
             {
                 id: 'p12',
-                category: 'ojos',
-                name: '12',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                category: 'Labiales',
+                name: 'Labial Love Lip Gloss efecto matte - Kevin & Coco',
+                price: 'S/ 3.50',
+                desc: 'Lipgloss de larga duración, resistente al agua y a las manchas. Su fórmula hidratante con aceite de jojoba y vitamina E cuida los labios, mientras aporta un brillo efecto cristal sin sensación pegajosa. Ideal para un look cómodo y duradero.',
                 tag: 'Trending',
                 images: [
                     '/images/12.Lipgloss corazon/Gemini_Generated_Image_slb051slb051slb0 (1).png',
@@ -545,10 +627,10 @@
             {
                 id: 'p13',
                 category: 'ojos',
-                name: '13',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
-                tag: 'Trending',
+                name: 'LIPGLOSS WATER LIP - GAGK',
+                price: 'S/ 7.00',
+                desc: 'Lipgloss que aporta brillo efecto agua y deja los labios suaves y luminosos. Su textura ligera e hidratante se desliza fácilmente, brindando un acabado fresco y jugoso sin sensación pegajosa, ideal para uso diario',
+                tag: '',
                 images: [
                     '/images/13.Lipgloss gagk/Gemini_Generated_Image_ouoddxouoddxouod.png',
                     '/images/13.Lipgloss gagk/tono2.png',
@@ -562,11 +644,11 @@
             },
             {
                 id: 'p14',
-                category: 'ojos',
-                name: '14',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
-                tag: 'Trending',
+                category: 'Labiales',
+                name: 'Balsamo hidratante de labios - Jelly Pocket Lip Jam Dupe Sheglam - Yeahkiss',
+                price: 'S/ 5.00',
+                desc: 'Bálsamo con textura suave y jugosa que hidrata y nutre los labios, dejando un acabado brillante y saludable. Ideal para uso diario y para mantener los labios suaves y protegidos',
+                tag: '',
                 images: [
                     '/images/14.lipjam yeahkiss/Gemini_Generated_Image_leod7vleod7vleod.png',
                     '/images/14.lipjam yeahkiss/Gemini_Generated_Image_4kzprs4kzprs4kzp (1).png',
@@ -584,9 +666,9 @@
             {
                 id: 'p15',
                 category: 'ojos',
-                name: '15',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                name: 'Fijador Matificante de arroz - Magic Shop',
+                price: 'S/ 12.50',
+                desc: 'Controla el brillo, absorbe el exceso de grasa y fija tu maquillaje, dejando un acabado mate natural y suave. Ideal para pieles mixtas o grasas.',
                 tag: 'Trending',
                 images: [
                     '/images/15.Matificante de arroz - Magic shop/Gemini_Generated_Image_sr9qd5sr9qd5sr9q.png',
@@ -598,10 +680,10 @@
             },
             {
                 id: 'p16',
-                category: 'ojos',
-                name: '16',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                category: 'Polvos, corrector y bases',
+                name: 'Polvo traslucido - Revel',
+                price: 'S/ 7.00',
+                desc: 'Polvo compacto ligero que fija, matifica y deja un acabado natural y suave.',
                 tag: 'Trending',
                 images: [
                     '/images/16.Polvo traslucido revel/Gemini_Generated_Image_1bnlre1bnlre1bnl.png',
@@ -614,11 +696,11 @@
             },
             {
                 id: 'p17',
-                category: 'ojos',
-                name: '17',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
-                tag: 'Trending',
+                category: 'Fijadores y Removedor',
+                name: 'Removedor Biofasico - Kevin & Coco',
+                price: 'S/ 15.00',
+                desc: 'Desmaquillante suave y eficaz que elimina el maquillaje. Limpia a profundidad y deja el rostro fresco, limpio y confortable. Ideal para uso diario y apto para todo tipo de piel.',
+                tag: '',
                 images: [
                     '/images/17.Removedor Kevin and coco/Gemini_Generated_Image_xluz02xluz02xluz.png',
                 ],
@@ -629,10 +711,10 @@
             },
             {
                 id: 'p18',
-                category: 'ojos',
-                name: '18',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                category: 'Rubor',
+                name: 'Rubor líquido - Dupe de Sheglam  - Kevin & Coco',
+                price: 'S/ 9.00',
+                desc: 'Rubor líquido de textura cremosa y acabado mate, altamente pigmentado y de larga duración con sensación liviana en la piel. Incluye aplicador para una aplicación fácil y un acabo natural. Disponible en varios tonos.',
                 tag: 'Trending',
                 images: [
                     '/images/18.rubor liquido/rubor 2.webp',
@@ -650,10 +732,10 @@
             },
             {
                 id: 'p19',
-                category: 'ojos',
-                name: '19',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                category: 'Fragancias',
+                name: 'Serum 4 en 1 - Blianlian 30 ml',
+                price: 'S/ 12.00',
+                desc: 'Potente sérum facial 4 en 1 formulado con Ácido Hialurónico, Niacinamida y Vitaminas C y E, ideal para el cuidado diario de la piel. Ayuda a hidratar profundamente, mejorar la luminosidad, unificar el tono y aportar protección antioxidante, dejando el rostro suave, fresco y revitalizado.',
                 tag: 'Trending',
                 images: [
                     '/images/19.Serum 4 en 1/Gemini_Generated_Image_u6m9e2u6m9e2u6m9.png',
@@ -665,10 +747,10 @@
             },
             {
                 id: 'p20',
-                category: 'ojos',
-                name: '20',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                category: 'Skincare',
+                name: 'Serum 30 ml - Kevin & coco',
+                price: 'S/ 12.00',
+                desc: 'Sérum facial ligero y de rápida absorción que hidrata, ilumina y mejora la textura de la piel. Ayuda a unificar el tono, suavizar líneas finas y dejar el rostro más fresco y radiante.',
                 tag: 'Trending',
                 images: [
                     '/images/20.Serum kevin and coco/serum.webp',
@@ -680,10 +762,10 @@
             },
             {
                 id: 'p21',
-                category: 'ojos',
-                name: '21',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                category: 'Sombras',
+                name: 'Sombras Electric- Lofshe',
+                price: 'S/ 12.00',
+                desc: 'Paleta de sombras con tonos cálidos y vibrantes, que combina acabados mate, satinados y glitter para crear looks naturales o intensos.',
                 tag: 'Trending',
                 images: [
                     '/images/21.Sombra Electric/Gemini_Generated_Image_dzyur7dzyur7dzyu.png',
@@ -695,10 +777,10 @@
             },
             {
                 id: 'p22',
-                category: 'ojos',
-                name: '22',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                category: 'Labiales',
+                name: 'Labial líquido Matte teddy - YeAhKiss',
+                price: 'S/ 9.00',
+                desc: 'Labial líquido de acabado mate con tono cálido y versátil, inspirado en Teddy de Maybelline. Fórmula pigmentada y duradera que no se transfiere, ideal para un look sofisticado y natural.',
                 tag: 'Trending',
                 images: [
                     '/images/22.TEDDY/Gemini_Generated_Image_25vyep25vyep25vy.png',
@@ -714,10 +796,10 @@
             },
             {
                 id: 'p23',
-                category: 'ojos',
-                name: '23',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                category: 'Labiales',
+                name: 'Tinta Candela- Nossa',
+                price: 'S/ 5.00',
+                desc: 'Tinta líquida con color intenso y duradero que se desliza suavemente en los labios, dejando un acabado vibrante y definido',
                 tag: 'Trending',
                 images: [
                     '/images/23.Tinta Candela/Gemini_Generated_Image_go1tekgo1tekgo1t.png',
@@ -735,10 +817,10 @@
             },
             {
                 id: 'p24',
-                category: 'ojos',
-                name: '24',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                category: 'Labiales',
+                name: 'Tinta The game - Jarusa',
+                price: 'S/ 5.00',
+                desc: 'Tinta líquida con pigmento intenso que ofrece color vibrante y alta duración. Su fórmula se desliza fácil y fija bien, dejando un acabado definido y duradero en los labios',
                 tag: 'Trending',
                 images: [
                     '/images/24.Tinta the game Jarusa/Gemini_Generated_Image_eld8fheld8fheld8.png',
@@ -756,10 +838,10 @@
             },
             {
                 id: 'p25',
-                category: 'ojos',
-                name: '25',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                category: 'Uñas',
+                name: 'Uñas press on ojo de gato - Nossa',
+                price: 'S/ 6.00',
+                desc: 'Uñas postizas press-on con diseño ojo de gato que crea un efecto multidimensional y elegante. Fáciles de aplicar, duraderas y listas para usar, dan un acabado moderno y sofisticado sin necesidad de ir al salón. Perfectas para un look impactante al instante.',
                 tag: 'Trending',
                 images: [
                     '/images/25.uñas nossa/Gemini_Generated_Image_to56g8to56g8to56.png',
@@ -778,10 +860,10 @@
             },
             {
                 id: 'p26',
-                category: 'ojos',
-                name: '26',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                category: 'Fragancias',
+                name: 'Body splash V.V. Love Dupe Sol de Janeiro',
+                price: 'S/ 15.00',
+                desc: 'Mellow Melody: Fragancia dulce y cálida con notas de chocolate, caramelo y miel. D /Cherry Delight – Fragancia dulce y frutal con notas de cereza/Fruit Symphony -  Aroma frutal dulce y jugoso, con notas vibrantes que recuerdan a frutas frescas y caramelizadas.',
                 tag: 'Trending',
                 images: [
                     '/images/26.Colonia sol de rio/Gemini_Generated_Image_qt8n45qt8n45qt8n.png',
@@ -794,11 +876,11 @@
             },
             {
                 id: 'p27',
-                category: 'ojos',
-                name: '27',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
-                tag: 'Trending',
+                category: 'Labiales',
+                name: 'Labiales - Dorage',
+                price: 'S/ 2.00',
+                desc: 'Colección de 12 labiales en una mezcla de acabados mate y con brillo, con colores variados para crear looks versátiles.',
+                tag: '',
                 images: [
                     '/images/27.Labial Dorage/Gemini_Generated_Image_f78tlff78tlff78t.png',
                     '/images/27.Labial Dorage/tono 2.jpg',
@@ -815,10 +897,10 @@
             },
             {
                 id: 'p28',
-                category: 'ojos',
-                name: '28',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
+                category: 'Skincare',
+                name: 'Mascarilla variado - Bioquia',
+                price: 'S/ 1.50',
+                desc: 'Mascarillas faciales en diferentes versiones según la necesidad de tu piel: retinol para revitalizar, avena para calmar, green tea para refrescar y baba de caracol para hidratar y reparar. Dejan la piel suave, fresca y luminosa, ideales para el cuidado diario.',
                 tag: 'Trending',
                 images: [
                     '/images/28.Mascarillas/Gemini_Generated_Image_hjzlj4hjzlj4hjzl.png',
@@ -834,11 +916,11 @@
             },
             {
                 id: 'p29',
-                category: 'ojos',
-                name: '29',
-                price: '$45.00',
-                desc: '12 sombras ultra pigmentadas en acabados mate y metálico.',
-                tag: 'Trending',
+                category: 'Rubor',
+                name: 'Rubor en barra - Dupe Rhode - M LUNDO',
+                price: 'S/ 5.00',
+                desc: 'Rubor en barra cremoso y retráctil inspirado en el famoso pocket blush de Rhode con pigmentación intensa que se difumina súper fácil para un toque de color natural en tus mejillas.',
+                tag: '',
                 images: [
                     '/images/29.rubor dupe/Gemini_Generated_Image_cneu4gcneu4gcneu.png',
                     '/images/29.rubor dupe/tonos, disponible tono 3.ffs7r4-1738878796906',
@@ -852,6 +934,36 @@
                     { name: 'Scarlet Kiss', hex: '#EB454F' }
                 ],
                 defaultTone: 'Raspberry Pink'
+            },
+            {
+                id: 'p30',
+                category: 'Iluminador',
+                name: 'Kit duo 3 en 1 Iluminador, rubor y sombra - Kevin & Coco',
+                price: 'S/ 10.00',
+                desc: 'Kit versátil 3 en 1 que funciona como iluminador, rubor y sombra, ideal para crear looks completos con un solo producto. Cada paquete incluye 2 unidades del kit.',
+                tag: 'Trending',
+                images: [
+                    '/images/30.3 en 1 polvos/imagen 1.avif'
+                ],
+                tones: [
+                    { name: 'Withe', hex: '#ffffff' }
+                ],
+                defaultTone: 'Withe'
+            },
+            {
+                id: 'p31',
+                category: 'Labiales',
+                name: 'Labial mousse barra matte - Italia deluxe',
+                price: 'S/ 17.00',
+                desc: 'Labial en barra con acabado mousse y efecto mate, textura ligera y suave que se desliza fácilmente, dejando un color intenso y duradero sin sensación pegajosa. Ideal para un look moderno y elegante. Disponible 23 sweet chocolate',
+                tag: 'Trending',
+                images: [
+                    '/images/31. Labial Italia Deluxe/image.png'
+                ],
+                tones: [
+                    { name: 'Sweet Chocolate', hex: '#8C4239' }
+                ],
+                defaultTone: 'Sweet Chocolate'
             }
         ];
 
