@@ -83,6 +83,14 @@
             background-color: rgba(255, 255, 255, 0.95);
             transform: scale(1.1);
         }
+        
+        /* Efecto hover para las imágenes del intro del kit */
+        .mood-img {
+            transition: transform 0.7s ease;
+        }
+        .mood-container:hover .mood-img {
+            transform: scale(1.03);
+        }
     </style>
 </head>
 
@@ -100,7 +108,6 @@
                         class="text-brand-dark hover:text-brand-accent transition font-light uppercase tracking-widest text-sm">Colección</a>
                     <a href="#" onclick="switchView('kits'); return false;"
                         class="text-brand-dark hover:text-brand-accent transition font-light uppercase tracking-widest text-sm">Kits</a>
-                    <!-- Agregado link a envios -->
                     <a href="#envios"
                         class="text-brand-dark hover:text-brand-accent transition font-light uppercase tracking-widest text-sm">Envíos</a>
                 </div>
@@ -125,7 +132,7 @@
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in-up">
             <h1 class="text-5xl md:text-7xl font-serif text-brand-dark mb-6">Redefine tu Esencia</h1>
             <p class="max-w-2xl mx-auto text-lg md:text-xl font-light text-gray-600 mb-10">
-                Una colección completa de maquillaje diseñada para realzar tu belleza natural. Desde bases perfectas hasta labiales vibrantes y sombras etéreas.
+                Una colección completa de maquillaje diseñada para realzar tu belleza natural.
             </p>
             <a href="#catalogo"
                 class="inline-block border border-brand-dark text-brand-dark px-10 py-3 uppercase tracking-widest text-sm hover:bg-brand-dark hover:text-white transition duration-300">
@@ -153,10 +160,10 @@
 
         <!-- VISTA 1: Individual Products (Generado Dinámicamente) -->
         <div id="vista-individual" class="transition-opacity duration-500">
-            <!-- El contenido se inyectará aquí mediante JavaScript basándose en categoriesDB y productsDB -->
+            <!-- El contenido se inyectará aquí mediante JavaScript -->
         </div>
 
-        <!-- VISTA 2: LISTA DE KITS (Galería simplificada) -->
+        <!-- VISTA 2: LISTA DE KITS (Generado Dinámicamente) -->
         <div id="vista-kits" class="hidden opacity-0 transition-opacity duration-500">
             <div class="flex items-end justify-between mb-12 border-b border-brand-pink/50 pb-4">
                 <div>
@@ -166,62 +173,12 @@
                 <span class="text-sm text-gray-400 hidden sm:block">EDICIÓN LIMITADA</span>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-
-                <!-- KIT CARD 1 -->
-                <div class="group cursor-pointer" onclick="openKitDetail('nude')">
-                    <div class="relative overflow-hidden bg-white rounded-xl shadow-md h-96 w-full mb-6">
-                        <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                            alt="The Nude Essentials Kit"
-                            class="h-full w-full object-cover transition duration-700 ease-in-out group-hover:scale-105">
-                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition duration-300"></div>
-                        <div class="absolute bottom-6 left-6 right-6">
-                            <button
-                                class="w-full bg-white/90 backdrop-blur text-brand-dark py-3 uppercase tracking-widest text-xs font-semibold hover:bg-brand-dark hover:text-white transition duration-300">
-                                Ver Contenido del Kit
-                            </button>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <h3 class="text-2xl font-serif mb-2">The Nude Essentials Kit</h3>
-                        <p class="text-gray-500 font-light mb-2 text-sm max-w-sm mx-auto">La colección definitiva de 12
-                            productos para lograr una piel de vidrio y tonos neutros perfectos.</p>
-                        <div class="flex justify-center items-center gap-3">
-                            <span class="text-xl font-serif text-brand-dark">$65.00</span>
-                            <span class="text-xs text-gray-400 line-through">$145.00 Value</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- KIT CARD 2 -->
-                <div class="group cursor-pointer" onclick="openKitDetail('glam')">
-                    <div class="relative overflow-hidden bg-white rounded-xl shadow-md h-96 w-full mb-6">
-                        <img src="https://images.unsplash.com/photo-1599305090598-fe179d501227?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                            alt="Full Glam Night Kit"
-                            class="h-full w-full object-cover transition duration-700 ease-in-out group-hover:scale-105">
-                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition duration-300"></div>
-                        <div class="absolute bottom-6 left-6 right-6">
-                            <button
-                                class="w-full bg-white/90 backdrop-blur text-brand-dark py-3 uppercase tracking-widest text-xs font-semibold hover:bg-brand-dark hover:text-white transition duration-300">
-                                Ver Contenido del Kit
-                            </button>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <h3 class="text-2xl font-serif mb-2">Full Glam Night Kit</h3>
-                        <p class="text-gray-500 font-light mb-2 text-sm max-w-sm mx-auto">10 esenciales de alto impacto
-                            para una noche inolvidable. Ojos ahumados y labios rojos.</p>
-                        <div class="flex justify-center items-center gap-3">
-                            <span class="text-xl font-serif text-brand-dark">$85.00</span>
-                            <span class="text-xs text-gray-400 line-through">$180.00 Value</span>
-                        </div>
-                    </div>
-                </div>
-
+            <!-- AQUÍ SE INYECTAN LAS CARDS DE KITS DINÁMICAMENTE -->
+            <div id="kits-grid" class="grid grid-cols-1 md:grid-cols-2 gap-12">
             </div>
         </div>
 
-        <!-- VISTA 3: DETALLE DEL KIT (Grid de productos dentro del kit) -->
+        <!-- VISTA 3: DETALLE DEL KIT (Intro + Grid de productos) -->
         <div id="vista-kit-detalle" class="hidden opacity-0 transition-opacity duration-500">
             <!-- Back Button -->
             <div class="mb-8">
@@ -231,15 +188,22 @@
                 </button>
             </div>
 
-            <!-- Kit Header Info (Dynamic) -->
-            <div class="text-center mb-16 border-b border-brand-pink/30 pb-10">
-                <h2 id="kit-detail-title" class="text-4xl md:text-5xl font-serif mb-4 text-brand-dark">Nombre del Kit
-                </h2>
-                <p id="kit-detail-desc" class="text-lg font-light text-gray-600 max-w-2xl mx-auto mb-6">Descripción del
-                    kit.</p>
-                <div class="inline-block border border-brand-dark px-6 py-2">
-                    <span id="kit-detail-price" class="text-2xl font-serif text-brand-dark">$00.00</span>
-                </div>
+            <!-- SECCIÓN NUEVA: INTRODUCCIÓN VISUAL DEL KIT (Moodboard) -->
+            <div id="kit-intro-section" class="mb-20">
+                <!-- Se inyecta dinámicamente -->
+            </div>
+
+            <!-- Separador -->
+            <div class="flex items-center justify-center mb-12">
+                <div class="h-px bg-brand-pink/50 w-full max-w-xs"></div>
+                <span class="px-4 text-brand-dark font-serif italic text-lg">Contenido del Kit</span>
+                <div class="h-px bg-brand-pink/50 w-full max-w-xs"></div>
+            </div>
+
+            <!-- Kit Header Info (Resumen precio) -->
+            <div class="text-center mb-12">
+                 <h3 id="kit-detail-title-small" class="text-2xl font-serif text-brand-dark mb-2">Nombre Kit</h3>
+                 <span id="kit-detail-price" class="text-xl font-light text-gray-600 bg-brand-pink/20 px-4 py-1 rounded-full">$00.00</span>
             </div>
 
             <!-- Products Grid (Dynamic) -->
@@ -250,155 +214,200 @@
 
     </main>
 
-    <!-- NUEVA SECCIÓN: MÉTODOS DE ENTREGA -->
-    <section id="envios" class="py-24 bg-brand-pink/20 border-t border-brand-pink/30">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Title -->
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-serif text-brand-dark mb-4">Métodos de Entrega</h2>
-                <p class="text-gray-600 font-light max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
-                    Llevamos la esencia Glossy hasta la puerta de tu casa. Elige la opción que mejor se adapte a tu ritmo de vida.
-                </p>
-            </div>
+<!-- SECCIÓN: ENVÍOS Y ENTREGAS -->
+<section id="envios" class="py-24 bg-brand-pink/20 border-t border-brand-pink/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            <!-- Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Card 1 -->
-                <div class="bg-white p-8 rounded-xl shadow-sm text-center hover:shadow-md transition duration-300 border border-brand-pink/10">
-                    <div class="inline-flex items-center justify-center w-14 h-14 bg-brand-nude rounded-full mb-6 text-brand-dark">
+        <!-- HEADER -->
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-serif text-brand-dark mb-4">
+                Envíos & Entregas
+            </h2>
+            <p class="text-gray-600 font-light max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
+                Cada pedido se prepara con cuidado para que llegue a tus manos de forma segura y puntual.
+            </p>
+        </div>
+
+        <!-- RESERVA -->
+        <div class="bg-white/70 backdrop-blur border border-brand-pink/20 rounded-2xl p-6 md:p-8 text-center mb-12">
+            <p class="text-brand-dark font-medium text-base md:text-lg">
+                💖 Reserva tu pedido con <span class="font-semibold">S/ 50</span> y asegura tu compra
+            </p>
+            <p class="text-sm text-gray-500 mt-2">
+                El monto restante se paga antes de la entrega o contraentrega.
+            </p>
+        </div>
+
+        <!-- GRID -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <!-- LIMA -->
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-brand-pink/10">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-12 h-12 flex items-center justify-center bg-brand-nude rounded-full text-brand-dark">
                         <i data-lucide="truck" class="w-6 h-6"></i>
                     </div>
-                    <h3 class="font-serif text-xl mb-3 text-brand-dark">Envío Standard</h3>
-                    <p class="text-sm text-gray-500 font-light leading-relaxed">
-                        Llegamos a todo el país. Tu pedido viajará seguro y llegará en un plazo estimado de <strong>3 a 5 días hábiles</strong>.
-                    </p>
+                    <h3 class="font-serif text-xl text-brand-dark">
+                        Lima Metropolitana & Callao
+                    </h3>
                 </div>
-                <!-- Card 2 -->
-                <div class="bg-white p-8 rounded-xl shadow-sm text-center hover:shadow-md transition duration-300 border border-brand-pink/10">
-                    <div class="inline-flex items-center justify-center w-14 h-14 bg-brand-nude rounded-full mb-6 text-brand-dark">
-                        <i data-lucide="zap" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="font-serif text-xl mb-3 text-brand-dark">Express Lima</h3>
-                    <p class="text-sm text-gray-500 font-light leading-relaxed">
-                        ¿Lo necesitas urgente? Entrega al día siguiente en Lima Metropolitana para pedidos confirmados antes de la 1:00 PM.
-                    </p>
-                </div>
-                <!-- Card 3 -->
-                <div class="bg-white p-8 rounded-xl shadow-sm text-center hover:shadow-md transition duration-300 border border-brand-pink/10">
-                    <div class="inline-flex items-center justify-center w-14 h-14 bg-brand-nude rounded-full mb-6 text-brand-dark">
-                        <i data-lucide="shopping-bag" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="font-serif text-xl mb-3 text-brand-dark">Recojo en Tienda</h3>
-                    <p class="text-sm text-gray-500 font-light leading-relaxed">
-                        Compra online y recoge sin costo adicional en nuestros puntos de venta autorizados. Listo en 24 horas.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Footer -->
-    <footer id="footer" class="bg-brand-dark text-brand-nude py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div>
-                <h3 class="font-serif text-2xl mb-6">GLOSSY.PE</h3>
-                <p class="font-light text-sm opacity-80 leading-relaxed">
-                    Celebrando la belleza individual a través de productos conscientes y estéticamente puros.
-                </p>
-            </div>
-            <div>
-                <h4 class="text-sm uppercase tracking-widest mb-6 font-semibold">Descubre</h4>
-                <ul class="space-y-3 text-sm opacity-80 font-light">
-                    <li><a href="#" onclick="switchView('individual'); return false;"
-                            class="hover:text-white hover:underline">Labios</a></li>
-                    <li><a href="#" onclick="switchView('individual'); return false;"
-                            class="hover:text-white hover:underline">Rostro</a></li>
-                    <li><a href="#" onclick="switchView('individual'); return false;"
-                            class="hover:text-white hover:underline">Ojos</a></li>
+                <ul class="text-sm text-gray-600 font-light space-y-3 leading-relaxed">
+                    <li>🚚 Envíos con <strong>motorizado</strong>.</li>
+                    <li>📍 Indícanos tu distrito y te brindamos la cotización del delivery.</li>
+                    <li>💳 El pago restante + delivery se puede realizar <strong>antes de la entrega o contraentrega</strong>.</li>
+                    <li>⏰ Entregas entre <strong>2:00 p.m. y 7:00 p.m.</strong> según distrito.</li>
                 </ul>
             </div>
-            <div>
-                <h4 class="text-sm uppercase tracking-widest mb-6 font-semibold">Mantente en contacto</h4>
-                <p class="text-sm opacity-80 mb-4 font-light">Síguenos para lanzamientos exclusivos.</p>
-                <div class="flex space-x-4 mt-6">
-                    <i data-lucide="instagram" class="w-5 h-5 cursor-pointer hover:text-white"></i>
-                    <i data-lucide="facebook" class="w-5 h-5 cursor-pointer hover:text-white"></i>
-                    <i data-lucide="twitter" class="w-5 h-5 cursor-pointer hover:text-white"></i>
+
+            <!-- PROVINCIA -->
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-brand-pink/10">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-12 h-12 flex items-center justify-center bg-brand-nude rounded-full text-brand-dark">
+                        <i data-lucide="package" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-serif text-xl text-brand-dark">
+                        Envíos a Provincia
+                    </h3>
                 </div>
+
+                <ul class="text-sm text-gray-600 font-light space-y-3 leading-relaxed">
+                    <li>🚛 Envíos por <strong>Agencia Shalom</strong>.</li>
+                    <li>📦 No cobramos embalaje.</li>
+                    <li>💳 El pago restante se realiza <strong>un día antes del envío</strong>.</li>
+                    <li>💰 El costo de envío se paga <strong>directamente en la agencia</strong> al recoger.</li>
+                    <li>⏱️ Tiempo estimado de llegada: <strong>2 a 3 días</strong>.</li>
+                </ul>
             </div>
         </div>
-        <div
-            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 pt-8 border-t border-brand-nude/10 text-center text-xs opacity-60">
-            &copy; 2025 Glossy.pe Cosmetics.
+
+        <!-- TRACKING & POLÍTICAS -->
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <div class="bg-white p-6 rounded-xl border border-brand-pink/10">
+                <h4 class="font-serif text-lg text-brand-dark mb-2 flex items-center gap-2">
+                    <i data-lucide="map-pin" class="w-5 h-5"></i>
+                    Seguimiento de Envío
+                </h4>
+                <p class="text-sm text-gray-600 font-light">
+                    Una vez enviado tu pedido, te compartiremos el <strong>número de tracking</strong>
+                    para que puedas seguir su recorrido y fecha estimada de llegada.
+                </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl border border-brand-pink/10">
+                <h4 class="font-serif text-lg text-brand-dark mb-2 flex items-center gap-2">
+                    <i data-lucide="alert-circle" class="w-5 h-5"></i>
+                    Importante
+                </h4>
+                <p class="text-sm text-gray-600 font-light">
+                    La persona que recoja el paquete debe ser <strong>mayor de 18 años</strong>.
+                    Se enviará un formato con datos personales que deberán ser verificados cuidadosamente.
+                </p>
+            </div>
         </div>
-    </footer>
+
+    </div>
+</section>
+
+
+<!-- Footer -->
+<footer id="footer" class="bg-brand-dark text-brand-nude py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-14">
+
+        <!-- BRAND -->
+        <div>
+            <h3 class="font-serif text-2xl mb-6 tracking-wide">GLOSSY.PE</h3>
+            <p class="font-light text-sm opacity-80 leading-relaxed max-w-xs">
+                Celebramos la belleza real con productos cuidadosamente seleccionados para cada ocasión.
+            </p>
+        </div>
+
+        <!-- CONTACT -->
+        <div>
+            <h4 class="text-sm uppercase tracking-widest mb-6 font-semibold">
+                Atención por WhatsApp
+            </h4>
+
+            <ul class="space-y-4 text-sm font-light opacity-80">
+                <li class="flex items-center gap-3">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    <a href="https://wa.me/51996629113" target="_blank"
+                       class="hover:text-white hover:underline">
+                        +51 996 629 113
+                    </a>
+                </li>
+
+                <li class="flex items-center gap-3">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    <a href="https://wa.me/51923895798" target="_blank"
+                       class="hover:text-white hover:underline">
+                        +51 923 895 798
+                    </a>
+                </li>
+            </ul>
+
+            <!-- CTA WHATSAPP -->
+            <a href="https://wa.me/51996629113" target="_blank"
+               class="inline-flex items-center justify-center gap-2 mt-6 px-6 py-3 bg-green-500 text-white text-sm rounded-full hover:bg-green-600 transition">
+                <i data-lucide="message-circle" class="w-4 h-4"></i>
+                Escríbenos por WhatsApp
+            </a>
+        </div>
+
+        <!-- SOCIAL -->
+        <div>
+            <h4 class="text-sm uppercase tracking-widest mb-6 font-semibold">
+                Síguenos
+            </h4>
+
+            <div class="flex flex-col gap-4 mt-4">
+                <a href="https://www.instagram.com/glossyr.pe" target="_blank"
+                   class="flex items-center gap-2 hover:text-white transition">
+                    <i data-lucide="instagram" class="w-5 h-5"></i>
+                    <span class="text-sm font-light opacity-80">Instagram</span>
+                </a>
+
+                <a href="https://www.tiktok.com/@glossy.pe" target="_blank"
+                   class="flex items-center gap-2 hover:text-white transition">
+                    <i data-lucide="music-2" class="w-5 h-5"></i>
+                    <span class="text-sm font-light opacity-80">TikTok</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- BOTTOM -->
+    <div class="mt-16 pt-6 border-t border-white/10 text-center text-xs opacity-60 font-light">
+        © 2026 GLOSSY.PE · Todos los derechos reservados
+    </div>
+</footer>
+
 
     <!-- Scripts -->
     <script>
-        // Inicializar iconos
         lucide.createIcons();
 
-        // ==========================================
-        //  CONFIGURACIÓN DE CATEGORÍAS (DINÁMICO)
-        // ==========================================
-        // Define aquí los metadatos de las categorías.
-        // La clave (ej: 'labios') debe coincidir con el campo 'category' en productsDB.
+        // ------------------------------------------
+        // 1. CONFIGURACIÓN DE CATEGORÍAS
+        // ------------------------------------------
         const categoriesDB = {
-        'Fijadores y Removedor': {
-            title: 'Fijadores y Removedor',
-            subtitle: 'Productos para sellar, prolongar y remover tu maquillaje.',
-            order: 1
-        },
-        'Fragancias': {
-            title: 'Fragancias',
-            subtitle: 'Aromas únicos que acompañan tu estilo todos los días.',
-            order: 2
-        },
-        'Skincare': {
-            title: 'Skincare',
-            subtitle: 'Cuidado facial para una piel sana y luminosa.',
-            order: 3
-        },
-        'Iluminador': {
-            title: 'Iluminadores',
-            subtitle: 'Resalta los puntos clave de tu rostro con luz natural.',
-            order: 4
-        },
-        'Rubor': {
-            title: 'Rubores',
-            subtitle: 'Aporta color y frescura a tus mejillas.',
-            order: 5
-        },
-        'Sombras': {
-            title: 'Sombras',
-            subtitle: 'Colores y texturas para crear miradas únicas.',
-            order: 6
-        },
-        'Labiales': {
-            title: 'Labiales',
-            subtitle: 'Acabados mate, satinados y glossy para cada ocasión.',
-            order: 7
-        },
-        'Polvos, corrector y bases': {
-            title: 'Polvos, corrector y bases',
-            subtitle: 'Bases, correctores y polvos para un acabado perfecto.',
-            order: 8
-        },
-        'Rímel, delineador y cejas': {
-            title: 'Rímel, delineador y cejas',
-            subtitle: 'Define y realza tu mirada con precisión.',
-            order: 9
-        },
-        'Uñas': {
-            title: 'Uñas',
-            subtitle: 'Esmaltes y tratamientos para manos impecables.',
-            order: 10
-        }
+            'Fijadores y Removedor': { title: 'Fijadores y Removedor', subtitle: 'Productos para sellar, prolongar y remover tu maquillaje.', order: 1 },
+            'Fragancias': { title: 'Fragancias', subtitle: 'Aromas únicos.', order: 2 },
+            'Skincare': { title: 'Skincare', subtitle: 'Cuidado facial para una piel sana.', order: 3 },
+            'Iluminador': { title: 'Iluminadores', subtitle: 'Resalta con luz natural.', order: 4 },
+            'Rubor': { title: 'Rubores', subtitle: 'Color y frescura.', order: 5 },
+            'Sombras': { title: 'Sombras', subtitle: 'Miradas únicas.', order: 6 },
+            'Labiales': { title: 'Labiales', subtitle: 'Acabados mate y glossy.', order: 7 },
+            'Polvos, corrector y bases': { title: 'Polvos, corrector y bases', subtitle: 'Acabado perfecto.', order: 8 },
+            'Rímel, delineador y cejas': { title: 'Rímel, delineador y cejas', subtitle: 'Define y realza.', order: 9 },
+            'Uñas': { title: 'Uñas', subtitle: 'Manos impecables.', order: 10 }
         };
 
-        // ==========================================
-        //  BASE DE DATOS DE PRODUCTOS (EDITAR AQUÍ)
-        // ==========================================
+        // ------------------------------------------
+        // 2. BASE DE DATOS DE PRODUCTOS (FUENTE DE VERDAD)
+        // ------------------------------------------
         const productsDB = [
             // --- LABIOS ---
             {
@@ -700,7 +709,7 @@
                 name: 'Removedor Biofasico - Kevin & Coco',
                 price: 'S/ 15.00',
                 desc: 'Desmaquillante suave y eficaz que elimina el maquillaje. Limpia a profundidad y deja el rostro fresco, limpio y confortable. Ideal para uso diario y apto para todo tipo de piel.',
-                tag: '',
+                tag: 'Opcional',
                 images: [
                     '/images/17.Removedor Kevin and coco/Gemini_Generated_Image_xluz02xluz02xluz.png',
                 ],
@@ -864,7 +873,7 @@
                 name: 'Body splash V.V. Love Dupe Sol de Janeiro',
                 price: 'S/ 15.00',
                 desc: 'Mellow Melody: Fragancia dulce y cálida con notas de chocolate, caramelo y miel. D /Cherry Delight – Fragancia dulce y frutal con notas de cereza/Fruit Symphony -  Aroma frutal dulce y jugoso, con notas vibrantes que recuerdan a frutas frescas y caramelizadas.',
-                tag: 'Trending',
+                tag: 'Opcional',
                 images: [
                     '/images/26.Colonia sol de rio/Gemini_Generated_Image_qt8n45qt8n45qt8n.png',
                     '/images/26.Colonia sol de rio/Gemini_Generated_Image_ssaemfssaemfssae.png',
@@ -967,58 +976,55 @@
             }
         ];
 
-        // ==========================================
-        //  BASE DE DATOS DE KITS
-        // ==========================================
+        // ------------------------------------------
+        // 3. BASE DE DATOS DE KITS (RELACIONAL)
+        // ------------------------------------------
+        // En lugar de definir los productos de nuevo, usamos sus IDs (p30, p31, etc)
         const kitsDB = {
-            'nude': {
-                title: "The Nude Essentials Kit",
-                price: "$65.00",
-                desc: "12 piezas esenciales para un look natural, fresco y radiante.",
-                products: [
-                    { name: "Luminous Skin Tint", tone: "Ivory", images: ["https://images.unsplash.com/photo-1631729371254-42c2a89e0e18?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"], colors: [{ hex: '#f3e2c3', name: 'Ivory' }, { hex: '#e8cdb3', name: 'Sand' }, { hex: '#dcbca0', name: 'Beige' }] },
-                    { name: "Matte Silk Lipstick", tone: "Rose Nude", images: ["https://images.unsplash.com/photo-1586495777744-4413f21062fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"], colors: [{ hex: '#dfaea3', name: 'Rose Nude' }, { hex: '#c98877', name: 'Terracotta' }] }
-                    // ... (Simplificado para el ejemplo, pero el código de render usa la misma lógica)
-                ]
-            },
-            'glam': {
-                title: "Full Glam Night Kit",
-                price: "$85.00",
-                desc: "Todo lo necesario para destacar. Tonos profundos y acabados metálicos.",
-                products: [
-                    { name: "Earth Tones Palette", tone: "Warm Sunset", images: ["https://images.unsplash.com/photo-1583241747386-404ead2a7752?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"], colors: [{ hex: '#d65a31', name: 'Warm Sunset' }, { hex: '#222831', name: 'Cool Night' }] }
+            'valentin': {
+                title: "Love Glow Kit",
+                price: "S/ 120.00",
+                desc: "Un set especial de San Valentín con productos seleccionados para realzar tu belleza natural y enamorar en cada detalle.",
+                
+                // NUEVOS DATOS PARA LA PRESENTACIÓN VISUAL
+                introTitle: "La Rutina Perfecta del Amor",
+                introDesc: "Tres pasos esenciales para un look romántico y duradero. Descubre la armonía de tonos rosados y texturas sedosas.",
+                // Simulación de imágenes de estilo de vida/complementos (puedes cambiarlas por las reales)
+                lifestyleImages: [
+                    "/images/Kit Valentin/Gemini_Generated_Image_jkxt5zjkxt5zjkxt.png", // Foto grande (ej: modelo o bodegon)
+                    "/images/Kit Valentin/Gemini_Generated_Image_vxqhiuvxqhiuvxqh.png", // Detalle 1
+                    "/images/Kit Valentin/Gemini_Generated_Image_jws17yjws17yjws1.png"  // Detalle 2
+                ],
+                
+                coverImage: "./images/Kit Valentin/Gemini_Generated_Image_jvzjj7jvzjj7jvzj.png", 
+                productIds: [
+                    'p1', 'p2', 'p5', 'p6', 'p7', 'p9', 'p11',
+                    'p13', 'p14', 'p15', 'p18', 'p21',
+                    'p24', 'p27', 'p28', 'p17', 'p26'
                 ]
             }
         };
 
-        // ==========================================
-        //  LÓGICA DE RENDERIZADO
-        // ==========================================
-
+        // ------------------------------------------
+        // 4. LÓGICA DE RENDERIZADO (INDIVIDUAL)
+        // ------------------------------------------
         function renderProducts() {
             const containerMain = document.getElementById('vista-individual');
-            containerMain.innerHTML = ''; // Limpiar cualquier contenido existente
+            containerMain.innerHTML = ''; 
 
-            // 1. Agrupar productos por categoría
             const productsByCategory = {};
             productsDB.forEach(p => {
                 if (!productsByCategory[p.category]) productsByCategory[p.category] = [];
                 productsByCategory[p.category].push(p);
             });
 
-            // 2. Iterar sobre categoriesDB para mantener el orden deseado
-            // Si hay una categoría en DB pero no en config, se podría manejar como 'Otros', 
-            // pero por ahora solo renderizamos lo configurado.
             Object.keys(categoriesDB).sort((a, b) => categoriesDB[a].order - categoriesDB[b].order).forEach((catKey, index) => {
                 const catConfig = categoriesDB[catKey];
                 const products = productsByCategory[catKey];
 
-                // Solo renderizar la sección si hay productos para esa categoría
                 if (products && products.length > 0) {
-
-                    // Crear HTML de la Sección (Título + Contenedor de Grid)
                     const sectionHtml = `
-                        <div id="container-${catKey}" class="mb-24 fade-in-up" style="animation-delay: ${0.2 + (index * 0.2)}s;">
+                        <div id="container-${catKey}" class="mb-24 fade-in-up" style="animation-delay: ${0.2 + (index * 0.1)}s;">
                             <div class="flex items-end justify-between mb-12 border-b border-brand-pink/50 pb-4">
                                 <div>
                                     <h2 class="text-3xl md:text-4xl font-serif mb-2">${catConfig.title}</h2>
@@ -1026,113 +1032,140 @@
                                 </div>
                                 <span class="text-sm text-gray-400 hidden sm:block">0${index + 1} — INDIVIDUAL</span>
                             </div>
-                            <div id="grid-${catKey}" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                                <!-- Las tarjetas se inyectarán aquí -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                                ${products.map(product => createProductCard(product)).join('')}
                             </div>
                         </div>
                     `;
-
-                    // Agregar sección al DOM principal
                     containerMain.insertAdjacentHTML('beforeend', sectionHtml);
-
-                    // Referencia al grid recién creado
-                    const gridContainer = document.getElementById(`grid-${catKey}`);
-
-                    // 3. Renderizar productos dentro del grid
-                    products.forEach(product => {
-                        const hasMultipleImages = product.images.length > 1;
-
-                        // Generar HTML de Imágenes (Carrusel o Simple)
-                        let imagesHtml = '';
-                        product.images.forEach((img, index) => {
-                            const hiddenClass = index === 0 ? '' : 'hidden';
-                            // Importante: unique styles display:none handling inside inline style for JS logic
-                            const styleDisplay = index !== 0 ? 'style="display:none"' : '';
-                            imagesHtml += `<img src="${img}" class="absolute inset-0 w-full h-full object-cover transition duration-500 ease-in-out product-img-${product.id}" data-index="${index}" ${styleDisplay}>`;
-                        });
-
-                        // Controles del Carrusel
-                        let carouselControls = '';
-                        if (hasMultipleImages) {
-                            carouselControls = `
-                                <button onclick="changeImage('${product.id}', -1)" class="carousel-btn absolute left-2 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 z-10 hover:bg-white">
-                                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
-                                </button>
-                                <button onclick="changeImage('${product.id}', 1)" class="carousel-btn absolute right-2 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 z-10 hover:bg-white">
-                                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                                </button>
-                                <div class="absolute bottom-2 left-0 right-0 flex justify-center space-x-1">
-                                    ${product.images.map((_, i) => `<div class="w-1.5 h-1.5 rounded-full bg-white/50 dot-${product.id}" data-index="${i}"></div>`).join('')}
-                                </div>
-                            `;
-                        }
-
-                        // Generar HTML de Tonos
-                        let tonesHtml = '';
-                        product.tones.forEach((tone, idx) => {
-                            const activeClass = idx === 0 ? 'active' : '';
-                            const bgStyle = tone.name === 'Warm Sunset' ? 'background-image: linear-gradient(to bottom right, #fed7aa, #f87171)' :
-                                tone.name === 'Cool Night' ? 'background-image: linear-gradient(to bottom right, #e5e7eb, #4b5563)' :
-                                    `background-color: ${tone.hex}`;
-
-                            tonesHtml += `<button class="w-6 h-6 rounded-full swatch ${activeClass}" style="${bgStyle}" onclick="selectTone(this, '${tone.name}')"></button> `;
-                        });
-
-                        const tagHtml = product.tag ? `<div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 text-xs uppercase tracking-wide z-10">${product.tag}</div>` : '';
-
-                        const cardHtml = `
-                            <div class="group" id="product-${product.id}" data-current-img="0" data-total-imgs="${product.images.length}">
-                                <div class="relative overflow-hidden bg-white rounded-t-xl h-80 w-full mb-4">
-                                    ${imagesHtml}
-                                    ${tagHtml}
-                                    ${carouselControls}
-                                </div>
-                                <div>
-                                    <div class="flex justify-between items-start mb-2">
-                                        <h3 class="text-xl font-serif">${product.name}</h3>
-                                        <span class="text-lg font-light text-brand-dark">${product.price}</span>
-                                    </div>
-                                    <p class="text-sm text-gray-500 mb-4 line-clamp-2">${product.desc}</p>
-                                    
-                                    <div class="mb-4">
-                                        <p class="text-xs uppercase tracking-widest text-gray-400 mb-2">Tono: <span class="text-brand-dark font-medium selected-tone-name">${product.defaultTone}</span></p>
-                                        <div class="flex space-x-2 flex-wrap gap-y-2">
-                                            ${tonesHtml}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-
-                        gridContainer.insertAdjacentHTML('beforeend', cardHtml);
-                    });
                 }
             });
-
-            // Re-inicializar iconos
             lucide.createIcons();
             updateDots();
         }
 
-        // --- LÓGICA DEL CARRUSEL ---
+        // ------------------------------------------
+        // 5. LÓGICA DE RENDERIZADO (LISTA DE KITS)
+        // ------------------------------------------
+        function renderKitsList() {
+            const kitsGrid = document.getElementById('kits-grid');
+            kitsGrid.innerHTML = '';
+
+            Object.entries(kitsDB).forEach(([key, kit]) => {
+                const cardHtml = `
+                <div class="group cursor-pointer fade-in-up" onclick="openKitDetail('${key}')">
+                    <div class="relative overflow-hidden bg-white rounded-xl shadow-md h-96 w-full mb-6">
+                        <img src="${kit.coverImage}"
+                            onerror="this.src='https://placehold.co/600x400/e3d5ca/4a403a?text=Kit+Image'"
+                            alt="${kit.title}"
+                            class="h-full w-full object-cover transition duration-700 ease-in-out group-hover:scale-105">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition duration-300"></div>
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <button
+                                class="w-full bg-white/90 backdrop-blur text-brand-dark py-3 uppercase tracking-widest text-xs font-semibold hover:bg-brand-dark hover:text-white transition duration-300">
+                                Descubrir el Kit
+                            </button>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-2xl font-serif mb-2">${kit.title}</h3>
+                        <p class="text-gray-500 font-light mb-2 text-sm max-w-sm mx-auto line-clamp-2">
+                            ${kit.desc}
+                        </p>
+                        <div class="flex justify-center items-center gap-3">
+                            <span class="text-xl font-serif text-brand-dark">${kit.price}</span>
+                        </div>
+                    </div>
+                </div>
+                `;
+                kitsGrid.insertAdjacentHTML('beforeend', cardHtml);
+            });
+        }
+
+        // ------------------------------------------
+        // 6. HELPER: CREAR TARJETA DE PRODUCTO
+        // ------------------------------------------
+        function createProductCard(product, hidePrice = false) {
+            const hasMultipleImages = product.images.length > 1;
+            
+            let imagesHtml = '';
+            product.images.forEach((img, index) => {
+                const styleDisplay = index !== 0 ? 'style="display:none"' : '';
+                imagesHtml += `<img src="${img}" class="absolute inset-0 w-full h-full object-cover transition duration-500 ease-in-out product-img-${product.id}" data-index="${index}" ${styleDisplay}>`;
+            });
+
+            let carouselControls = '';
+            if (hasMultipleImages) {
+                carouselControls = `
+                    <button onclick="changeImage('${product.id}', -1); event.stopPropagation();" class="carousel-btn absolute left-2 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 z-10 hover:bg-white">
+                        <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                    </button>
+                    <button onclick="changeImage('${product.id}', 1); event.stopPropagation();" class="carousel-btn absolute right-2 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 z-10 hover:bg-white">
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                    <div class="absolute bottom-2 left-0 right-0 flex justify-center space-x-1">
+                        ${product.images.map((_, i) => `<div class="w-1.5 h-1.5 rounded-full bg-white/50 dot-${product.id}" data-index="${i}"></div>`).join('')}
+                    </div>
+                `;
+            }
+
+            let tonesHtml = '';
+            if (product.tones) {
+                product.tones.forEach((tone, idx) => {
+                    const activeClass = idx === 0 ? 'active' : '';
+                    const bgStyle = tone.name.includes('Sunset') ? 'background-image: linear-gradient(to bottom right, #fed7aa, #f87171)' : `background-color: ${tone.hex}`;
+                    tonesHtml += `<button class="w-6 h-6 rounded-full swatch ${activeClass}" style="${bgStyle}" onclick="selectTone(this, '${tone.name}'); event.stopPropagation();"></button> `;
+                });
+            }
+
+            const tagHtml = product.tag ? `<div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 text-xs uppercase tracking-wide z-10">${product.tag}</div>` : '';
+
+            // Lógica condicional para el precio
+            const priceHtml = hidePrice ? '' : `<span class="text-lg font-light text-brand-dark">${product.price}</span>`;
+
+            return `
+                <div class="group" id="product-${product.id}" data-current-img="0" data-total-imgs="${product.images.length}">
+                    <div class="relative overflow-hidden bg-white rounded-t-xl h-80 w-full mb-4">
+                        ${imagesHtml}
+                        ${tagHtml}
+                        ${carouselControls}
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-serif">${product.name}</h3>
+                            ${priceHtml} 
+                        </div>
+                        <p class="text-sm text-gray-500 mb-4 line-clamp-2">${product.desc}</p>
+                        
+                        <div class="mb-4">
+                            <p class="text-xs uppercase tracking-widest text-gray-400 mb-2">Tono: <span class="text-brand-dark font-medium selected-tone-name">${product.defaultTone || ''}</span></p>
+                            <div class="flex space-x-2 flex-wrap gap-y-2">
+                                ${tonesHtml}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+
+        // ------------------------------------------
+        // 7. FUNCIONES DE INTERACCIÓN
+        // ------------------------------------------
+        
         function changeImage(productId, direction) {
             const productCard = document.getElementById(`product-${productId}`);
             let currentIndex = parseInt(productCard.getAttribute('data-current-img'));
             const totalImages = parseInt(productCard.getAttribute('data-total-imgs'));
 
-            // Ocultar imagen actual
             const images = productCard.querySelectorAll(`.product-img-${productId}`);
             images[currentIndex].style.display = 'none';
 
-            // Calcular nuevo índice
             currentIndex = currentIndex + direction;
             if (currentIndex >= totalImages) currentIndex = 0;
             if (currentIndex < 0) currentIndex = totalImages - 1;
 
-            // Mostrar nueva imagen
             images[currentIndex].style.display = 'block';
-
-            // Actualizar estado
             productCard.setAttribute('data-current-img', currentIndex);
             updateDots(productId, currentIndex);
         }
@@ -1149,7 +1182,6 @@
                     }
                 });
             } else {
-                // Initialize all dots active state (index 0)
                 document.querySelectorAll('.group').forEach(group => {
                     const dots = group.querySelectorAll('div[class*="dot-"]');
                     if (dots.length > 0) {
@@ -1159,8 +1191,6 @@
                 });
             }
         }
-
-        // --- FUNCIONES EXISTENTES ---
 
         function selectTone(element, toneName) {
             const productContainer = element.closest('.group');
@@ -1209,54 +1239,80 @@
             }
         }
 
+        // ------------------------------------------
+        // 8. LOGICA DE DETALLE DE KIT (RELACIONAL)
+        // ------------------------------------------
         function openKitDetail(kitId) {
             const kit = kitsDB[kitId];
             if (!kit) return;
 
             const kitsView = document.getElementById('vista-kits');
             const detailView = document.getElementById('vista-kit-detalle');
+            const introSection = document.getElementById('kit-intro-section');
             const grid = document.getElementById('kit-products-grid');
 
+            // Ocultar lista de kits
             kitsView.classList.add('opacity-0');
+            
             setTimeout(() => {
                 kitsView.classList.add('hidden');
 
-                document.getElementById('kit-detail-title').innerText = kit.title;
-                document.getElementById('kit-detail-price').innerText = kit.price;
-                document.getElementById('kit-detail-desc').innerText = kit.desc;
+                // 1. INYECTAR LA SECCIÓN DE INTRODUCCIÓN (MOODBOARD)
+                const img1 = kit.lifestyleImages ? kit.lifestyleImages[0] : 'https://placehold.co/400x600';
+                const img2 = kit.lifestyleImages ? kit.lifestyleImages[1] : 'https://placehold.co/400x300';
+                const img3 = kit.lifestyleImages ? kit.lifestyleImages[2] : 'https://placehold.co/400x300';
 
-                grid.innerHTML = '';
-                kit.products.forEach((prod, index) => {
-                    // Logic to handle images inside Kit Detail (Simplified to show first image only for now, but scalable)
-                    const mainImage = prod.images ? prod.images[0] : prod.img; // Fallback for old data structure
-
-                    let colorsHtml = '';
-                    prod.colors.forEach((col, idx) => {
-                        const activeClass = idx === 0 ? 'active' : '';
-                        colorsHtml += `<button class="w-6 h-6 rounded-full swatch ${activeClass}" style="background-color: ${col.hex};" onclick="selectTone(this, '${col.name}')"></button>`;
-                    });
-
-                    const cardHtml = `
-                        <div class="group">
-                            <div class="relative overflow-hidden bg-white rounded-t-xl h-80 w-full mb-4">
-                                <img src="${mainImage}" alt="${prod.name}" class="h-full w-full object-cover group-hover:scale-105 transition duration-700 ease-in-out">
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-serif mb-1">${prod.name}</h3>
-                                <div class="mb-4">
-                                    <p class="text-xs uppercase tracking-widest text-gray-400 mb-2">Tono: <span class="text-brand-dark font-medium selected-tone-name">${prod.tone}</span></p>
-                                    <div class="flex space-x-2">
-                                        ${colorsHtml}
-                                    </div>
-                                </div>
-                            </div>
+                // CAMBIOS REALIZADOS: GRID 3 columnas simple con altura controlada
+                introSection.innerHTML = `
+                    <div class="text-center mb-10 fade-in-up">
+                        <h2 class="text-4xl md:text-5xl font-serif text-brand-dark mb-4">${kit.introTitle || kit.title}</h2>
+                        <p class="text-lg font-light text-gray-600 max-w-2xl mx-auto italic">
+                            "${kit.introDesc || kit.desc}"
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 fade-in-up" style="animation-delay: 0.2s">
+                        <!-- Imagen 1 -->
+                        <div class="h-64 md:h-80 rounded-xl overflow-hidden shadow-md mood-container">
+                             <img src="${img1}" class="w-full h-full object-cover mood-img" alt="Mood 1">
                         </div>
-                    `;
-                    grid.innerHTML += cardHtml;
+                        
+                        <!-- Imagen 2 -->
+                        <div class="h-64 md:h-80 rounded-xl overflow-hidden shadow-md mood-container">
+                             <img src="${img2}" class="w-full h-full object-cover mood-img" alt="Mood 2">
+                        </div>
+
+                        <!-- Imagen 3 -->
+                        <div class="h-64 md:h-80 rounded-xl overflow-hidden shadow-md mood-container">
+                             <img src="${img3}" class="w-full h-full object-cover mood-img" alt="Mood 3">
+                        </div>
+                    </div>
+                `;
+
+                // 2. Llenar info básica del kit (debajo del grid)
+                document.getElementById('kit-detail-title-small').innerText = kit.title;
+                document.getElementById('kit-detail-price').innerText = kit.price;
+
+                // 3. Limpiar grid de productos anterior
+                grid.innerHTML = '';
+
+                // 4. BUCLE RELACIONAL DE PRODUCTOS
+                kit.productIds.forEach((prodId, idx) => {
+                    const fullProduct = productsDB.find(p => p.id === prodId);
+                    
+                    if (fullProduct) {
+                        const cardHtml = createProductCard(fullProduct, true);
+                        grid.insertAdjacentHTML('beforeend', cardHtml);
+                    }
                 });
 
+                // Reinicializar iconos para los nuevos elementos
+                lucide.createIcons();
+                updateDots();
+
+                // Mostrar detalle
                 detailView.classList.remove('hidden');
-                window.scrollTo(0, document.getElementById('catalogo').offsetTop - 100);
+                window.scrollTo(0, document.getElementById('catalogo').offsetTop - 50);
                 setTimeout(() => detailView.classList.remove('opacity-0'), 50);
 
             }, 500);
@@ -1274,7 +1330,6 @@
             }, 500);
         }
 
-        // Navbar scroll effect
         window.addEventListener('scroll', () => {
             const nav = document.querySelector('nav');
             if (window.scrollY > 50) {
@@ -1286,9 +1341,10 @@
             }
         });
 
-        // INICIALIZAR RENDERIZADO
+        // INICIALIZACIÓN
         document.addEventListener('DOMContentLoaded', () => {
             renderProducts();
+            renderKitsList(); // Renderizar también los kits al inicio
         });
 
     </script>
