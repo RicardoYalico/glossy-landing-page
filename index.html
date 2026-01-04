@@ -36,6 +36,7 @@
         body {
             background-color: #faf9f8;
             scroll-behavior: smooth;
+            -webkit-tap-highlight-color: transparent; /* Elimina el flash azul en móviles */
         }
 
         .swatch {
@@ -77,6 +78,7 @@
             padding: 8px;
             border-radius: 50%;
             transition: all 0.3s;
+            cursor: pointer;
         }
 
         .carousel-btn:hover {
@@ -90,6 +92,16 @@
         }
         .mood-container:hover .mood-img {
             transform: scale(1.03);
+        }
+
+        /* Utilidad para evitar selección de texto al hacer swipe */
+        .noselect {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
     </style>
 </head>
@@ -401,7 +413,7 @@
             'Sombras': { title: 'Sombras', subtitle: 'Miradas únicas.', order: 6 },
             'Labiales': { title: 'Labiales', subtitle: 'Acabados mate y glossy.', order: 7 },
             'Polvos, corrector y bases': { title: 'Polvos, corrector y bases', subtitle: 'Acabado perfecto.', order: 8 },
-            'Rímel, delineador y cejas': { title: 'Rímel, delineador y cejas', subtitle: 'Define y realza.', order: 9 },
+            'Rimel, delineador y aplicador para cejas': { title: 'Rímel, delineador y cejas', subtitle: 'Define y realza.', order: 9 },
             'Uñas': { title: 'Uñas', subtitle: 'Manos impecables.', order: 10 }
         };
 
@@ -552,7 +564,7 @@
             },
             {
                 id: 'p9',
-                category: 'Fijadores y Removedor ',
+                category: 'Fijadores y Removedor',
                 name: 'Fijador Kiss Beauty',
                 price: 'S/ 12.00',
                 desc: 'Un spray ligero y eficaz que fija el maquillaje prolongando su duración durante todo el día. Su fórmula ayuda a controlar el brillo, manteniendo la piel con un acabado natural, fresco e impecable por horas.',
@@ -635,7 +647,7 @@
             },
             {
                 id: 'p13',
-                category: 'ojos',
+                category: 'Labiales',
                 name: 'LIPGLOSS WATER LIP - GAGK',
                 price: 'S/ 7.00',
                 desc: 'Lipgloss que aporta brillo efecto agua y deja los labios suaves y luminosos. Su textura ligera e hidratante se desliza fácilmente, brindando un acabado fresco y jugoso sin sensación pegajosa, ideal para uso diario',
@@ -674,7 +686,7 @@
             },
             {
                 id: 'p15',
-                category: 'ojos',
+                category: 'Fijadores y Removedor',
                 name: 'Fijador Matificante de arroz - Magic Shop',
                 price: 'S/ 12.50',
                 desc: 'Controla el brillo, absorbe el exceso de grasa y fija tu maquillaje, dejando un acabado mate natural y suave. Ideal para pieles mixtas o grasas.',
@@ -979,7 +991,6 @@
         // ------------------------------------------
         // 3. BASE DE DATOS DE KITS (RELACIONAL)
         // ------------------------------------------
-        // En lugar de definir los productos de nuevo, usamos sus IDs (p30, p31, etc)
         const kitsDB = {
             'valentin': {
                 title: "Love Glow Kit",
@@ -989,11 +1000,10 @@
                 // NUEVOS DATOS PARA LA PRESENTACIÓN VISUAL
                 introTitle: "La Rutina Perfecta del Amor",
                 introDesc: "Tres pasos esenciales para un look romántico y duradero. Descubre la armonía de tonos rosados y texturas sedosas.",
-                // Simulación de imágenes de estilo de vida/complementos (puedes cambiarlas por las reales)
                 lifestyleImages: [
-                    "/images/Kit Valentin/Gemini_Generated_Image_jkxt5zjkxt5zjkxt.png", // Foto grande (ej: modelo o bodegon)
-                    "/images/Kit Valentin/Gemini_Generated_Image_vxqhiuvxqhiuvxqh.png", // Detalle 1
-                    "/images/Kit Valentin/Gemini_Generated_Image_jws17yjws17yjws1.png"  // Detalle 2
+                    "/images/Kit Valentin/Gemini_Generated_Image_jkxt5zjkxt5zjkxt.png", 
+                    "/images/Kit Valentin/Gemini_Generated_Image_vxqhiuvxqhiuvxqh.png", 
+                    "/images/Kit Valentin/Gemini_Generated_Image_jws17yjws17yjws1.png"
                 ],
                 
                 coverImage: "./images/Kit Valentin/Gemini_Generated_Image_jvzjj7jvzjj7jvzj.png", 
@@ -1085,6 +1095,32 @@
         // ------------------------------------------
         // 6. HELPER: CREAR TARJETA DE PRODUCTO
         // ------------------------------------------
+        
+        // Variables para gestionar el swipe
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        function handleTouchStart(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        }
+
+        function handleTouchEnd(e, productId) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe(productId);
+        }
+
+        function handleSwipe(productId) {
+            const threshold = 50; // Mínima distancia para considerar swipe
+            if (touchEndX < touchStartX - threshold) {
+                // Swipe izquierda -> Siguiente imagen
+                changeImage(productId, 1);
+            }
+            if (touchEndX > touchStartX + threshold) {
+                // Swipe derecha -> Imagen anterior
+                changeImage(productId, -1);
+            }
+        }
+
         function createProductCard(product, hidePrice = false) {
             const hasMultipleImages = product.images.length > 1;
             
@@ -1093,6 +1129,11 @@
                 const styleDisplay = index !== 0 ? 'style="display:none"' : '';
                 imagesHtml += `<img src="${img}" class="absolute inset-0 w-full h-full object-cover transition duration-500 ease-in-out product-img-${product.id}" data-index="${index}" ${styleDisplay}>`;
             });
+
+            // Lógica Swipe: Añadimos eventos ontouchstart y ontouchend al contenedor de imagen
+            const touchEvents = hasMultipleImages 
+                ? `ontouchstart="handleTouchStart(event)" ontouchend="handleTouchEnd(event, '${product.id}')"` 
+                : '';
 
             let carouselControls = '';
             if (hasMultipleImages) {
@@ -1120,12 +1161,12 @@
 
             const tagHtml = product.tag ? `<div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 text-xs uppercase tracking-wide z-10">${product.tag}</div>` : '';
 
-            // Lógica condicional para el precio
             const priceHtml = hidePrice ? '' : `<span class="text-lg font-light text-brand-dark">${product.price}</span>`;
 
             return `
-                <div class="group" id="product-${product.id}" data-current-img="0" data-total-imgs="${product.images.length}">
-                    <div class="relative overflow-hidden bg-white rounded-t-xl h-80 w-full mb-4">
+                <div class="group noselect" id="product-${product.id}" data-current-img="0" data-total-imgs="${product.images.length}">
+                    <!-- Contenedor con eventos touch añadidos -->
+                    <div class="relative overflow-hidden bg-white rounded-t-xl h-80 w-full mb-4 touch-pan-y" ${touchEvents}>
                         ${imagesHtml}
                         ${tagHtml}
                         ${carouselControls}
@@ -1205,6 +1246,11 @@
             }
         }
 
+        // Variables globales para los timeouts de las vistas
+        // Esto soluciona el bug de la pantalla blanca al cambiar rápido
+        let individualTimeout;
+        let kitsTimeout;
+
         function switchView(viewName) {
             const individualView = document.getElementById('vista-individual');
             const kitsView = document.getElementById('vista-kits');
@@ -1212,26 +1258,49 @@
             const btnIndividual = document.getElementById('btn-individual');
             const btnKits = document.getElementById('btn-kits');
 
+            // Siempre ocultar el detalle al cambiar entre pestañas principales
             kitDetailView.classList.add('hidden', 'opacity-0');
 
             if (viewName === 'individual') {
+                // 1. Limpiar timeout pendiente de "ocultar individual" si existe
+                if (individualTimeout) clearTimeout(individualTimeout);
+
+                // 2. Mostrar Inmediatamente la vista Individual (quitar hidden)
                 individualView.classList.remove('hidden');
+                
+                // 3. Pequeño delay para la opacidad (transición suave)
                 setTimeout(() => individualView.classList.remove('opacity-0'), 50);
 
+                // 4. Ocultar la vista de Kits
                 kitsView.classList.add('opacity-0');
-                setTimeout(() => kitsView.classList.add('hidden'), 500);
+                
+                // 5. Establecer timeout para "display: none" de Kits
+                if (kitsTimeout) clearTimeout(kitsTimeout); // Limpiar previo por si acaso
+                kitsTimeout = setTimeout(() => kitsView.classList.add('hidden'), 500);
 
+                // Estilos de botones
                 btnIndividual.classList.add('bg-brand-dark', 'text-white', 'shadow-md');
                 btnIndividual.classList.remove('text-gray-500');
                 btnKits.classList.remove('bg-brand-dark', 'text-white', 'shadow-md');
                 btnKits.classList.add('text-gray-500');
+
             } else {
+                // LÓGICA INVERSA
+                
+                // 1. Limpiar timeout pendiente de "ocultar kits" si existe
+                if (kitsTimeout) clearTimeout(kitsTimeout);
+
+                // 2. Mostrar Inmediatamente la vista Kits
                 kitsView.classList.remove('hidden');
                 setTimeout(() => kitsView.classList.remove('opacity-0'), 50);
 
+                // 3. Ocultar individual
                 individualView.classList.add('opacity-0');
-                setTimeout(() => individualView.classList.add('hidden'), 500);
+                
+                if (individualTimeout) clearTimeout(individualTimeout);
+                individualTimeout = setTimeout(() => individualView.classList.add('hidden'), 500);
 
+                // Estilos de botones
                 btnKits.classList.add('bg-brand-dark', 'text-white', 'shadow-md');
                 btnKits.classList.remove('text-gray-500');
                 btnIndividual.classList.remove('bg-brand-dark', 'text-white', 'shadow-md');
@@ -1262,7 +1331,6 @@
                 const img2 = kit.lifestyleImages ? kit.lifestyleImages[1] : 'https://placehold.co/400x300';
                 const img3 = kit.lifestyleImages ? kit.lifestyleImages[2] : 'https://placehold.co/400x300';
 
-                // CAMBIOS REALIZADOS: GRID 3 columnas simple con altura controlada
                 introSection.innerHTML = `
                     <div class="text-center mb-10 fade-in-up">
                         <h2 class="text-4xl md:text-5xl font-serif text-brand-dark mb-4">${kit.introTitle || kit.title}</h2>
@@ -1272,28 +1340,23 @@
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 fade-in-up" style="animation-delay: 0.2s">
-                        <!-- Imagen 1 -->
                         <div class="h-64 md:h-80 rounded-xl overflow-hidden shadow-md mood-container">
                              <img src="${img1}" class="w-full h-full object-cover mood-img" alt="Mood 1">
                         </div>
-                        
-                        <!-- Imagen 2 -->
                         <div class="h-64 md:h-80 rounded-xl overflow-hidden shadow-md mood-container">
                              <img src="${img2}" class="w-full h-full object-cover mood-img" alt="Mood 2">
                         </div>
-
-                        <!-- Imagen 3 -->
                         <div class="h-64 md:h-80 rounded-xl overflow-hidden shadow-md mood-container">
                              <img src="${img3}" class="w-full h-full object-cover mood-img" alt="Mood 3">
                         </div>
                     </div>
                 `;
 
-                // 2. Llenar info básica del kit (debajo del grid)
+                // 2. Llenar info básica del kit
                 document.getElementById('kit-detail-title-small').innerText = kit.title;
                 document.getElementById('kit-detail-price').innerText = kit.price;
 
-                // 3. Limpiar grid de productos anterior
+                // 3. Limpiar grid anterior
                 grid.innerHTML = '';
 
                 // 4. BUCLE RELACIONAL DE PRODUCTOS
@@ -1306,7 +1369,6 @@
                     }
                 });
 
-                // Reinicializar iconos para los nuevos elementos
                 lucide.createIcons();
                 updateDots();
 
@@ -1344,7 +1406,7 @@
         // INICIALIZACIÓN
         document.addEventListener('DOMContentLoaded', () => {
             renderProducts();
-            renderKitsList(); // Renderizar también los kits al inicio
+            renderKitsList(); 
         });
 
     </script>
